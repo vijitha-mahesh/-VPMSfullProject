@@ -1,0 +1,29 @@
+﻿@model List<Status>
+
+@foreach (var data in Model)
+{
+
+    @if (data.ProjectType == "Ongoing")
+    {
+        <a asp-action="GetCurrentProjects">
+            <li class="list-group-item justify-content-between align-items-center">
+                <label>@data.ProjectType</label>
+                <span class="badge badge-primary badge-info float-right ml-2">@data.Count</span>
+            </li>
+        </a>
+    }
+    else
+    {
+        <a asp-action="GetClosedProjects">
+
+            <li class="list-group-item justify-content-between align-items-center">
+                <label>@data.ProjectType</label>
+                <span class="badge badge-primary badge-info float-right ml-2">@data.Count</span>
+            </li>
+        </a>
+
+    }
+
+
+
+}

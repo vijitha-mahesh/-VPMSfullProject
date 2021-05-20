@@ -1,0 +1,99 @@
+﻿
+@{
+    ViewData["Title"] = "AddNewBudget";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@model BudgetModel
+
+<div id="addP1">
+
+    <div class="container">
+        <h3 class="display-4 text-center">Add New Budget</h3>
+        <hr />
+
+        @if (ViewBag.IsSuccess == true)
+        {
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <strong>Congratulations</strong> You have added new Budget successfulliy.<br />
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        }
+
+        <form method="post" enctype="multipart/form-data"
+              asp-action="AddNewBudget" asp-controller="Budget">
+            <div class="row">
+                <div class="col-6">
+                    <div class="form-group">
+                        <label asp-for="ProjectsID"></label>
+                        <select asp-for="ProjectsID" class="form-control" asp-items="ViewBag.projects">
+                            <option vlaue="">Please choose the project </option>
+                        </select>
+                        <span asp-validation-for="ProjectsID" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <div class="form-group">
+                        <label asp-for="LbHou"></label>
+                        <input asp-for="LbHou" class="form-control" />
+                        <span asp-validation-for="LbHou" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="MtUnit"></label>
+                        <input asp-for="MtUnit" class="form-control" />
+                        <span asp-validation-for="MtUnit" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-group">
+                        <label asp-for="LbRate"></label>
+                        <input asp-for="LbRate" class="form-control" />
+                        <span asp-validation-for="LbRate" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="MtunitPr"></label>
+                        <input asp-for="MtunitPr" class="form-control" />
+                        <span asp-validation-for="MtunitPr" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="BudgetCost"></label>
+                <input asp-for="BudgetCost" class="form-control" />
+                <span asp-validation-for="BudgetCost" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Actual"></label>
+                <input asp-for="Actual" class="form-control" />
+                <span asp-validation-for="Actual" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="cost"></label>
+                <input asp-for="cost" class="form-control" />
+                <span asp-validation-for="cost" class="text-danger"></span>
+            </div>
+            @*<div class="form-group">
+                    <label asp-for="Under"></label>
+                    <input asp-for="Under" class="form-control" />
+                    <span asp-validation-for="Under" class="text-danger"></span>
+                </div>*@
+            <div class="form-group">
+                <input type="submit" value="Add A Task Budget" class="btn btn-primary" />
+            </div>
+        </form>
+        <div>
+            <a asp-controller="Project" asp-action="GetAllProjects" class="btn btn-link">Back to Project List</a>
+        </div>
+        <br />
+
+        <partial name="GetAllBudgets" model="@ViewData["budget"]" />
+    </div>
+
+</div>
+
+
+

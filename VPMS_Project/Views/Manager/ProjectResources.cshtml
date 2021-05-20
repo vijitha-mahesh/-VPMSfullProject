@@ -1,0 +1,71 @@
+﻿
+@{
+    Layout = "_LayoutManager";
+    ViewData["Title"] = "ProjectResources";
+}
+
+    <div class="container-fluid pb-5" id="addP">
+        <h1 class="pt-3 pb-4" style="font-size: 20px; font-weight: bold; ">RESOURCES OVERVIEW</h1>
+
+
+        <div class="row pb-4 text-center">
+            <div class="col-4">
+                <span>Total Resources</span>
+            </div>
+            <div class="col-4">
+                <span>Allocated Resources</span>
+            </div>
+            <div class="col-4">
+                <span>Non-Allocated Resources</span>
+            </div>
+           
+        </div>
+
+        <div class="row text-center pb-5 mt-4 mb-5">
+            <div class="col-4">
+                <div class="col-11" style="padding:47px">
+                    <img src="~/images/blue.png" style="height: 130px; margin-top: -80px; margin-left: -48px; position: absolute; z-index: -1;" />
+                </div>
+                <div class="mx-auto" style="margin-top: -75px;">@ViewBag.Total</div>
+
+            </div>
+            <div class="col-4">
+                <div class="col-11" style="padding:47px">
+                    <img src="~/images/green2.png" style="height: 130px; margin-top: -80px; margin-left: -48px; position: absolute; z-index: -1;" />
+                </div>
+                <div class="mx-auto" style="margin-top: -75px;">@ViewBag.Allocated</div>
+            </div>
+            <div class="col-4">
+                <div class="col-11" style="padding:47px">
+                    <img src="~/images/yellow.png" style="height: 130px; margin-top: -80px; margin-left: -48px; position: absolute; z-index: -1;" />
+                </div>
+                <div class="mx-auto" style="margin-top: -75px;">@ViewBag.NonAllocated</div>
+            </div>
+           
+        </div>
+
+        <div class="row">
+
+            <div class="col-sm-6" >
+                <label class="text-muted">RESOURCE ALLOCATION</label>
+                <hr />
+                <partial name="ResourceView1" model="@ViewData["Alloted"]" />
+
+            </div>
+
+            <div class="col-sm-6">
+                <label class="text-muted">NON-ALLOCATED RESOURCES</label>
+                <hr />
+                <partial name="ResourceView2"  model="@ViewData["nonalloted"]"/>
+
+            </div>
+
+
+
+        </div>
+
+
+
+
+
+    </div>

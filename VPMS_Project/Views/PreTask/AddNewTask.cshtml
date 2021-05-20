@@ -1,0 +1,119 @@
+﻿
+@{
+    ViewData["Title"] = "AddNewTask";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@model PreTaskModel
+
+    <div id="addP1">
+
+        <div class="container">
+            <h1 class="display-4 text-center">Add New Project Plan</h1>
+            <hr />
+
+            @if (ViewBag.context == true)
+            {
+                <div class="alert alert-danger alert-dismissible " role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <strong>Date and time not belong to the current context</strong>
+                </div>
+            }
+
+            @if (ViewBag.invalid == true)
+            {
+                <div class="alert alert-danger alert-dismissible " role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <strong>End date and time should be a value greater than start date and time</strong>
+                </div>
+            }
+
+            @if (ViewBag.IsSuccess == true)
+            {
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <strong>Congratulations</strong> You have added new project successfulliy.<br />
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            }
+
+            <form method="post" enctype="multipart/form-data"
+                  asp-action="AddNewTask" asp-controller="PreTask">
+                @*<div class="form-group">
+                        <label asp-for="ProjectsID"></label>
+                        <select asp-for="ProjectsID" class="form-control" asp-items="ViewBag.projects">
+                            <option vlaue="" selected-disabled>Please choose the project </option>
+                        </select>
+                        <span asp-validation-for="ProjectsID" class="text-danger"></span>
+                    </div>*@
+
+                <div class="col">
+                    <div class="form-group">
+                        <input text=@ViewBag.project.ID asp-for="ProjectsID" class="form-control" hidden />
+                        <label asp-for="ProjectsID"> @ViewBag.project.Title </label>
+                        @*<input text=@ViewBag.project.Title class="form-control" disabled />*@
+                        <span asp-validation-for="ProjectsID" class="text-danger"></span>
+                    </div>
+                </div>
+
+
+                @*<div class="form-group">
+                        <label asp-for="Number"></label>
+                        <input asp-for="Number" class="form-control" />
+                        <span asp-validation-for="Number" class="text-danger"></span>
+                    </div>*@
+                <div class="row">
+                    <div class="col">
+                        <div class="form-group">
+                            <label asp-for="Description"></label>
+                            <input asp-for="Description" class="form-control" />
+                            <span asp-validation-for="Description" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="StartDate"></label>
+                            <input asp-for="StartDate" class="form-control" />
+                            <span asp-validation-for="StartDate" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Priority"></label>
+                            <input asp-for="Priority" class="form-control" />
+                            <span asp-validation-for="Priority" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group">
+                            <label asp-for="Duration"></label>
+                            <input asp-for="Duration" class="form-control" />
+                            <span asp-validation-for="Duration" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="EndDate"></label>
+                            <input asp-for="EndDate" class="form-control" />
+                            <span asp-validation-for="EndDate" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Assignee"></label>
+                            <select asp-for="Assignee" class="form-control">
+                                <option value=" ">Please chose the employeee</option>
+                                <option>Kusal</option>
+                                <option>Nipuni</option>
+                                <option>Amal</option>
+                            </select>
+                            <span asp-validation-for="Assignee" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Add A Task" class="btn btn-primary" />
+                </div>
+            </form>
+            <div>
+                <a asp-action="GetAllTasks">Back to List</a>
+            </div>
+            <br />
+        </div>
+
+    </div>
+
+

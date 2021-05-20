@@ -1,0 +1,83 @@
+﻿
+
+@{
+    Layout = "_LeaveLayout";
+    ViewData["Title"] = "Edit leave allocation";
+
+}
+
+<link href="~/CSS/EditLeaveAll.css" rel="stylesheet" />
+@model EmpModel
+    
+<div id="s1">
+    <br><br><br> <br>
+    <form enctype="multipart/form-data" method="post" id="s2" asp-action="EditLeaveAllocation" asp-controller="AdminLeave">
+        <input hidden asp-for="EmpId" />
+        <div class="row">
+            <div class="col">
+                <div class="form-group">
+                    <font class="text-white">From Date</font>
+                    <input asp-for="FromDate" class="form-control" placeholder="Casual Leaves" />
+                    <span asp-validation-for="FromDate" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="form-group">
+                    <font class="text-white">To Date</font>
+                    <input asp-for="Todate" class="form-control" placeholder="Medical Leaves" />
+                    <span asp-validation-for="Todate" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col">
+                <div class="form-group">
+                    <font class="text-white">Casual leaves</font>
+                    <input asp-for="CasualAllocated" class="form-control" placeholder="Casual Leaves"/>
+                    <span asp-validation-for="CasualAllocated" class="text-danger"></span>
+                </div>
+
+            </div>
+
+            <div class="col">
+                <div class="form-group">
+                    <font class="text-white">Medical leaves</font>
+                    <input asp-for="MedicalAllocated" class="form-control" placeholder="Medical Leaves"/>
+                    <span asp-validation-for="MedicalAllocated" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col">
+                <div class="form-group">
+                    <font class="text-white"> Annual leaves</font>
+                    <input asp-for="AnnualAllocated" class="form-control" placeholder="Annual Leaves" />
+                    <span asp-validation-for="AnnualAllocated" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="form-group">
+                    <font class="text-white"> short leaves</font>
+                    <input asp-for="ShortLeaveAllocated" class="form-control" placeholder="Short Leaves" />
+                    <span asp-validation-for="ShortLeaveAllocated" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <font class="text-white"> Half days</font>
+            <input asp-for="HalfLeaveAllocated" class="form-control" placeholder="Half Day Leaves" />
+            <span asp-validation-for="HalfLeaveAllocated" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <input type="submit" value="Save Changes" class="btn-block btn-success btn-lg" /><br>
+            <a asp-controller="AdminLeave" asp-action="SeeLeaveAllocation" asp-route-id="@Model.EmpId" class="btn btn-success btn-lg btn-block">Cancel</a>
+        </div>
+
+    </form>
+</div>
+

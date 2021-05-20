@@ -1,0 +1,94 @@
+﻿@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Generate New Task";
+}
+<link href="~/CSS/TimeSheet.css" rel="stylesheet" />
+<link rel="stylesheet" type="text/css" href="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.4/css/jquery.dataTables.css">
+<link rel="stylesheet" type="text/css" href="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.0/css/jquery.dataTables_themeroller.css">
+
+
+<div class="content">
+    <br>
+    <div aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a asp-controller="EmployeeHome" asp-action="Portal">Home</a></li>
+            <li class="breadcrumb-item"><a asp-controller="StaffTimeSheet" asp-action="TimeSheet">Time sheet</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Genarate New task</li>
+
+        </ol>
+    </div>
+    <br>
+    @if (ViewBag.IsSuccess == true)
+    {
+        <div class="alert alert-success alert-dismissible fade show container" role="alert">
+            <strong>Congragulations!</strong> You added a new task successfully.Now It is waiting for recommendation.
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+
+
+    }
+    <div class="row mt-3">
+        <div class="col-md-4">
+
+            <div class="card text-center" style="background:linear-gradient(45deg, #173A47,#607d8b)">
+
+                <h5 class="card-header text-white" style="font-family:Cambria">
+                    <b>Generate New Task</b>
+                </h5>
+                <div class="card-body" style="background-color:ThreeDHighlight">
+
+                    <form class="form-inline" method="get" asp-action="AddTask" asp-controller="StaffTimeSheet">
+                        <div class="container">
+                            <div class="form-group">
+                                <select name="projectId" class="chosen form-control custom-select" asp-items="ViewBag.proj" id="f1" style="width:100%;font-family:Cambria" required>
+                                    <option value="">Select Project Name</option>
+                                </select>
+                            </div>
+                            <div class="form-group mt-4 mb-3">
+                                <input name="Task" class="form-control" placeholder="Enter Task Name" style="height:40px;width:100%;font-family:Cambria" required />
+                                <span class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <font class="ml-2" style="font-size:10pt">Begin Date</font>
+                                <input name="S_Date" type="datetime-local" class="form-control" placeholder="select day" value="dd/mm/yyyy" style="height:40px;width:100%;font-family:Cambria" required />
+                                <span class="text-danger"></span>
+                            </div>
+                            <div class="form-group mt-3 mb-3">
+                                <font class="ml-2" style="font-size:10pt">End Date</font>
+                                <input name="E_Date" type="datetime-local" class="form-control" placeholder="select day" value="dd/mm/yyyy" style="height:40px;width:100%;font-family:Cambria" required />
+                                <span class="text-danger"></span>
+                            </div>
+                            <div class="form-group mt-4 mb-3">
+                                <textarea name="Des" class="form-control" placeholder="Description" style="height:40px;width:100%;font-family:Cambria"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <input class="btn btn-outline-primary" type="submit" value="Add Task For Daily Time sheet" style="height:35px;width:100%;font-family:Cambria" />
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="card-footer text-muted">
+                    Add tasks for submitting daily time sheet.
+                </div>
+
+            </div>
+
+        </div>
+        <div class="col-md-8" style="background-color: #ecdcdad1;background-image: url('../images/background.jpg');background-blend-mode: lighten; height: 100%;background-position: center;background-repeat: no-repeat;background-size: cover;">
+           <div style="min-height:500px">
+            @await Component.InvokeAsync("Staff_Task", new { id = ViewBag.EmpId })
+               </div>
+        </div>
+    </div>
+</div>
+@section TimeSheet{
+    <script type="text/javascript" charset="utf8" src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.2.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.4/jquery.dataTables.min.js"></script>
+    <script>
+        $(function () {
+            $("#example").dataTable();
+        })
+    </script>
+}}

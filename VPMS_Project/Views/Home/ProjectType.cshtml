@@ -1,0 +1,12 @@
+﻿@model List<Status>
+
+@foreach (var data in Model)
+{
+    <a asp-action="GetProjectsByType" asp-route-type="@data.ProjectType">
+        <li class="list-group-item justify-content-between align-items-center">
+            <label>@data.ProjectType</label>
+
+            <span class="badge badge-primary badge-info float-right ml-2">@data.Count</span>
+        </li>
+    </a>
+}

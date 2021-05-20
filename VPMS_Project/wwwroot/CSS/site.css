@@ -1,0 +1,536 @@
+﻿
+
+/*newly added - lashini*/
+
+/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
+for details on configuring this project to bundle and minify static web assets. */
+
+
+
+/* Provide sufficient contrast against white background */
+a {
+    color: #0366d6;
+}
+
+.btn-primary {
+    color: #fff;
+    background-color: #527872;
+    border-color: #527872;
+}
+
+.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+    color: #fff;
+    background-color: #1b6ec2;
+    border-color: #1861ac;
+}
+
+div#alert {
+    background-color: #7d0d0d57;
+    border-radius: 15px;
+}
+
+div.alertText {
+    text-align: center;
+    padding: 4%;
+    font-size: 120%;
+    font-family: cursive;
+    color: #540000;
+}
+
+@media (max-width: 991px) {
+    .user {
+        display: none;
+    }
+}
+
+a.text-decoration-none.text-white:hover {
+    background-color: #737373;
+}
+/* Sticky footer styles
+-------------------------------------------------- */
+html {
+    font-size: 14px;
+}
+
+@media (min-width: 768px) {
+    html {
+        font-size: 16px;
+    }
+}
+
+.border-top {
+    border-top: 1px solid #e5e5e5;
+}
+
+.border-bottom {
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.box-shadow {
+    box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+}
+
+button.accept-policy {
+    font-size: 1rem;
+    line-height: inherit;
+}
+
+/* Sticky footer styles
+-------------------------------------------------- */
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    /* Margin bottom by footer height */
+    font-family: 'Cambria Math';
+    margin-bottom: 60px;
+}
+
+label {
+    font-size: 15px;
+}
+
+.footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    white-space: nowrap;
+    line-height: 60px; /* Vertically center the text there */
+}
+
+ul.dropdown-menu.show {
+    background-color: #383737e0;
+    text-align: center;
+}
+
+li.m-3:hover {
+    background-color: #737373;
+}
+/*  index-start */
+
+body#h1 {
+    background-image: url('../images/background-plate-turkos-pattern.jpg');
+}
+
+nav.navbar.navbar-expand-sm.navbar-toggleable-sm.navbar-light.box-shadow.mb-3 {
+    background-color: #173a47;
+}
+
+footer.text-muted {
+    background-color: #173a47;
+}
+
+div.container.text-white {
+    text-align: center;
+}
+
+div.mid1 {
+    text-align: center;
+    font-weight: 600;
+    font-size: 140%;
+    font-family: unset;
+    margin-top: 200px;
+    color: white;
+}
+
+span.project1 {
+    margin-right: 25%;
+    background-color: #00000052;
+    padding: 8%;
+    border-radius: 20px
+}
+
+span.project2 {
+    background-color: #00000052;
+    padding-top: 8%;
+    padding-bottom: 8%;
+    padding-left: 6%;
+    padding-right: 7%;
+    border-radius: 20px
+}
+
+    span.project1:hover, span.project2:hover {
+        cursor: pointer;
+    }
+
+div#list1 {
+    display: none;
+}
+
+a.btn.btn-default {
+    cursor: pointer;
+}
+
+a#admin1.btn.btn-default {
+    background-color: #4bcab140;
+    width: 37%;
+}
+/*index- end getProjects-start*/
+
+nav.navbar.navbar-expand-sm.navbar-toggleable-sm.navbar-light.box-shadow {
+    background-color: #173a47;
+}
+
+h1 {
+    text-align: center;
+    font-size: 170%;
+    font-family: revert;
+}
+
+a {
+    color: darkblue;
+    font-family: revert;
+    text-decoration: none;
+}
+
+    a.dropdown-toggle {
+        margin-left: 40px;
+        color: white;
+        text-decoration: none;
+    }
+
+@media (max-width: 575px) {
+    a.dropdown-toggle {
+        margin-left: 0;
+    }
+}
+
+div.thumbnail {
+    background-color: #0e0a1038;
+    height: 92%;
+    margin-bottom: 20px;
+    border-radius: 10px;
+    transition: all 0.5s ease-in-out;
+}
+
+    div.thumbnail:hover {
+        background-color: #0604061a;
+    }
+
+h4.main3 {
+    font-size: 125%;
+    text-align: center;
+    padding: 7%;
+    font-family: math;
+    font-weight: bold;
+}
+
+p.des {
+    background-color: #25064e21;
+    margin-left: 6%;
+    margin-right: 6%;
+    padding: 10px;
+    font-size: 90%;
+}
+
+p.des2 {
+    background-color: #99b32029;
+    margin-left: 6%;
+    margin-right: 6%;
+    padding: 10px;
+    font-size: 90%;
+}
+
+p.button {
+    text-align: center;
+    padding-bottom: 5%
+}
+
+a.btn.btn-default {
+    background-color: #5f2e0d;
+    color: white;
+}
+
+a.btn.btn-danger {
+    background-color: #6e151e;
+}
+
+a.btn.btn-primary {
+    background-color: #527872;
+}
+
+button.btn.btn-custom {
+    background-color: cadetblue;
+}
+
+div#edit {
+    text-align: right;
+    color: white;
+    margin-bottom: 3%;
+}
+
+li.list-group-item.justify-content-between.align-items-center:hover {
+    background-color: #09130929;
+}
+
+/*getprojects- end addproject-start*/
+
+
+div#addP {
+   
+    padding-top: 70px;
+}
+
+div.col-sm-6#proj {
+    background-image: url('../images/60ac66ae2cf6843b28687fc143861404.png');
+    min-height: 400px;
+    background-size: cover;
+   
+}
+
+div#addP1 {
+    background-image: url('../images/clean-white-polygon-backgrounds-8.jpg');
+    background-size: cover;
+    background-color: #5b8d8f;
+    background-blend-mode: hard-light;
+    min-height: 700px;
+    padding-top: 70px;
+}
+
+div#addQ {
+    background-image: url('../images/e30127a76d70d0b4847d654c1ce46d41.jpg');
+    background-size: cover;
+    background-color: #5b8d8f;
+    background-blend-mode: hard-light;
+    padding-top: 70px;
+}
+
+
+
+body#addp {
+    background-color: #c9c9c9d1;
+    background-image: url(../images/background-plate-turkos-pattern.jpg);
+    background-size: cover;
+    background-blend-mode: overlay;
+    padding-top: 70px;
+}
+
+body#addy {
+    background-color: #ecdcdad1;
+    background-image: url('../images/background.jpg');
+    background-size: cover;
+    background-blend-mode: overlay;
+}
+
+div#addx {
+    background-color: #ecdcdad1;
+    background-image: url('../images/background.jpg');
+    background-size: cover;
+    background-blend-mode: lighten;
+    padding-top: 70px;
+    min-height: 550px;
+}
+
+div#addR.card {
+    background-color: #100f0f33;
+    background-size: cover;
+    background-blend-mode: overlay;
+}
+
+@media (min-height:661px) {
+    div#addP1 {
+        background-image: url('../images/clean-white-polygon-backgrounds-8.jpg');
+        background-size: cover;
+        background-color: #5b8d8f;
+        background-blend-mode: hard-light;
+        min-height: 1024px;
+        padding-top: 70px;
+    }
+    div#addx {
+        min-height: 1024px;
+    }
+
+}
+
+label {
+    color: #333
+}
+
+.btn-send {
+    font-weight: 300;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    width: 80%;
+    margin-left: 3px
+}
+
+.help-block.with-errors {
+    color: #ff5050;
+    margin-top: 5px
+}
+
+.card {
+    margin-left: 10px;
+    margin-right: 10px
+}
+
+input.btn.pt-2.btn-block {
+    color: #fff;
+    background-color: #247682;
+    font-weight: 300;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    margin-left: 3px
+}
+
+    input.btn.pt-2.btn-block.mt-3 {
+        color: #fff;
+        background-color: #2d97a7;
+        font-weight: 300;
+        text-transform: uppercase;
+        letter-spacing: 0.2em;
+        margin-left: 3px;
+    }
+
+div.col-3.group1 {
+    background-color: #6b8880d4;
+    padding: 10px 0 10px 0;
+    text-align: center;
+    border-right: solid white;
+    border-radius: 18px;
+}
+
+div.col-3.group2 {
+    background-color: #526862;
+    padding: 10px 0 10px 0;
+    text-align: center;
+    border-right: solid white;
+    border-radius: 18px;
+}
+
+div.col-6.group1 {
+    background-color: #6b8880d4;
+    padding: 10px 0 10px 0;
+    text-align: center;
+    border-right: solid white;
+}
+
+div.col-6.group2 {
+    background-color: #526862;
+    padding: 10px 0 10px 0;
+    text-align: center;
+}
+
+div.col-4.group2 {
+    background-color: #526862;
+    padding: 10px 0 10px 0;
+    text-align: center;
+}
+
+    div.col-6.group2:hover, div.col-3.group2:hover, div.col-4.group2:hover {
+        transition: 1s;
+        background-color: #6b8880d4;
+    }
+/*addproject- end getprojectbyid-start*/
+div.card {
+    background-color: #73568630;
+}
+
+
+div.jumbotron {
+    background-color: #e8d7fa57;
+}
+
+/*div.card-body.border-0 {
+    background-color: #0000001f;
+    border-radius: 10px;
+}
+*/
+div#edit1.col-md-12 {
+    margin-top: 25px;
+    text-align: center;
+}
+
+a#delete.btn.btn-default {
+    width: 49%;
+    background-color: darkred;
+}
+
+div.form-group.text {
+    color: #0f6766;
+}
+/*getprojectbyid-end getcustomers-start addcustomers-start*/
+table.table.table-striped {
+    background-color: #7f788340;
+}
+
+thead {
+    background-color: #6e8083;
+}
+
+.table {
+    color: black;
+}
+/*resource allocation-start
+*/
+li.list-group-item {
+    background-color: #ffffffbf;
+    height: 40px;
+    font-family: math;
+}
+
+li#list.list-group-item {
+    background-color: #9eb8b9eb;
+}
+
+/*projectStatusByMonth*/
+
+label.Project {
+    background-color: #a71717c9;
+    width: 60px;
+    height: 60px;
+    text-align: center;
+    padding-top: 16px;
+    border-radius: 31px;
+    color: white;
+}
+
+label.Maintainance {
+    background-color: #c1cb1ac9;
+    width: 60px;
+    height: 60px;
+    text-align: center;
+    padding-top: 16px;
+    border-radius: 31px;
+    color: white;
+}
+
+label.R.and.D {
+    background-color: #155724;
+    width: 60px;
+    height: 60px;
+    text-align: center;
+    padding-top: 16px;
+    border-radius: 31px;
+    color: white;
+}
+
+label.Internal {
+    background-color: #1635a0c9;
+    width: 60px;
+    height: 60px;
+    text-align: center;
+    padding-top: 16px;
+    border-radius: 31px;
+    color: white;
+}
+
+    label.Project:hover, label.Maintainance:hover, label.R.and.D:hover, label.Internal:hover {
+        margin-top: -15px;
+        transition: 0.5s linear;
+    }
+
+/*task overview*/
+
+span.taskcount {
+    background-color: #0000005e;
+    padding: 50px 54px;
+    border-radius: 40px;
+    color: white;
+}
+
+/*manager portal
+*/
+

@@ -1,0 +1,83 @@
+﻿
+@{
+    Layout = "_LayoutManager";
+    ViewData["Title"] = "TaskDetails";
+}
+
+    <div class="container-fluid pb-5" id="addP">
+
+
+        <div>
+        
+               
+            <div class="row pb-4 pt-4 text-center"  >
+                <div class="col-4">
+                    <span style="background-color: #69ffb8;padding: 10px; border-radius: 5px; margin-left: 17px;width:240px">Today Allocated - @ViewBag.TodayAllocated</span>
+                </div>
+                <div class="col-4">
+                <span style="background-color: #69ffb8; padding: 10px; border-radius: 5px; margin-left: 17px;width:240px">Today Started - @ViewBag.TodayStarted</span>
+            </div>
+            <div class="col-4">
+               <span style="background-color: #69ffb8; padding: 10px; border-radius: 5px; margin-left: 17px;width:240px">Finalized - @ViewBag.TodayFinalized</span>
+               </div>
+                    
+        </div>
+
+            <hr />
+
+
+        <partial name="TaskView1" model="@ViewData["count"]" />
+
+        <div class="row">
+
+            <div class="col-sm-4" style="border-right:outset 1px">
+
+                <partial name="TaskView2" model="@ViewData["projects"]" />
+
+            </div>
+
+            <div class="col-sm-8">
+
+                <partial name="TaskView3" model="@ViewData["tasks"]" />
+
+            </div>
+
+        </div>
+
+
+
+
+
+
+</div>
+
+    </div>
+
+@section Scripts{
+
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    
+    <script>
+        function showcontent(id, isclicked) {
+            var show = 'show_' + id;
+            var content = 'content_' + id;
+            var content2 = 'content2_' + id;
+            if (isclicked) {
+                $('#' + content).show();
+                $('#' + content2).show();
+                $('#' + show).hide();
+            }
+        }
+        function hidecontent(id, isclicked) {
+            var show = 'show_' + id;
+            var content = 'content_' + id;
+            var content2 = 'content2_' + id;
+            if (isclicked) {
+                $('#' + content).hide();
+                $('#' + content2).hide();
+                $('#' + show).show();
+            }
+        }
+    </script>
+}       

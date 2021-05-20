@@ -1,0 +1,40 @@
+﻿@model List<Resources2>
+    <div class="col-12" style="border-right:outset 1px">
+
+
+
+        @foreach (var data in Model)
+        {
+
+            <label class="text-muted">Project Manager:- @data.ProjectManager</label>
+
+            <div class="row " style="background-color: #464a4e; border-radius: 6px; padding: 3px; margin-bottom: 30px;margin-right: 5px;">
+                <div class="col-2">
+
+                    <label class="text-white">ID</label>
+                </div>
+                <div class="col-10">
+                    <label class="text-white"> DESIGNATION & NAME</label>
+
+                </div>
+              
+
+            </div>
+            @for(int i = 0; i < @data.Count; i++)
+            {
+    <div class="row " style="background-color: #61884c; border-radius: 6px; padding: 3px; margin-bottom: 18px;margin-right: 5px;">
+        <div class="col-2">
+
+            <label class="text-white">@data.Ids[i]</label>
+        </div>
+
+        <div class="col-10">
+            <label class="text-white text-capitalize">@data.employee[i]</label>
+
+        </div>
+    </div>
+            }
+
+            
+        }
+    </div>

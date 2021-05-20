@@ -1,0 +1,62 @@
+﻿@{
+    ViewData["Title"] = "ManagerPortal";
+}
+
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+</head>
+<body id="h1">
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light box-shadow mb-3 ">
+            <div class="container">
+                <a class="navbar-brand text-white" asp-area="" asp-controller="Home" asp-action="manager">Bellvantage - Manager Portal</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+            </div>
+        </nav>
+    </header>
+
+  
+    <div class="mid1">
+
+        <div id="list2">
+            <span class="project1" onclick="change1()">Project</span>
+            <a class="text-decoration-none text-white" asp-controller="ManagerDash" asp-action="Dashboard"><span class="project2">Employee</span></a>
+        </div>
+
+
+        <div id="list1" class="btn-group-vertical mx-auto" role="group" aria-label="...">
+            <a class="btn btn-default" id="admin1" asp-action="ProjectDetails" asp-controller="Manager">Project Overview</a>
+            <a class="btn btn-default" id="admin1" asp-action="TaskDetails" asp-controller="Manager">Task Overview</a>
+            <a class="btn btn-default" id="admin1" asp-action="ProjectResources" asp-controller="Manager">Resource Overview</a>
+            <a class="btn btn-default" id="admin1" asp-action="ProjectStatus" asp-controller="Home">Project Status</a>
+        </div>
+
+    </div>
+
+
+
+    <footer class="footer text-muted">
+        <div class="container text-white">
+            &copy;Bellvantage - Admin</a>
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+
+</body>
+</html>
+

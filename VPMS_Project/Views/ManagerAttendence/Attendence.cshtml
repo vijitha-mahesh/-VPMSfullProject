@@ -1,0 +1,134 @@
+﻿@{
+    Layout = "_ManagerLayout";
+    ViewData["Title"] = "View Attendence";
+
+}
+@model IEnumerable<Key2Model>
+<link href="~/CSS/AttManage.css" rel="stylesheet" />
+
+<div class="content">
+    <br>
+    <div class="navbar">
+        <div class="card-title">
+            <h3>
+
+                <a asp-controller="EmployeeHome" asp-action="Portal" title="Back">
+                    <i class='fas fa-arrow-left'></i>
+                </a>View Attendence info
+            </h3>
+        </div>
+        <div class="card-title">
+            <a asp-controller="ManagerAttendence" asp-action="NotUpdated" class="btn btn-outline-dark btn-block">Attendence Not Updated Employees</a>
+        </div>
+    </div>
+    <hr>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-5 text-center">
+                <div class="jumbotron jumbotron-fluid" style="background-color:rgba(172, 203, 222, 0.27)">
+                    <form class="form-inline" method="get" asp-action="Attendence" asp-controller="ManagerAttendence">
+                        <div class="container">
+                            <select name="Search" class="chosen form-control custom-select" asp-items="ViewBag.Emps" style="height:45px;border: none;width:100%">
+                                <option value="">All Employees</option>
+                            </select>
+                            <input name="Date" type="Date" class="i1 form-control mt-3 text-center" placeholder="select day" value="dd/mm/yyyy" style="height:30px;width:100%" />
+
+                            <input class="b btn btn-success mt-3 " type="submit" value="View Attendence Details" />
+
+
+                        </div>
+                    </form>
+
+                </div>
+                <br>
+                @if (Model.Count() == 0)
+                {
+                    <div class="card w-85" style="background-color: rgba(211, 218, 224, 0.36)">
+                        <div class="card-body">
+                            <p class="card-text" style="font-size:16pt;font-family:Cambria">Choose by employee name or date to view attendence detals.</p>
+                            <img src="~/images/sea.jpg" style="width:200px;height:auto" />
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <div class="table-responsive col-sm-12 col-md-12">
+                        <table class="table table-hover " id="example">
+                            <thead>
+                                <tr style="line-height: 2px">
+
+                                    <th scope="row"> </th>
+                                    <th scope="row"></th>
+                                    <th scope="row"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                @foreach (var emp in Model)
+                                {
+
+                                    <tr style="line-height: 30px">
+
+                                        <td scope="row">
+                                            <a asp-action="Attendence" asp-controller="ManagerAttendence" asp-route-id="@emp.AttendenceId">
+                                                <div class="rounded-circle" style="width: 3rem;background-color:gainsboro;border-width:medium">
+                                                    <img class="card-img-top rounded-circle" src="@(string.IsNullOrEmpty(emp.PhotoURL) ? "~/images/defa.png" : emp.PhotoURL)" height="45" width="20" asp-append-version="true">
+                                                </div>
+                                            </a>
+                                        </td>
+                                        <td class="text-left"> @emp.EmpFName<br><font style="color:forestgreen;font-size:11pt;margin-bottom:0px">Date - @emp.RelavantDate.Day-@emp.RelavantDate.Month-@emp.RelavantDate.Year  <br> Status : @emp.Status </font></td>
+
+                                        <td><a asp-action="Attendence" asp-controller="ManagerAttendence" asp-route-id="@emp.AttendenceId" class="text-dark">View More</a></td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+
+                    </div>
+                }
+            </div>
+            <div class="col-md-7" style=" background-image: url('/images/Background.jpg');">
+                @if (ViewBag.Id == 0)
+                {
+                    <br>
+                    <div class="jumbotron jumbotron-fluid">
+                        <div class="container">
+                            <h1 class="display-4">Attendence Report</h1>
+                            <p class="lead">You can view attendence reports by selecting employee name or date.</p>
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <div data-aos="zoom-in" data-aos-duration="1500">
+                    @await Component.InvokeAsync("AttendenceReport", new { id = ViewBag.Id })
+                        </div>
+                }
+
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Manager{
+
+    <script type="text/javascript" charset="utf8" src="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.4/jquery.dataTables.min.js"></script>
+    <script>
+        AOS.init();
+
+        $(function () {
+            $(".chosen").chosen();
+        });
+
+    </script>
+    <script>
+        $(function () {
+            $("#example").dataTable({
+                'paging': false,
+                'ordering': false,
+            });
+        })
+    </script>
+
+
+}

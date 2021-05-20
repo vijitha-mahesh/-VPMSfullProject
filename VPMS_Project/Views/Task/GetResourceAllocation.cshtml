@@ -1,0 +1,52 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@model List<Resources2>
+
+  <label class="text-muted">PROJECT MANAGERS</label>
+<hr />
+  <div>
+      @for (int j=0; j<Model.Count(); j++)
+      {
+          <div class="row" style="background-color: #e4ddbb; padding: 4px; margin-bottom: 20px; border-radius: 5px; "><div class="col-12">
+    <label class="text-capitalize">@Model[j].ProjectManager</label>
+    <span class="badge badge-primary badge-info ml-2" style="align-self: baseline;">@Model[j].Count</span>
+    <label style="cursor: pointer;float: right;" id="show_@j" onclick="showcontent(@j, true);">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
+            <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z" />
+        </svg>
+    </label>
+    <label style="cursor: pointer;float: right;" id="hide_@j" onclick="hidecontent(@j, true);">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-up-fill" viewBox="0 0 16 16">
+            <path d="m7.247 4.86-4.796 5.481c-.566.647-.106 1.659.753 1.659h9.592a1 1 0 0 0 .753-1.659l-4.796-5.48a1 1 0 0 0-1.506 0z" />
+        </svg>
+    </label>
+</div>
+</div>
+          <div id="content_@j" style="display:none">
+              @for (int i = 0; i < Model[j].Count; i++)
+              {
+                  <div class="row"  style="background-color: #ccc8b6; padding: 4px; margin-bottom: 10px; border-radius: 5px;">
+
+
+                      <div class="col-12">
+                          <label>@Model[j].employee[i]</label>
+                          <a asp-action="RemoveAllocation" asp-controller="Task" asp-route-id="@Model[j].Ids[i]">
+                              <label style="float:right;cursor: pointer;">
+                                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#792323" class="bi bi-x-square-fill" viewBox="0 0 16 16">
+                                      <path d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm3.354 4.646L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 1 1 .708-.708z" />
+                                  </svg>
+
+                              </label>
+                          </a>
+                      </div>
+
+
+                  </div>
+              }
+          </div>
+      }
+
+      </div>
+           
+        

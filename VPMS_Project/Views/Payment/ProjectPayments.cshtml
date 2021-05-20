@@ -1,0 +1,75 @@
+﻿@{
+    ViewData["Title"] = "Payment";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@model VPMS_Project.Models.Payment
+
+    <div id="addP1">
+
+        <div class="container">
+            <br><br> <br><br>
+            <h4 class="display-4 text-center">Payments - @Model.ProjectName </h4>
+            <hr />
+            @*@if (ViewBag.IsSuccess == true)
+                {
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        <strong>Congratulations</strong> You have added new collection successfulliy.<br />
+                        Click <a asp-controller="Collection" asp-action="GetAllCollection">here</a> to view the details
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                }*@
+
+            <form method="post" asp-action="ProjectPayments" asp-controller="Payment">
+                <div class="row">
+                    @*<div class="col">
+                            <div class="form-group">
+                                <label asp-for="ProjectsID"></label>
+                                <select asp-for="ProjectsID" class="form-control" asp-items="ViewBag.projects">
+                                    <option vlaue="  " >Please choose the project  </option>
+                                </select>
+                                <span asp-validation-for="ProjectsID" class="text-danger"></span>
+                            </div>
+                        </div>*@
+                    <div class="col" hidden>
+                        <div class="form-group">
+                            <input text=@Model.ProjectName asp-for="ProjectName" class="form-control" hidden />
+                            <input text=@Model.ProjectId asp-for="ProjectId" class="form-control" hidden />
+                            @*<input text=@ViewBag.project.Title class="form-control" disabled />*@
+                            <span asp-validation-for="ProjectId" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group">
+                            <label asp-for="Comment"></label>
+                            <input asp-for="Comment" class="form-control" />
+                            <span asp-validation-for="Comment" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group">
+                            <label asp-for="Amount"></label>
+                            <input asp-for="Amount" class="form-control" />
+                            <span asp-validation-for="Amount" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <input type="submit" value="Save" class="btn btn-primary" />
+                </div>
+            </form>
+            <br />
+            <div>
+                <partial name="PaymentsList" model="@ViewData["projects"]" />
+            </div>
+            <div>
+                <a asp-controller="Project" asp-action="GetAllProjects" class="btn btn-link">Back to Project List</a>
+            </div>
+        </div>
+
+    </div>
+
+

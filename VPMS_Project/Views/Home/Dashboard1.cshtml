@@ -1,0 +1,23 @@
+﻿
+@model List<DashboardProjectList>
+
+
+<label class="text-muted">PROJECTS</label>
+<hr />
+@foreach(var item in Model)
+{
+<div>
+    <label style="color:#60accf">@item.Name</label>
+
+    @foreach (var project in item.Projects)
+    {
+      <a class="text-decoration-none" asp-controller="Home" asp-action="GetProjectById" asp-route-id="@project.Id">
+    <div class="row text-capitalize text-center" style="background-color:#bbcddc; padding-bottom: 10px; padding-top: 10px; border-radius: 8px;margin-bottom:5px"><div class="col-12">
+        @project.Name</div></div></a>
+    }
+
+   
+
+</div>
+
+}

@@ -1,0 +1,172 @@
+﻿@{
+    Layout = "_Layout";
+    ViewData["Title"] = "View Time Sheet";
+}
+
+@model IEnumerable<TimeSheetTaskModel>
+<style>
+    #s1 {
+        margin-left: 2%;
+        height: 60px;
+    }
+
+    .jumbotron {
+        height: 250px
+    }
+
+    .lead {
+        padding-bottom: 10px
+    }
+
+    #s2 {
+        height: 45px;
+        border: none;
+        width: 100%
+    }
+
+    #date {
+        height: 45px;
+        margin-top: 20px;
+        width: 100%
+    }
+
+    #a {
+        line-height: 35px;
+        width: 100%;
+        background-color: #173A47;
+        margin-top: 25px;
+    }
+
+    .c2 {
+        font-family: Cambria;
+        border-bottom-width: 10px;
+    }
+
+    </style>
+
+<div class="content">
+    <br>
+    <div aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a asp-controller="EmployeeHome" asp-action="Portal">Home</a></li>
+            <li class="breadcrumb-item"><a asp-controller="StaffTimeSheet" asp-action="TimeSheet">Time sheet</a></li>
+            <li class="breadcrumb-item active" aria-current="page">View Time Sheet</li>
+
+        </ol>
+    </div>
+
+    <div class="jumbotron jumbotron-fluid" style="background-color: rgba(172, 203, 222, 0.27)">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 col-lg-6 col-sm-12">
+                    <h1 class="display-4">View Time Sheet</h1>
+                    <p class="lead">Select a date and view your daily Time Sheet .</p>
+                </div>
+                <div class="col-md-6 col-lg-6 col-sm-12">
+                    <form class="form-inline" method="get" asp-action="ViewTimeS" asp-controller="StaffTimeSheet">
+                        <div class="row">
+                            <div class="col-md-12 col-lg-12 col-sm-12 mr-5">
+                                <input name="Date" id="date" type="Date" class="form-control" placeholder="select day" value="dd/mm/yyyy" required />
+                            </div>
+                            <div class="col-md-12 col-lg-12 col-sm-12 mr-5">
+                                <input id="a" class="btn btn-success" type="submit" value="View" />
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @if (ViewBag.Empty == true)
+    {
+        <div style="margin-left:20%;font-size:15pt;font-family:Cambria">
+
+            <img src="~/images/download.png" style="width:30%;height:auto;" />
+            View your Time Sheets Entered so far
+        </div>
+
+    }
+    else
+    {
+       {Html.BeginForm("CreateDocument", "StaffTimeSheet", FormMethod.Get);
+            {
+                <input type="submit" value="Get As Pdf" style="width:150px;height:27px;margin-left:10%" formtarget="_blank" />
+            }
+            Html.EndForm();
+        }
+        <br>
+        <div class="c2 card text-center" style="border:5px solid;border-color:lightgray;width:80%;margin-left:10%">
+
+            <div class="row ml-5 mr-5" style="background-color:white">
+                <div class="col-md-2">
+                    <img src="~/images/bell.jpg" height="120" width="120" />
+                </div>
+                <div class="col-md-4 float-left" style="border-color:black;">
+                    <br>
+                    <h4>
+                        Daily Time Sheet<br>
+                        <span style="font-size:13pt"> @ViewBag.Date.Day-@ViewBag.Date.Month-@ViewBag.Date.Year</span>
+
+                    </h4>
+                </div>
+            </div>
+            <hr style="border-width: 10px;">
+            <div class="card-body" style="border-width:20px;width:100%">
+                <table class="table table-striped" style="background-color:rgba(211, 214, 214, 0.49)">
+                    <thead>
+                        <tr class="text-center">
+                            <th scope="col">Task</th>
+                            <th scope="col">Project</th>
+                            <th scope="col">Start Time</th>
+                            <th scope="col">End Time</th>
+                            <th scope="col">Break Hours</th>
+                            <th scope="col">Total Hours</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var task in Model)
+                        {
+                        <tr style="line-height:40px">
+                            <td scope="row">@task.Name</td>
+                            <td scope="row">@task.ProjectName</td>
+                            @{
+                                String start = string.Format("{0:hh:mm:ss tt}", task.ActualStartDateTime);
+                                String end = string.Format("{0:hh:mm:ss tt}", task.ActualEndDateTime);
+                            }
+                            <td>@start</td>
+                            <td>@end</td>
+                            @{
+                                var timeSpan3 = TimeSpan.FromHours(task.BreakHours);
+                                int hh3 = timeSpan3.Hours;
+                                int mm3 = timeSpan3.Minutes;
+                                String total3 = hh3 + " h " + mm3 + " min";
+                            }
+                            <td>@total3</td>
+
+
+                            @{
+                                var timeSpan1 = TimeSpan.FromHours(task.TotalHours);
+                                int hh1 = timeSpan1.Hours;
+                                int mm1 = timeSpan1.Minutes;
+                                String total = hh1 + " h " + mm1 + " min";
+                            }
+                            <td>@total</td>
+                        </tr>
+                        }
+                        <tr style="font-size:15pt">
+                            <td colspan="5">Total Spent Hours</td>
+                            @{
+                                var timeSpan2 = TimeSpan.FromHours(ViewBag.TotalHours);
+                                int hh2 = timeSpan2.Hours;
+                                int mm2 = timeSpan2.Minutes;
+                                String total2 = hh2 + " h " + mm2 + " minutes";
+                            }
+                            <td>@total2</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    }
+</div>

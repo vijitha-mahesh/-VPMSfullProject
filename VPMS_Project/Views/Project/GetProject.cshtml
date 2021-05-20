@@ -1,0 +1,112 @@
+﻿
+@{
+    ViewData["Title"] = "GetProject";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@*doesn't want*@
+@model ProjectModel
+
+<div id="addP1">
+    
+    <div class="container">
+        <br />
+        
+        <div class="row">
+            <div class="col-md-6">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h3><span class="font-weight-bold">Project Name :- @Model.Title</span></h3>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12 ">
+                        <span class="label label-primary">Project Id :- </span>
+                        <span class="text-monospace">@Model.ID</span>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <p class="description">
+                            @Model.Description
+                        </p>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4">
+                        <button class="btn btn-outline-primary">
+                            More Details
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+
+            </div>
+        </div>
+        <br />
+        <div class="container">
+            <div class="row">
+                <p class="h2 font-weight-bold">Add Project Document</p>
+            </div>
+            <!--<div class="row text-center">
+        <form method="post" enctype="multipart/form-data" asp-action="GetProjects" asp-controller="Project">
+            <div class="form-group">
+                <label asp-for="ScopeDocument" class="control-lable"></label>
+                <div class="custom-file">
+                    <input asp-for="ScopeDocument" class="custom-file-input" id="customeFile">
+                    <label class="custom-file-label" for="customerFile">Choose file</label>
+                </div>
+                <span asp-validation-for="ScopeDocument" class="text-danger"></span>
+            </div>
+            <button type="submit">Upload</button>
+        </form>-->
+            @*<form>
+                      <label for="exampleFormControlFile1">Upload Action Plan</label>
+                    <input type="file" class="form-control-file text-center" id="exampleFormControlFile1">
+                </div>
+            </form>*@
+            <!--<form>
+                <div class="form-group col">
+                    <label for="exampleFormControlFile1">Upload Time Plan</label>
+                    <input type="file" class="form-control-file text-center" id="exampleFormControlFile1">
+
+                </div>
+            </form>
+        </div>-->
+            <br />
+            <div class="row text-center">
+                <div class="col">
+                    <div class="row"><a asp-controller="Document" asp-action="AddNewDocument" asp-route-projectId="@Model.ID" class="btn btn-primary btn-lg">Document</a></div>
+                    @*<div class="row"><a asp-controller="Document" asp-action="GetDocument" asp-route-projectId="@Model.ID" class="btn btn-info btn-sm">View</a></div>*@
+                    @*<div class="row"><a class="btn btn-outline-primary btn-sm" href="@documentInfo.ActionPlanUrl">Action Plan</a></div>*@
+                </div>
+                @*<div class="col"><a asp-controller="Document" asp-action="AddNewDocument" asp-route-projectId="@Model.ID" class="btn btn-primary btn-lg">Action Plan</a></div>
+                <div class="col"><a asp-controller="Document" asp-action="AddNewDocument" asp-route-projectId="@Model.ID" class="btn btn-primary btn-lg">Time Plan</a></div>*@
+                <div class="col"><a asp-controller="Budget" asp-action="GetBudget" asp-route-projectId="@Model.ID" asp-route-Title="@Model.Title" class="btn btn-primary btn-lg">Budget</a></div>
+                <div class="col"><a asp-controller="PreTask" asp-action="GetTask" asp-route-projectId="@Model.ID" asp-route-Title="@Model.Title" class="btn btn-primary btn-lg">Project Plan</a></div>
+                <div class="col"><a asp-controller="Payment" asp-action="ProjectPayments" asp-route-projectId="@Model.ID" asp-route-Title="@Model.Title" class="btn btn-primary btn-lg">Payments</a></div>
+                <div class="col"><a asp-controller="Project" asp-action="ConvertProject" asp-route-id="@Model.ID" class="btn btn-success btn-lg">Convert Project</a></div>
+            </div>
+        </div>
+        <hr />
+        @*<div id="addQ">*@
+        <ul class="list-group" style="background-image: url('../images/e30127a76d70d0b4847d654c1ce46d41.jpg');">
+            <li class="list-group-item border-bottom-0"><span class="font-weight-bold">Project Type - </span> @Model.ProjectType </li>
+            <li class="list-group-item border-bottom-0"><span class="font-weight-bold">Customer Name - </span>@Model.Customers</li>
+            <li class="list-group-item border-bottom-0"><span class="font-weight-bold">Project Manager - </span>@Model.projectManager</li>
+            <li class="list-group-item border-bottom-0"><span class="font-weight-bold">Start Date - </span>@Model.startDate</li>
+            <li class="list-group-item border-bottom-0"><span class="font-weight-bold">Close Date - </span>@Model.EndDate</li>
+            <li class="list-group-item border-bottom-0"><span class="font-weight-bold">Value - </span>@Model.value</li>
+            <li class="list-group-item"><span class="font-weight-bold">Budget - </span>@Model.ProjectBudget</li>
+        </ul>
+        @*</div>*@
+        <br />
+        <br />
+        <br />
+    </div>
+</div>
+

@@ -1,0 +1,14 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@model List<Status>
+
+
+@foreach(var data in Model)
+{
+    <li class="list-group-item justify-content-between align-items-center">
+        <label>@data.ProjectType</label>
+        <span class="badge badge-primary badge-info float-right ml-2">@data.Count</span>
+    </li>
+}
+

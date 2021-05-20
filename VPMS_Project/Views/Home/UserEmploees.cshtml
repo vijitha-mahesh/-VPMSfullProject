@@ -1,0 +1,24 @@
+﻿
+@model List<Employee>
+
+
+<label class="text-muted">CURRENT EMPLOYEES</label>
+<hr />
+@foreach (var item in Model)
+{
+    <div>
+       
+            <a class="text-decoration-none" >
+                <div class="row text-capitalize text-center" style="background-color: #bbcddc; padding-bottom: 10px; padding-top: 10px; border-radius: 8px;margin-bottom:5px">
+                    <div class="col-12">
+                        @item.Name
+                    </div>
+                </div>
+            </a>
+       
+
+
+
+    </div>
+
+}

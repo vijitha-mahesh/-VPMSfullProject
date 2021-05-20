@@ -1,0 +1,68 @@
+﻿
+@*@{
+    ViewData["Title"] = "GetAllTasks";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}*@
+
+@model IEnumerable<VPMS_Project.Models.PreTaskModel>
+
+<div id="addP1">
+
+    <div class="container">
+        <h1 class="text-center">Project Plan - 000002 - Project Management System</h1>
+        <div class="row">
+            <div class="text-center">
+                <a asp-controller="Task" asp-action="AddNewTask" class="btn btn-primary btn-sm">Add New Budget</a>
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <table class="table">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">Project ID</th>
+                        <th scope="col">Nu</th>
+                        <th scope="col">Description</th>
+                        <th scope="col">Duration</th>
+                        <th scope="col">Start Date</th>
+                        <th scope="col">Finish Date</th>
+                        <th scope="col">Priority</th>
+                        <th scope="col">Assignee</th>
+                        <th scope="col">    </th>
+                    </tr>
+                </thead>
+                @foreach (var task in Model)
+                {
+                    <tbody>
+                        <tr>
+                            <th scope="row">@task.ProjectsID
+                            <th>@task.Number</th>
+                            <td>@task.Description</td>
+                            <td>@task.Duration (Days)</td>
+                            <td>@task.StartDate</td>
+                            <td>@task.EndDate</td>
+                            <td>@task.Priority</td>
+                            <td>@task.Assignee</td>
+                            <td>
+                                <div class="btn-group" role="group" aria-label="Basic example">
+                                    <a asp-controller="PreTask" asp-action="EditTasks" asp-route-id="@task.Id" asp-route-namaofCustomer="@task.Description" class="btn btn-primary">Edit</a>
+                                    <a class="btn btn-danger" role="button" asp-action="DeleteTask" asp-controller="Task" asp-route-id="@task.Id"
+                                       onclick="return confirm('Are you sure you want to delete task @task.Description ? ')">Delete</a>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                }
+            </table>
+
+
+            <div class="col-md-4">
+            </div>
+            <div class="col-md-7">
+            </div>
+            <div class="col-md-1">
+            </div>
+        </div>
+    </div>
+</div>
+

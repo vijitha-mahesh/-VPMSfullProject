@@ -1,0 +1,54 @@
+﻿@model TaskCount
+
+<div>
+
+    <div class="row ">
+        <div class="col-12  text-center">
+            <span style="font-size:20px;font-weight:bold">TOTAL TASKS</span>
+            <div style="font-size:20px">@Model.Total</div>
+        </div>
+    </div>
+
+    <div class="row pb-4 text-center">
+        <div class="col-3">
+            <span>Ongoing</span>
+        </div>
+        <div class="col-3">
+            <span>Pending</span>
+        </div>
+        <div class="col-3">
+            <span>TimeOut</span>
+        </div>
+        <div class="col-3">
+            <span>Finalized</span>
+        </div>
+    </div>
+
+    <div class="row text-center pb-5 mt-4 mb-5">
+        <div class="col-3">
+          <div class="col-11" style="padding:47px">
+              <img src="~/images/orange.png" style="height: 130px; margin-top: -80px; margin-left: -53px; position: absolute; z-index: -1;"/>
+          </div>
+            <div class="mx-auto" style="margin-top: -75px;">@Model.Ongoing</div>
+            
+        </div>
+        <div class="col-3">
+            <div class="col-11" style="padding:47px">
+                <img src="~/images/blue.png" style="height: 130px; margin-top: -80px; margin-left: -53px; position: absolute; z-index: -1;" />
+            </div>
+            <div class="mx-auto" style="margin-top: -75px;">@Model.Pending</div>
+        </div>
+        <div class="col-3">
+            <div class="col-11" style="padding:47px">
+                <img src="~/images/yellow.png" style="height: 130px; margin-top: -80px; margin-left: -53px; position: absolute; z-index: -1;" />
+            </div>
+            <div class="mx-auto" style="margin-top: -75px;">@Model.TimeOut</div>
+        </div>
+        <div class="col-3">
+            <div class="col-11" style="padding:47px">
+                <img src="~/images/green2.png" style="height: 130px; margin-top: -80px; margin-left: -53px; position: absolute; z-index: -1;" />
+            </div>
+            <div class="mx-auto" style="margin-top: -75px;">@Model.Finalized</div>
+        </div>
+    </div>
+</div>

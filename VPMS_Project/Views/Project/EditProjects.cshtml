@@ -1,0 +1,99 @@
+﻿
+@{
+    ViewData["Title"] = "EditProjects";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model ProjectModel
+
+<div id="addP1">
+    <div class="container">
+        <h1 class="display-4 text-center">Edit Project</h1>
+        <hr />
+
+        @if (ViewBag.Success == true)
+        {
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <strong>Congratulations</strong> You successfully updated project.<br />
+                Click <a asp-controller="Project" asp-action="GetProject" asp-route-id="@ViewBag.id">here</a> to view the details
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        }
+        <div class="row">
+            <div class="col">
+                <form asp-action="EditProjects" asp-controller="Project" method="post" id="contact-from">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="hidden" asp-for="ID" />
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label asp-for="Title"></label>
+                                <input asp-for="Title" class="form-control" />
+                                <span asp-validation-for="Title" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="projectManagerId"></label>
+                                <select asp-for="projectManagerId" class="form-control" asp-items="ViewBag.ProjectManager">
+                                    <option vlaue="">Please choose the project manager name</option>
+                                </select>
+                                <span asp-validation-for="projectManagerId" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="startDate"></label>
+                                <input asp-for="startDate" class="form-control" type="date" />
+                                <span asp-validation-for="startDate" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="ProjectBudget"></label>
+                                <input asp-for="ProjectBudget" class="form-control" />
+                                <span asp-validation-for="ProjectBudget" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Description"></label>
+                                <textarea asp-for="Description" class="form-control"></textarea>
+                                <span asp-validation-for="Description" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <label asp-for="CustomersId"></label>
+                                <select asp-for="CustomersId" class="form-control" asp-items="ViewBag.Customers">
+                                    <option value="">Please choose customer name</option>
+                                </select>
+                                <span asp-validation-for="CustomersId" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="ProjectType"></label>
+                                <select asp-for="ProjectType" class="form-control">
+                                    <option value="">Please choose a project type</option>
+                                    <option>Project</option>
+                                    <option>Maintainance</option>
+                                    <option>R and D(Research & Development)</option>
+                                    <option>Internal</option>
+                                </select>
+                                <span asp-validation-for="ProjectType" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="EndDate"></label>
+                                <input asp-for="EndDate" class="form-control" type="date" />
+                                <span asp-validation-for="EndDate" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="value"></label>
+                                <input asp-for="value" class="form-control" />
+                                <span asp-validation-for="value" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <input asp-action="EditProjects" asp-controller="Project" type="submit" value="Update Project Details" class="btn btn-primary" />
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div>
+            <a asp-action="GetAllProjects">Back to List</a>
+        </div>
+    </div>
+</div>

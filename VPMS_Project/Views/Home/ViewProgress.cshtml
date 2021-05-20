@@ -1,0 +1,84 @@
+﻿
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Progress";
+}
+@model Project
+    <div class="container-fluid" id="addP1">
+
+        <div class="col-md-12 text-center" style="padding-top: 10px">
+
+            <label class="pt-3 text-capitalize mx-auto" style="font-size: 22px; font-weight: bold;">@Model.Name</label>
+        </div>
+
+        <div class="row pt-5">
+            <div class="col-md-3 text-center pb-4" data-aos="zoom-in" data-aos-duration="1000">
+                <div class="col-10 mx-auto p-0" style="width: 30rem;background-color: #00000026;min-height: 325px;border-radius: 10px">
+                    <div class="col-12 pt-3" style="background-color: #274663;color:white; border-top-left-radius: 10px;border-top-right-radius: 10px;min-height: 175px;margin-bottom: 20px;">
+                        <h5 class="card-title">Time Remaining</h5>
+                        <p class="card-text"> @ViewBag.TimeDays days remaining</p>
+                        <p class="card-text"> @ViewBag.TimePresentage% </p>
+                    </div>
+                    <div class="col-12 pt-4">
+                        <div class="progress w-50 mx-auto">
+                            <div class="progress-bar bg-success" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width:@ViewBag.TimePresentage%">
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 text-center" data-aos="zoom-in" data-aos-duration="1000">
+                <div class="col-10 mx-auto p-0" style="width: 30rem;background-color: #00000026;min-height: 325px;border-radius: 10px">
+                    <div class="col-12 pt-3" style=" background-color: #492763;color:white;border-top-left-radius: 10px;border-top-right-radius: 10px;min-height: 175px;margin-bottom: 20px;">
+                        <h5 class="card-title">Budget Remaining</h5>
+                        <p class="card-text"> Rs. @ViewBag.BudgetRemaining remaining</p>
+                        <p class="card-text">@ViewBag.BudgetPresentage% </p>
+
+                    </div>
+                    <div class="col-12 pt-4">
+                        <div class="progress w-50 mx-auto">
+                            <div class="progress-bar bg-success" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: @ViewBag.BudgetPresentage%">
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+      
+            <div class="col-md-3 text-center pb-4" data-aos="zoom-in" data-aos-duration="1000">
+                <div class="col-10 mx-auto p-0" style="width: 30rem;background-color: #00000026;min-height: 325px;border-radius: 10px">
+                    <div class="col-12 pt-3" style="background-color: #276331;color:white;border-top-left-radius: 10px;border-top-right-radius: 10px;min-height: 175px;margin-bottom: 20px;">
+                        <h5 class="card-title">Current Profit Margin</h5>
+                        <p class="card-text">Current: @ViewBag.ProfitMargin % </p>
+                        <p>Rs. @ViewBag.Profit </p>
+                        <p class="card-text">Target: @ViewBag.ProfitMarginTarget % </p>
+                    </div>
+                    <div class="col-12 pt-4">
+                        <div class="progress w-50 mx-auto">
+                            <div class="progress-bar bg-success" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width:@ViewBag.ProfitMargin%">
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 text-center" data-aos="zoom-in" data-aos-duration="1000">
+                <div class="col-10 mx-auto p-0" style="width: 30rem;background-color: #00000026;min-height: 325px;border-radius: 10px">
+                    <div class="col-12 pt-3" style="background-color: #636327;color:white; border-top-left-radius: 10px;border-top-right-radius: 10px;min-height: 175px;margin-bottom: 20px;">
+                        <h5 class="card-title">Current Progress</h5>
+                        <p class="card-text">% Competed</p>
+                        <p><div>All Tasks -@Model.AllocatedTasks </div> <div>Finalized Tasks -@Model.FinalizedTasks </div></p>
+                    </div>
+                    <div class="col-12 pt-4">
+                        <div class="progress w-50 mx-auto">
+                            <div class="progress-bar bg-success" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width:@ViewBag.ProfitMargin%">
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>

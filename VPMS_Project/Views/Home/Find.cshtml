@@ -1,0 +1,19 @@
+@{
+    Layout = "_ChatLayout";
+    ViewData["Title"] = "";
+}
+
+
+@model IEnumerable<ApplicationUser>
+
+<div class="user-list">
+    @foreach (var user in Model)
+    {
+        <div class="user">
+            <p>@user.FirstName @user.LastName</p>
+            <a asp-controller="Home" asp-action="CreatePrivateRoom" asp-route-userId="@user.Id">
+                Add to Chat
+            </a>
+
+        </div>}
+</div>

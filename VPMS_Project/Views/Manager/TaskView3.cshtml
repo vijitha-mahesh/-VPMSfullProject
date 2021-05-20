@@ -1,0 +1,123 @@
+﻿
+@model PaginatedList<VPMS_Project.Data.Tasks>
+
+<label class="text-muted">PROJECT TASKS</label>
+<hr />
+
+@{
+    var prevDisabled = !@Model.HasPreviousPage ? "disabled" : "";
+    var nextDisabled = !@Model.HasNextPage ? "disabled" : "";
+    var Disabled1 = Model.PageIndex == 1 ? "" : "disabled";
+    var Disabled2 = Model.PageIndex == 2 ? "" : "disabled";
+    var Disabled3 = Model.PageIndex == 3 ? "" : "disabled";
+
+}
+
+<span class="text-muted">Showing @Model.Count of @Model.TotalCount entries</span>
+<nav style="margin-top: -26px;" aria-label="Page navigation example">
+    <ul class="pagination justify-content-end">
+        <li class="page-item  @prevDisabled">
+            <a class="page-link " asp-action="TaskDetails" asp-controller="Manager" asp-route-pageNumber="@(Model.PageIndex - 1)" tabindex="-1">Previous</a>
+        </li>
+        <li class="page-item @Disabled1"><a class="page-link " asp-action="TaskDetails" asp-controller="Manager" asp-route-pageNumber="1">1</a></li>
+        <li class="page-item @Disabled2"><a class="page-link " asp-action="TaskDetails" asp-controller="Manager" asp-route-pageNumber="2">2</a></li>
+        <li class="page-item  @Disabled3"><a class="page-link " asp-action="TaskDetails" asp-controller="Manager" asp-route-pageNumber="3">3</a></li>
+        <li class="page-item @nextDisabled">
+            <a class="page-link " asp-action="TaskDetails" asp-controller="Manager" asp-route-pageNumber="@(Model.PageIndex +1)">Next</a>
+        </li>
+    </ul>
+</nav>
+
+<div class="row " style="background-color: #464a4e; border-radius: 6px; padding: 3px;  margin-bottom: 18px;margin-left: 5px;
+}">
+    <div class="col-2">
+        <label class="text-white">ID</label>
+    </div>
+    <div class="col-7">
+        <label class="text-white">TASK NAME</label>
+    </div>
+</div>
+@foreach (var Task in Model)
+{
+
+
+
+
+    <div class="row " style="background-color: #81949c; border-radius: 6px; padding: 3px;  margin-bottom: 18px;margin-left: 5px;">
+        <div class="col-2">
+            <label class="text-white">@Task.Id</label>
+        </div>
+        <div class="col-5">
+            <label class="text-white">@Task.Name</label>
+        </div>
+        <div class="col-2">
+            @if (Task.TimeSheet == true)
+            {
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#18672a" class="bi bi-circle-fill" viewBox="0 0 16 16">
+                    <circle cx="8" cy="8" r="8" />
+                </svg>}
+            @if (Task.EndDate < DateTime.Now)
+            {
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#969323" class="bi bi-circle-fill" viewBox="0 0 16 16">
+                    <circle cx="8" cy="8" r="8" />
+                </svg>
+            }
+            @if (Task.StartDate > DateTime.Now)
+            {
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill=" #296580" class="bi bi-circle-fill" viewBox="0 0 16 16">
+                    <circle cx="8" cy="8" r="8" />
+                </svg>
+            }
+            @if (Task.EndDate >= DateTime.Now && Task.StartDate <= DateTime.Now)
+            {
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#b35c11" class="bi bi-circle-fill" viewBox="0 0 16 16">
+                    <circle cx="8" cy="8" r="8" />
+                </svg>
+            }
+        </div>
+        <div class="col-3">
+            <button id="show_@Task.Id" onclick="showcontent('@Task.Id', true);" class="btn btn-dark">show</button>
+        </div>
+
+
+        <div class="row mr-0 ml-0" style="display:none" id="content_@Task.Id">
+            <div class="col-sm-6 "><label class="text-white">Created Date & Time = @Task.CreatedDate</label></div>
+            <div class="col-sm-6 "><label class="text-white">Last Update = @Task.LastUpdate</label></div>
+            <div class="col-sm-6 "><label class="text-white">Emloyee Name = @Task.EmployeeName</label></div>
+            <div class="col-sm-6 "><label class="text-white">Project Name = @Task.ProjectName</label></div>
+            <div class="col-sm-6 "><label class="text-white">Task Description = @Task.Description</label></div>
+            <div class="col-sm-6 "><label class="text-white">Project Manager = @Task.ProjectManager</label></div>
+
+
+            <div class="col-2">
+                <button id="hide_@Task.Id" onclick="hidecontent('@Task.Id', true);" class="btn btn-dark">Hide</button>
+            </div>
+        </div>
+
+    </div>
+
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,184 @@
+﻿@model List<DashboardTaskList>
+
+@foreach (var item in Model)
+{
+    <div data-aos="zoom-in" data-aos-duration="1000" class="col-sm-12 mb-3 text-center">
+        <div style="background-color:#5c6b44; border-radius: 7px; padding: 7px;">
+            <label style="color:white">@item.Name |</label> <label style="padding-right: 35px;color:white">@item.Tasks.Count()</label>
+            <button class="btn btn-dark" id="show_@item.Name" onclick="showcontent('@item.Name', true);">show</button>
+        </div>
+
+
+        <div style="display:none" id="content_@item.Name">
+
+
+            <div class="row">
+                <div class="col-12 table-responsive ">
+                    <table class="table table table-hover table-striped " id="tasks_@item.Name" width="100%" cellspacing="0">
+
+                        <thead>
+                            <tr style="line-height: 30px">
+
+
+                                <th scope="row">Task</th>
+                                <th scope="row">Employee</th>
+                                <th scope="row">Project</th>
+                                <th scope="row"></th>
+
+
+                            </tr>
+                        </thead>
+
+                        <tbody>
+
+
+                            @if (Model != null)
+                            {
+                                @foreach (var task in item.Tasks)
+                                {
+                                    <tr>
+                                        <td scope="row">@task.Name</td>
+                                        <td scope="row">@task.Employee</td>
+                                        <td scope="row">@task.project</td>
+                                        <td scope="row">
+                                            @if (item.Name.Equals("Pending"))
+                                            {
+                                                <a asp-action="EditTask" asp-controller="Task" asp-route-id="@task.Id">
+                                                    <label style="cursor:pointer;float:right">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                                                            <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+                                                            <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
+                                                        </svg>
+                                                    </label>
+                                                </a>
+                                                <a asp-action="DeleteTask" asp-controller="Task" asp-route-id="@task.Id" onclick="return confirm('Are you sure you want to delete task @task.Name?')">
+                                                    <label style="cursor:pointer;float:right">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#792323" class="bi bi-x-square-fill" viewBox="0 0 16 16">
+                                                            <path d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm3.354 4.646L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 1 1 .708-.708z" />
+                                                        </svg>
+                                                    </label>
+                                                </a>
+                                            }
+                                            else if (item.Name.Equals("Finalized"))
+                                            {
+                                                <label>
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#792323" class="bi bi-x-square-fill" viewBox="0 0 16 16">
+                                                        <path d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm3.354 4.646L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 1 1 .708-.708z" />
+                                                    </svg>
+                                                </label>
+                                            }
+                                        </td>
+
+                                    </tr>
+
+                                }
+                            }
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+            <button class="btn btn-dark" id="hide_@item.Name" onclick="hidecontent('@item.Name', true);">hide</button>
+        </div>
+        </div>
+
+            }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            @*@foreach (var item in Model)
+                {
+                    <div data-aos="zoom-in" data-aos-duration="1000" class="col-sm-6 mb-3 text-center" >
+                        <div style="background-color: #44616b; border-radius: 7px; padding: 7px;">
+                            <label style="color:white">@item.Name |</label> <label style="padding-right: 35px;color:white">@item.Tasks.Count()</label>
+                            <button class="btn btn-dark" id="show_@item.Name" onclick="showcontent('@item.Name', true);">show</button>
+                        </div>
+
+
+                        <div style="display:none" id="content_@item.Name">
+
+                            @foreach (var task in item.Tasks)
+                            {
+
+                                <div class="row text-capitalize  mr-0 ml-0 mb-3 " style="background-color: aliceblue;  border-radius: 8px;margin-bottom:5px">
+                                    <div class="col-12" style="text-align: left;">
+                                        <label style="padding-left:10px">@task.Employee</label>
+                                        <label>|</label>
+                                        <label>@task.Name</label>
+
+
+                                        @if (item.Name.Equals("Pending"))
+                                        {
+                                            <a asp-action="EditTask" asp-controller="Task" asp-route-id="@task.Id">
+                                                <label style="cursor:pointer;float:right">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                                                        <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+                                                        <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
+                                                    </svg>
+                                                </label>
+                                            </a>
+                                            <a asp-action="DeleteTask" asp-controller="Task" asp-route-id="@task.Id" onclick="return confirm('Are you sure you want to delete task @task.Name?')">
+                                                <label style="cursor:pointer;float:right">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#792323" class="bi bi-x-square-fill" viewBox="0 0 16 16">
+                                                        <path d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm3.354 4.646L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 1 1 .708-.708z" />
+                                                    </svg>
+                                                </label>
+                                            </a>
+                                        }
+                                        else if (item.Name.Equals("Finalized"))
+                                        {
+                                            <label>
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#792323" class="bi bi-x-square-fill" viewBox="0 0 16 16">
+                                                    <path d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm3.354 4.646L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 1 1 .708-.708z" />
+                                                </svg>
+                                            </label>
+                                        }
+
+
+
+
+                                    </div>
+                                </div>
+                            }
+                            <button class="btn btn-dark" id="hide_@item.Name" onclick="hidecontent('@item.Name', true);">hide</button>
+                        </div>
+
+
+
+
+                    </div>
+
+                }*@

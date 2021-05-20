@@ -1,0 +1,66 @@
+﻿
+@{
+    ViewData["Title"] = "GetCustomer";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@model CustomerModel
+
+<div id="addP1">
+
+    <div class="container">
+        <h1 class="display-4 text-center">Customer Details</h1>
+        <hr />
+        <div class="row">
+            <div class="col-md-4">
+                <div class="text-center">
+                    <img src="~/images/vector-profile-glyph-black-icon.jpg" alt="customer Profile" class="img-thumbnail" style="width:250px; height:250px">
+                </div>
+                <hr />
+                <h6 class="text-center font-weight-bold">@Model.name</h6>
+                <h6 class="text-center">@Model.address</h6>
+                <ul class="list-group">
+                    <li class="list-group-item"><span class="font-weight-bold">Email - </span> @Model.emailAddress </li>
+                    <li class="list-group-item"><span class="font-weight-bold">Contact Number - </span>@Model.contactNumber</li>
+                    @*<li class="list-group-item"><span class="font-weight-bold">Project Count - </span>@Model.projectCount</li>*@
+                </ul>
+            </div>
+            <br>
+
+            <div class="col-md-8">
+                <h4>Project Details</h4>
+                <div class="my-3 p-3 bg-white rounded box-shadow">
+                    <h6 class="border-bottom border-gray pb-2 mb-0">Recent updates</h6>
+                    <div class="media text-muted pt-3">
+                        @*<img data-src="holder.js/32x32?theme=thumb&bg=007bff&fg=007bff&size=1" alt="" class="mr-2 rounded">*@
+                        <p class="media-body pb-3 mb-0 border-bottom border-gray">
+                            <strong class="d-block text-gray-dark ">Create the scope document</strong>
+                            Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.
+                        </p>
+                    </div>
+                    <div class="media text-muted pt-3">
+                        @*<img data-src="holder.js/32x32?theme=thumb&bg=e83e8c&fg=e83e8c&size=1" alt="" class="mr-2 rounded">*@
+                        <p class="media-body pb-3 mb-0  border-bottom border-gray">
+                            <strong class="d-block text-gray-dark">Create the budget</strong>
+                            Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.
+                        </p>
+                    </div>
+                    <div class="media text-muted pt-3">
+                        @*<img data-src="holder.js/32x32?theme=thumb&bg=6f42c1&fg=6f42c1&size=1" alt="" class="mr-2 rounded">*@
+                        <p class="media-body pb-3 mb-0 border-bottom border-gray">
+                            <strong class="d-block text-gray-dark">Create the project plan</strong>
+                            Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.
+                        </p>
+                    </div>
+                    <small class="d-block text-right mt-3">
+                        <a href="#">All updates</a>
+                    </small>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+    <br />
+</div>
+

@@ -1,0 +1,64 @@
+﻿@model CustomerModel
+@{
+    ViewData["Title"] = "EditCustomers";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div id="addP1">
+    <div class="container">
+
+        <h1 class="display-4 text-center">Edit Customer</h1>
+        <hr />
+
+        @if (ViewBag.Success == true)
+        {
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <strong>Congratulations</strong> You successfully updated customer.<br />
+                Click <a asp-controller="Customer" asp-action="GetCustomer" asp-route-id="@ViewBag.id">here</a> to view the details
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        }
+        <div class="row">
+            <div class="col">
+                <form asp-action="EditCustomers" asp-controller="Customer" method="post" id="contact-from">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="hidden" asp-for="Id" />
+                    <div class="form-group">
+                        <label asp-for="@Model.name" class="control-label"></label>
+                        <input asp-for="@Model.name" class="form-control" />
+                        <span asp-validation-for="name" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="@Model.contactNumber" class="control-label"></label>
+                        <input asp-for="@Model.contactNumber" class="form-control" />
+                        <span asp-validation-for="contactNumber" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="@Model.address" class="control-label"></label>
+                        <input asp-for="@Model.address" class="form-control" />
+                        <span asp-validation-for="address" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="@Model.emailAddress" class="control-label"></label>
+                        <input asp-for="@Model.emailAddress" class="form-control" />
+                        <span asp-validation-for="emailAddress" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="@Model.projectCount" class="control-label"></label>
+                        <input asp-for="@Model.projectCount" class="form-control" />
+                        <span asp-validation-for="projectCount" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <input asp-action="EditCustomers" asp-controller="Customer" type="submit" value="Update Customer Details" class="btn btn-primary" />
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div>
+            <a asp-action="GetAllCustomers">Back to List</a>
+        </div>
+    </div>
+</div>
+

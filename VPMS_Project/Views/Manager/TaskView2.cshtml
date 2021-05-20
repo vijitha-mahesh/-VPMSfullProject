@@ -1,0 +1,16 @@
+﻿@model List<Project>
+
+<label class="text-muted">PROJECTS</label>
+<hr />
+
+@foreach( var Project in Model)
+{
+
+    <a class="text-decoration-none" asp-action="TaskDetails" asp-controller="Manager" asp-route-id="@Project.Id">
+        <div class="col-sm-11" style="background-color: #464a4e; border-radius: 6px; padding: 3px; text-align: center; margin-bottom: 18px;">
+            <p class="text-white">@Project.Name</p>
+        </div>
+    </a>
+
+
+}

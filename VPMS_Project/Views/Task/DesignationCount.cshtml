@@ -1,0 +1,20 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@model List<DesignationCount>
+
+    <div class="container" >
+        <div style="padding: 30px 0; font-weight: bold;">
+           AVAILABLE RESOURCES
+        </div>
+        @foreach (var data in Model)
+        {
+            <div class="row">
+                <div class="col-sm-12">
+                    <label class="text-capitalize">@data.Designation</label>
+
+                    <span class="badge badge-dark badge-info float-right ml-2">@data.Count</span>
+                </div>
+            </div>
+        }
+    </div>

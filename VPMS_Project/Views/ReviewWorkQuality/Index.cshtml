@@ -1,0 +1,124 @@
+﻿
+@{
+    Layout = "_ReviewLayout";
+    ViewData["Title"] = "Work Quality";
+}
+@model WorkQModel
+<link href="https://fonts.googleapis.com/css?family=Muli&display=swap" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+
+<style>
+
+    .content {
+        margin-right: auto;
+        margin-right: auto;
+    }
+
+
+    #h {
+        font-family: Cambria;
+        border-color: black;
+        text-align: center;
+        background-color: gainsboro;
+        border-radius: 25px;
+        padding: 30px;
+    }
+
+    /*
+        *added new table
+
+    */
+
+
+</style>
+
+<link rel="stylesheet" type="text/css" href="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.4/css/jquery.dataTables.css">
+<link rel="stylesheet" type="text/css" href="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.0/css/jquery.dataTables_themeroller.css">
+
+<div class="content text-center">
+    <div class="col-md-8 col-lg-12 col-sm-12">
+        <br>    <h4 id="h" style="font-family:Castellar;line-height:50px">
+            <b>Rate For Others</b>
+        </h4>
+    </div>
+    @if (ViewBag.Show != true)
+    {
+        @if (ViewBag.IsSuccess == true)
+        {
+            <div class="alert alert-success alert-dismissible fade show container" role="alert">
+                <strong>Successful!</strong> You have done successfully.
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <br>
+
+        }
+        @if (ViewBag.IsExist == true)
+        {
+            <div class="alert alert-danger alert-dismissible fade show container" role="alert">
+                <strong>Sorry!</strong> You have already done rate to this task done by this employee.
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <br>
+
+        }
+        <form enctype="multipart/form-data" method="get" asp-action="Index" asp-controller="ReviewWorkQuality">
+            <div class="row">
+                <div class="col-md-6 col-sm-6">
+                    <div class="form-group">
+                        <select name="id" class="form-control custom-select" asp-items="ViewBag.Emps" required>
+                            <option value="">Choose Employee</option>
+                        </select>
+                    </div>
+
+                </div>
+
+                <div class="col-md-6 col-sm-6">
+                    <div class="form-group">
+                        <input type="submit" value="Select" class="btn-block" />
+                    </div>
+                </div>
+            </div>
+        </form>
+    }
+    @if (ViewBag.Show == true)
+    {
+        <b>Rate For @ViewBag.Name</b><br>
+        <form enctype="multipart/form-data" method="get" asp-action="Index" asp-controller="ReviewWorkQuality">
+            <div class="row">
+                <div class="col-md-6 col-sm-6">
+                    <input hidden name="id" value="@ViewBag.Id" />
+                    <div class="form-group">
+                        <select name="TaskId" class="form-control" asp-items="ViewBag.Task" required>
+                            <option value="">Choose a Task</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-6 col-sm-6">
+                    <div class="form-group">
+                        <input name="Val" type="range" min="0" max="100" value="0" oninput="this.form.amountInput.value=this.value" class="form-control" placeholder="Enter Value for workQuality" required />
+                        <input type="number" name="amountInput" min="0" max="100" value="0" oninput="this.form.amountRange.value=this.value" />
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Submit" class="btn-block" />
+                <a asp-controller="ReviewWorkQuality" asp-action="index" class="btn-block">Cancel</a>
+            </div>
+
+
+        </form>
+    }
+
+    <br>
+    @{ 
+        string user = User.FindFirst("Index").Value;
+    }
+    @await Component.InvokeAsync("WorkQuality", new { user = user })
+
+</div>
+

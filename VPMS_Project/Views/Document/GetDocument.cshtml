@@ -1,0 +1,52 @@
+﻿@model IEnumerable<VPMS_Project.Models.DocumentModel>
+
+<div class="row">
+    <div class="col-md-4">
+        <div class="card" style="width: 18rem;">
+            <div class="card-body">
+                <h4 class="card-title">Scope Document</h4>
+                    @foreach (var item in Model)
+                    {
+                        <a href="@Html.DisplayFor(modelItem => item.ScopeDocumentUrl)">View</a>
+
+                        @*<p class="card-text">@item.ProjectsID</p>*@
+                    }
+                
+            </div>
+        </div>
+        <br />
+    </div>
+    <div class="col-md-4">
+        <div class="card" style="width: 18rem;">
+            <div class="card-body">
+                <h4 class="card-title">Action Plan</h4>
+                    @foreach (var item in Model)
+                    {
+                        <a href="@Html.DisplayFor(modelItem => item.ActionPlanUrl)">View</a>
+
+                        @*<p class="card-text">@item.ProjectsID</p>*@
+                    }
+                
+            </div>
+        </div>
+        <br />
+    </div><div class="col-md-4">
+        <div class="card" style="width: 18rem;">
+            <div class="card-body">
+                <h4 class="card-title">Time plan</h4>
+                    @foreach (var item in Model)
+                    {
+                        <a href="@Html.DisplayFor(modelItem => item.TimePlanUrl)">View</a>
+
+                        @*<p class="card-text">@item.ProjectsID</p>*@
+                    }
+                
+            </div>
+        </div>
+        <br />
+    </div>
+
+    @*<a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
+        @Html.DisplayFor(modelItem => item.ProjectsID)*@
+
+</div>   

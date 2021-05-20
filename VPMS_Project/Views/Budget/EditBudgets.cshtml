@@ -1,0 +1,84 @@
+﻿
+@{
+    ViewData["Title"] = "EditBudgets";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@model BudgetModel
+
+    <div id="addP1">
+
+
+        <div class="container">
+            <h3 class="display-4 text-center">Edit Project Task</h3>
+            <hr />
+
+            @if (ViewBag.IsSuccess == true)
+            {
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <strong>Congratulations</strong> You have edited budget parts successfulliy.<br />
+                    Click <a asp-controller="Budget" asp-action="GetAllBudgets" asp-route-id="@ViewBag.id">here</a> to view the details
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            }
+
+            <form method="post" asp-action="EditBudgets" asp-controller="Budget" id="contact-from">
+                <div class="form-group">
+                    <label asp-for="@Model.ProjectsID"></label>
+                    <input asp-for="@Model.ProjectsID" class="form-control" />
+                    <span asp-validation-for="ProjectsID" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="@Model.LbHou"></label>
+                    <input asp-for="@Model.LbHou" class="form-control" />
+                    <span asp-validation-for="LbHou" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="@Model.LbRate"></label>
+                    <input asp-for="@Model.LbRate" class="form-control" />
+                    <span asp-validation-for="LbRate" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="@Model.MtUnit"></label>
+                    <input asp-for="@Model.MtUnit" class="form-control" />
+                    <span asp-validation-for="MtUnit" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="@Model.MtunitPr"></label>
+                    <input asp-for="@Model.MtunitPr" class="form-control" />
+                    <span asp-validation-for="MtunitPr" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="@Model.BudgetCost"></label>
+                    <input asp-for="@Model.BudgetCost" class="form-control" />
+                    <span asp-validation-for="BudgetCost" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="@Model.Actual"></label>
+                    <input asp-for="@Model.Actual" class="form-control" />
+                    <span asp-validation-for="Actual" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="@Model.cost"></label>
+                    <input asp-for="@Model.cost" class="form-control" />
+                    <span asp-validation-for="cost" class="text-danger"></span>
+                </div>
+                @*<div class="form-group">
+                        <label asp-for="@Model.Under"></label>
+                        <input asp-for="@Model.Under" class="form-control" />
+                        <span asp-validation-for="Under" class="text-danger"></span>
+                    </div>*@
+                <div class="form-group">
+                    <input asp-action="EditBudgets" asp-controller="Budget" type="submit" value="Update budget Details" class="btn btn-primary" />
+                </div>
+            </form>
+            <div>
+                <a asp-action="GetAllBudgets">Back to List</a>
+            </div>
+            <br />
+        </div>
+
+    </div>

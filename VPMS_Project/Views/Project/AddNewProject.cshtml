@@ -1,0 +1,129 @@
+﻿
+@{
+    ViewData["Title"] = "AddNewProject";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model ProjectModel
+    <div id="addP1">
+        <div class="container">
+            <h2 class="pt-3 text-center" style="font-weight: bold; ">ADD PROJECT</h2>
+            <hr />
+            @if (ViewBag.context == true)
+            {
+                <div class="alert alert-danger alert-dismissible " role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <strong>Date and time not belong to the current context</strong>
+                </div>
+            }
+            @if (ViewBag.invalid == true)
+            {
+                <div class="alert alert-danger alert-dismissible " role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <strong>End date and time should be a value greater than start date and time</strong>
+                </div>
+            }
+
+            @if (ViewBag.IsSuccess == true)
+            {
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <strong>Congratulations</strong> You have added new project successfulliy.<br />
+                    Click <a asp-controller="Project" asp-action="GetProject" asp-route-id="@ViewBag.ProjectId">here</a> to view the details
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            }
+            <form method="post" enctype="multipart/form-data"
+                  asp-action="AddNewProject" asp-controller="Project">
+                <div class="row">
+                    <div class="col">
+                        <div class="form-group">
+                            <label asp-for="Title"></label>
+                            <input asp-for="Title" class="form-control" />
+                            <span asp-validation-for="Title" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="projectManagerId"></label>
+                            <select asp-for="projectManagerId" class="form-control" asp-items="ViewBag.ProjectManager">
+                                <option vlaue="">Please choose the project manager name</option>
+                            </select>
+                            <span asp-validation-for="projectManagerId" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="startDate"></label>
+                            <input asp-for="startDate" class="form-control" type="date" />
+                            <span asp-validation-for="startDate" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="ProjectBudget"></label>
+                            <input asp-for="ProjectBudget" class="form-control" />
+                            <span asp-validation-for="ProjectBudget" class="text-danger"></span>
+                        </div>                        
+                        <div class="form-group">
+                            <label asp-for="Description"></label>
+                            <textarea asp-for="Description" class="form-control"></textarea>
+                            <span asp-validation-for="Description" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group">
+                            <label asp-for="CustomersId"></label>
+                            <select asp-for="CustomersId" class="form-control" asp-items="ViewBag.Customers">
+                                <option value="">Please choose customer name</option>
+                            </select>
+                            <span asp-validation-for="CustomersId" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="ProjectType"></label>
+                            <select asp-for="ProjectType" class="form-control">
+                                <option value="">Please choose a project type</option>
+                                <option>Project</option>
+                                <option>Maintainance</option>
+                                <option>R and D(Research & Development)</option>
+                                <option>Internal</option>
+                            </select>
+                            <span asp-validation-for="ProjectType" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="EndDate"></label>
+                            <input asp-for="EndDate" class="form-control" type="date" />
+                            <span asp-validation-for="EndDate" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="value"></label>
+                            <input asp-for="value" class="form-control" />
+                            <span asp-validation-for="value" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Add A Project" class="btn btn-primary" />
+                </div>
+
+            </form>
+        </div>
+
+        <br>
+
+
+        @*@section scripts {
+            <script>
+                function myComplete(data) {
+                    alert("I am from complete");
+                    console.log(data);
+                }
+
+                function mySuccess(data) {
+                    alert("I am from Success");
+                    console.log(data);
+                }
+
+                function myFailure(data) {
+                    alert("I am from failue");
+                    console.log(data);
+                }
+
+            </script>
+            }*@
+
+    </div>

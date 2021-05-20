@@ -1,0 +1,66 @@
+﻿@{
+    ViewData["Title"] = "AdminPortal";
+}
+
+
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/CSS/site.css" />
+</head>
+<body id="h1">
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light box-shadow mb-3 ">
+            <div class="container">
+                <a class="navbar-brand text-white" asp-area="" asp-controller="Home" asp-action="Index2">Bellvantage - Admin Portal</a>
+                <a class="navbar-brand text-white" asp-area="" asp-controller="EmployeeHome" asp-action="Portal">Home</a>
+
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    
+    <div class="mid1">
+
+        <div id="list2">
+            <span class="project1" onclick="change1()">Project</span>
+            <a  asp-action="EmpIndex" asp-controller="EmployeeHome"><span class="project2 text-white">Employee</span></a>
+        </div>
+
+        <div id="list1" class="btn-group-vertical mx-auto" role="group" aria-label="...">
+            <a class="btn btn-default" id="admin1" asp-action="UserDashboard" asp-controller="Home">Dashboard</a>
+            <a class="btn btn-default" id="admin1" asp-area="" asp-controller="Home" asp-action="GetProjects">View Projects</a>
+            <a class="btn btn-default" id="admin1" asp-area="" asp-controller="Home" asp-action="AddProject">Add Projects</a>
+            <a class="btn btn-default" id="admin1" asp-action="SelectEmployee" asp-controller="Task">Add Task</a>
+            <a class="btn btn-default" id="admin1" asp-action="TaskOverview" asp-controller="Task">View Task</a>
+            <a class="btn btn-default" id="admin1" asp-controller="Customer" asp-action="AddCustomer">Add Customer</a>
+            <a class="btn btn-default" id="admin1" asp-action="SelectResources" asp-controller="Task">View Availability</a>
+            <a class="btn btn-default" id="admin1" asp-action="ResourceAllocation" asp-controller="Task">Resource Allocation</a>
+
+        </div>
+
+    </div>
+
+
+
+    <footer class="footer text-muted">
+        <div class="container text-white">
+            &copy;Bellvantage - Admin
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+
+</body>
+</html>

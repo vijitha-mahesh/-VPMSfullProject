@@ -1,0 +1,92 @@
+﻿
+
+@{
+    ViewData["Title"] = Model.EmpFName;
+    ViewData["Topic"] = "Employees of Bellvantage (Pvt) Ltd";
+}
+<link href="~/CSS/ViewEmpId.css" rel="stylesheet" />
+@model EmpModel
+
+<div class="content">
+    <br>
+    <section class="jumbotron text-center" style="background-color: rgba(178, 186, 195, 0.31)">
+        <a asp-controller="Emp_Manage" asp-action="EditEmpById" asp-route-id="@Model.EmpId" class="btn btn-outline-success float-right">
+            <i class='fas fa-wrench'></i> Edit
+        </a>
+        <a asp-controller="Emp_Manage" asp-action="DeleteEmp" asp-route-id="@Model.EmpId" class="btn btn-outline-danger float-right mr-4"><i class='fas fa-times text-danger'></i> Delete</a>
+        <br><br>
+        <div class="row">
+            <div class="col-lg-4 col-md-4 col-sm-12">
+                <div class="s1 card rounded-circle">
+                    <img class="card-img-top rounded-circle" src="@(string.IsNullOrEmpty(Model.PhotoURL) ? "~/images/defa.png" : Model.PhotoURL)" height="240" width="60" asp-append-version="true">
+                </div>
+                <br> <br>
+            </div>
+            <div class="col-lg-8 col-md-8 col-sm-12" >
+                <div class="card" style="background-color:rgba(82, 76, 76, 0.17);font-family:Cambria">
+                    <div class="card-body">
+                        <h4 class="card-title" style="color:black">
+                            @Model.EmpFName @Model.EmpLName
+                            <span class="badge badge-dark float-right"> @Model.Status</span>
+                        </h4>
+                        <h5 class="card-title" style="color:midnightblue">
+                            @Model.JobType
+                        </h5>
+                        <h7 class="card-title" style="color:midnightblue">Work since - @Model.WorkSince.Day-@Model.WorkSince.Month-@Model.WorkSince.Year</h7><hr>
+                        <table class="table table-bordered">
+                            <tbody>
+                                <tr>
+                                    <th scope="row">User ID</th>
+                                    <th>@Model.EmpId</th>
+                                </tr>
+
+                                <tr>
+                                    <th scope="row">Email</th>
+                                    <th>@Model.Email</th>
+
+                                </tr>
+                                <tr>
+                                    <th scope="row">Gender</th>
+                                    <th>@Model.Gender</th>
+
+                                </tr>
+                                <tr>
+                                    <th scope="row">Mobile </th>
+                                    <th>@Model.Mobile</th>
+
+                                </tr>
+                                <tr>
+                                    <th scope="row">Address</th>
+                                    <th>@(string.IsNullOrEmpty(Model.Address) ? "Address is not available" : Model.Address) </th>
+
+                                </tr>
+                                <tr>
+                                    <th scope="row">Date of Birth</th>
+                                    <th>@Model.Dob.Day-@Model.Dob.Month-@Model.Dob.Year</th>
+
+                                </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <br>
+    <a asp-controller="Emp_Manage" asp-action="ViewAllEmp" class="float-right mr-5 text-dark">View All Employees</a>
+    <br>
+    <div class="container">
+        <h3 style="color:white;background-color:#555;margin-top:18px">Related Employees</h3>
+        @await Component.InvokeAsync("EmpList", new { name = Model.EmpFName, job = Model.JobType, id = Model.EmpId })
+
+
+
+    </div>
+</div>
+
+
+
+
+
+
+
+

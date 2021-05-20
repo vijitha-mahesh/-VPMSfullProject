@@ -1,0 +1,83 @@
+﻿
+@{
+    ViewData["Title"] = "EditTasks";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@model PreTaskModel
+
+    <div id="addP1">
+
+        <div class="container">
+            <h3 class="display-4 text-center">Edit Project Task</h3>
+            <hr />
+
+            @if (ViewBag.IsSuccess == true)
+            {
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <strong>Congratulations</strong> You have edited the project task successfulliy.<br />
+                    Click <a asp-controller="Task" asp-action="GetAllTasks" asp-route-id="@ViewBag.id">here</a> to view the details
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            }
+
+            <form method="post" asp-action="EditTasks" asp-controller="Task" id="contact-from">
+                <div class="form-group">
+                    <label asp-for="@Model.ProjectsID"></label>
+                    <input asp-for="@Model.ProjectsID" class="form-control" />
+                    <span asp-validation-for="ProjectsID" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="@Model.Number"></label>
+                    <input asp-for="@Model.Number" class="form-control" />
+                    <span asp-validation-for="Number" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="@Model.Description"></label>
+                    <input asp-for="@Model.Description" class="form-control" />
+                    <span asp-validation-for="Description" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="@Model.Duration"></label>
+                    <input asp-for="@Model.Duration" class="form-control" />
+                    <span asp-validation-for="Duration" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="@Model.StartDate"></label>
+                    <input asp-for="@Model.StartDate" class="form-control" />
+                    <span asp-validation-for="StartDate" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="@Model.EndDate"></label>
+                    <input asp-for="@Model.EndDate" class="form-control" />
+                    <span asp-validation-for="EndDate" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="@Model.Priority"></label>
+                    <input asp-for="@Model.Priority" class="form-control" />
+                    <span asp-validation-for="Priority" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="@Model.Assignee"></label>
+                    <input asp-for="@Model.Assignee" class="form-control" />
+                    <span asp-validation-for="Assignee" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input asp-action="EditTasks" asp-controller="Task" type="submit" value="Update Task Details" class="btn btn-primary" />
+                </div>
+            </form>
+            <div>
+                <a asp-action="GetAllTasks">Back to List</a>
+            </div>
+            <br />
+        </div>
+
+    </div>
+

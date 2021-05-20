@@ -1,0 +1,142 @@
+﻿
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Resource Allocation";
+}
+@model Resources
+<div class="container-fluid pb-5" id="addP1">
+
+
+
+    @if (ViewBag.success == true)
+    {
+        <div class="alert alert-success alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <strong>Congratulations!</strong> Employees successfully allocated.
+        </div>
+    }
+
+
+    @if (ViewBag.success2 == true)
+    {
+        <div class="alert alert-success alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <strong>Congratulations!</strong> You successfully removed an employee.
+        </div>
+    }
+
+
+    @if (ViewBag.success3 == false)
+    {
+        <div class="alert alert-danger alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <strong>Request denied!</strong> Employee currently allocated to tasks.
+        </div>
+    }
+
+
+    <h1 class="pb-4 pt-3" style="font-size: 20px; font-weight: bold; ">RESOURCE ALLOCATION</h1>
+
+
+    <div class="row ml-2">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-arrow-left-circle-fill" viewBox="0 0 16 16">
+            <path d="M8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0zm3.5 7.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5z" />
+        </svg>
+        <a class="text-decoration-none mb-1" asp-action="SelectEmployee" asp-controller="Task">Task allocation</a>
+    </div>
+
+
+    <div class="row">
+        <div class="col-sm-3" style="background-color:#394c4629;border-radius: 10px">
+            <partial name="DesignationCount" model="@ViewData["designation"]" />
+        </div>
+        <div class="col-sm-9">
+
+            <div class="container pb-5">
+                <div class="row no-gutters">
+
+
+                    <div class="col-sm-6">
+
+                        <div class="card-body pt-0 pl-0">
+                            <partial name="GetResourceAllocation" model="@ViewData["employees"]" />
+                        </div>
+
+                    </div>
+
+                    <div class="col-md-6 mt-4" >
+
+                        <form method="post" class="ml-sm-2">
+                            <div class="form-group" style="padding-top: 32px;">
+                                <select asp-items="ViewBag.ProjectManager" asp-for="@Model.Id" class="form-control ">
+                                    <option value="" selected disabled>Select Project Manager</option>
+                                </select>
+                            </div>
+
+                            <p class="font-weight-bold">Select Employees</p>
+
+                            <ul class="list-group list-group-flush">
+                                @for (int i = 0; i < Model.employee.Count(); i++)
+                                {
+                                    <li class="list-group-item ">
+                                        <div class="custom-control custom-checkbox">
+                                            <input type="hidden" asp-for="@Model.employee[i].Value" />
+                                            <input asp-for="employee[i].Selected" type="checkbox" />
+                                            <label class="text-capitalize">@Model.employee[i].Text</label>
+                                        </div>
+                                    </li>
+                                }
+
+                            </ul>
+
+                            <input class="btn btn-outline-dark col-sm-6 mt-4" style="background-color:#9cd0d2" asp-action="ResourceAllocation" asp-controller="Task" type="submit" value="Allocate Resources">
+                        </form>
+
+
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+
+
+
+
+
+</div>
+@section Scripts{
+
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#Name').autocomplete({
+                source: "@Url.Action("searchTask","postapi")"
+            });
+        });
+    </script>
+    <script>
+        function showcontent(id, isclicked) {
+            var show = 'show_' + id;
+            var content = 'content_' + id;
+            var content2 = 'content2_' + id;
+            if (isclicked) {
+                $('#' + content).show();
+                $('#' + content2).show();
+                $('#' + show).hide();
+            }
+        }
+        function hidecontent(id, isclicked) {
+            var show = 'show_' + id;
+            var content = 'content_' + id;
+            var content2 = 'content2_' + id;
+            if (isclicked) {
+                $('#' + content).hide();
+                $('#' + content2).hide();
+                $('#' + show).show();
+            }
+        }
+    </script>
+}       

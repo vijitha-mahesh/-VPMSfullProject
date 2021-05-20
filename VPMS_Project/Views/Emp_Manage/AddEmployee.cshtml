@@ -1,0 +1,201 @@
+﻿
+
+@{
+    ViewData["Title"] = "Add New Employee";
+    ViewData["Topic"] = "Enroll New Employee";
+}
+@model EmpModel
+    <link href="~/CSS/AddEmp.css" rel="stylesheet" />
+<style>
+    .content {
+        background-image: url('/images/Parallax.jpg');
+        background-repeat: no-repeat;
+        position: center;
+        background-size: 100% 100%;
+        min-height: 1300px;
+        background-size: cover;
+    }
+    </style>
+    <div class="content">
+        <br><br><br>
+        <div class="container">
+           @if (ViewBag.IsSuccess == true)
+                {
+                    <div class="alert alert-success alert-dismissible fade show container" role="alert">
+                        <strong>Congragulations!</strong> You added a new employee successfully.<br><a asp-route="empDetailsRoute" asp-route-id="@ViewBag.empId">Click here</a> to view the details.
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+
+
+                }
+
+                <form enctype="multipart/form-data" method="post" asp-action="AddEmployee" asp-controller="Emp_Manage" id="s1">
+                    <div class="row">
+                        <div class="col-md-6 col-sm-6">
+                            <div class="form-group">
+                                <input asp-for="EmpFName" class="form-control" placeholder="Employee First Name" />
+                                <span asp-validation-for="EmpFName" class="text-danger"></span>
+                            </div>
+
+                        </div>
+
+                        <div class="col-md-6 col-sm-6">
+                            <div class="form-group">
+                                <input asp-for="EmpLName" class="form-control" placeholder="Employee Last Name" />
+                                <span asp-validation-for="EmpLName" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="row">
+                        <div class="col-md-6 col-sm-6">
+                            <div class="form-group">
+                                <a asp-controller="Emp_Manage" asp-action="ModifyList" class="btn-outline-secondary" style=" margin-left: 63%; color: aliceblue"><i class='fas fa-wrench'></i> Modity List</a>
+                                <select asp-for="JobTitleId" class="form-control" asp-items="ViewBag.Jobs">
+                                    <option value="">Choose Designation</option>
+                                </select>
+                                <span asp-validation-for="JobTitleId" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 col-sm-6">
+                            <div class="form-group form-inline" style="font-size:15pt;margin-top:33px">
+
+                                <input class="s2 form-control" type="radio" value="Female" asp-for="Gender" /><font class="text-white">Female</font>
+                                <input class="s2 form-control" type="radio" value="Male" asp-for="Gender" /><font class="text-white">Male</font>
+                                <span asp-validation-for="Gender" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 col-sm-3">
+                            <div class="form-group">
+                                <input asp-for="Email" class="form-control" placeholder="Employee email" />
+                                <span asp-validation-for="Email" class="text-danger"></span>
+
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-sm-3">
+                            <div class="form-group">
+                                <input asp-for="Mobile" class="form-control" placeholder="Employee Mobile" />
+                                <span asp-validation-for="Mobile" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 col-sm-6">
+                            <div class="form-group">
+                                <font style="color:white">Date Of Birth</font>
+                                <input asp-for="Dob" class="form-control" value="dd/mm/yyyy" />
+                                <span asp-validation-for="Dob" class="text-danger"></span>
+                            </div>
+
+                        </div>
+
+                        <div class="col-md-6 col-sm-6">
+                            <div class="form-group">
+                                <font style="color:white">Employee Join Date</font>
+                                <input asp-for="WorkSince" type="date" class="form-control" value="dd/mm/yyyy" />
+                                <span asp-validation-for="WorkSince" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 col-sm-3">
+                            <div class="form-group">
+                                <textarea asp-for="Address" class="form-control" placeholder="Employee Address" style="height:70px"></textarea>
+                                <span asp-validation-for="Address" class="text-danger"></span>
+                            </div>
+
+                        </div>
+
+                        <div class="col-md-6 col-sm-6">
+                            <div class="form-group">
+                                <div class="form-group form-inline" style="font-size:15pt;margin-top:33px">
+
+                                    <input class="s2 form-control" type="radio" value="Active" asp-for="Status" checked />&nbsp;&nbsp;&nbsp;<font style="color:white">Active</font>
+                                    <input class="s2 form-control" type="radio" value="Inactive" asp-for="Status" disabled />&nbsp;&nbsp;&nbsp;<font style="color:white">Inactive</font>&nbsp;&nbsp;&nbsp;
+                                    <span asp-validation-for="Status" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="custom-file">
+                            <input asp-for="ProfilePhoto" class="custom-file-input" id="customFile">
+                            <label class="custom-file-label" for="customFile" style="height: 50px">Upload Image</label>
+                        </div>
+                    </div>
+
+                    <!--newly added snippet-->
+
+                    <div class="form-group mt-4">
+
+                        <input asp-for="UserName" class="form-control" placeholder="Enter User Index" />
+                        <span asp-validation-for="UserName" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+
+                        <input asp-for="Password" class="form-control" placeholder="Enter User login password" />
+                        <span asp-validation-for="Password" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+
+                        <input asp-for="ConfirmPassword" class="form-control" placeholder="confirm Password" />
+                        <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group col-sm-5">
+
+                        <label asp-for="admin" class="text-white">Admin</label>
+                        <input type="checkbox" asp-for="admin" class="form-control" />
+                        <label asp-for="user" class="text-white">User</label>
+                        <input type="checkbox" asp-for="user" class="form-control" />
+                        <label asp-for="manager" class="text-white">Manager</label>
+                        <input type="checkbox" asp-for="manager" class="form-control" />
+
+
+                        <span asp-validation-for="admin" class="text-danger"></span>
+                        <span asp-validation-for="user" class="text-danger"></span>
+                        <span asp-validation-for="manager" class="text-danger"></span>
+                    </div>
+
+
+
+                    <br>
+
+                    <div class="form-group">
+                        <input type="submit" value="Add New" class="btn-block" id="s4" /><br><br>
+                        <a asp-controller="Emp_Manage" asp-action="ViewAllEmp" class="s5 btn btn-lg btn-block">Cancel</a>
+                    </div>
+
+
+                </form>
+            </div>
+    </div>
+
+
+
+
+@section photo
+{
+    <script type="text/javascript">
+
+
+        $(".custom-file-input").on("change", function () {
+            var fileName = $(this).val().split("\\").pop();
+            $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+        });
+    </script>
+
+
+}

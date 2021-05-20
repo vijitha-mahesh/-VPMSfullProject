@@ -1,0 +1,97 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@model List<ChartType>
+
+@{
+    var XLabels = Newtonsoft.Json.JsonConvert.SerializeObject(Model.Select(x => x.X).ToList());
+    var YValues = Newtonsoft.Json.JsonConvert.SerializeObject(Model.Select(x => x.Y).ToList());
+    ViewData["Title"] = "Pie Chart";
+}
+
+
+<div data-aos="zoom-in" data-aos-duration="1500" class="chart-container">
+    <canvas id="chartRevenues" style="width:50%; height:300px"></canvas>
+</div>
+
+
+
+
+
+
+<script type="text/javascript">
+
+        $(function () {
+            var chartName = "chartRevenues";
+        var ctx = document.getElementById(chartName).getContext('2d');
+        var data = {
+                labels: @Html.Raw(XLabels),
+                datasets: [{
+                    label: "Revenues Chart",
+                    backgroundColor: [                       
+                        'rgba(239, 81, 151,1)',
+                        'rgba(239, 81, 151,1)',
+                        'rgba(239, 81, 151,1)',
+                        'rgba(239, 81, 151,1)',
+                        'rgba(239, 81, 151,1)',
+                        'rgba(239, 81, 151,1)',
+                        'rgba(239, 81, 151,1)',
+                        'rgba(239, 81, 151,1)',
+                        'rgba(239, 81, 151,1)',
+                        'rgba(239, 81, 151,1)',
+                        'rgba(239, 81, 151,1)',
+                        'rgba(239, 81, 151,1)'
+                    ],
+                    borderColor: [
+                        'rgba(85, 51, 92,1)',
+                        'rgba(85, 51, 92,1)',
+                        'rgba(85, 51, 92,1)',
+                        'rgba(85, 51, 92,1)',
+                        'rgba(85, 51, 92,1)',
+                        'rgba(85, 51, 92,1)',
+                        'rgba(85, 51, 92,1)',
+                        'rgba(85, 51, 92,1)',
+                        'rgba(85, 51, 92,1)',
+                        'rgba(85, 51, 92,1)',
+                        'rgba(85, 51, 92,1)',
+                        'rgba(85, 51, 92,1)',
+                        'rgba(85, 51, 92,1)'
+                       ],
+                    borderWidth: 1,
+                    data: @Html.Raw(YValues)
+    }]
+            };
+
+var options = {
+                maintainAspectRatio: false,
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            min: 0,
+                            beginAtZero: true
+                        },
+                        gridLines: {
+                            display: false,
+                            color: "rgba(255,99,164,0.2)"
+                        }
+}],
+                    xAxes: [{
+                        ticks: {
+                            min: 0,
+                            beginAtZero: true
+                        },
+                        gridLines: {
+                            display: false
+                        }
+                    }]
+                }
+            };
+
+       var myChart = new  Chart(ctx, {
+                options: options,
+                data: data,
+           type:'bar'
+
+            });
+        });
+</script>  

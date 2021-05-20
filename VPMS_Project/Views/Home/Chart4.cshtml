@@ -1,0 +1,99 @@
+﻿
+@model List<Status>
+
+@{
+    var XLabels = Newtonsoft.Json.JsonConvert.SerializeObject(Model.Select(x => x.ProjectType).ToList());
+    var YValues = Newtonsoft.Json.JsonConvert.SerializeObject(Model.Select(x => x.Count).ToList());
+    ViewData["Title"] = "Pie Chart";
+}
+
+
+<div data-aos="zoom-in" data-aos-duration="1500" class="col-sm-10 chart-container pb-5">
+    <canvas id="chart4" style=" height:300px; "></canvas>
+</div>
+
+
+
+<script type="text/javascript">
+
+        $(function () {
+    var chartName = "chart4";
+        var ctx = document.getElementById(chartName).getContext('2d');
+        var data = {
+                labels: @Html.Raw(XLabels),
+                datasets: [{
+                    label: "Cumulative Projects",
+                    backgroundColor: [
+                        //'rgba(255, 99, 132, 0.2)',
+                        //'rgba(54, 162, 235, 0.2)',
+                        //'rgba(255, 206, 86, 0.2)',
+                        //'rgba(75, 192, 192, 0.2)',
+                        //'rgba(153, 102, 255, 0.2)',
+                        //'rgba(255, 159, 64, 0.2)',
+                        //'rgba(255, 0, 0)',
+                        //'rgba(0, 255, 0)',
+                        //'rgba(85, 51, 92,1)',
+                        'rgba(32,110,21,1)',
+                        'rgba(180,191,1,1)',
+                        'rgba(183,90,35,0.79)',
+                        'rgba(183,49,35,0.79)',
+                        'rgba(142,0,0,0.79)'
+
+                    ],
+                    borderColor: [
+                        //'rgba(32,110,21,1)',
+                        //'rgba(180,191,1,1)',
+                        //'rgba(183,90,35,0.79)',
+                        'rgba(183,49,35,0.79)',
+                        'rgba(142,0,0,0.79)'
+                        //'rgba(255,99,132,1)',
+                        //'rgba(54, 162, 235, 1)',
+                        //'rgba(255, 206, 86, 1)',
+                        //'rgba(75, 192, 192, 1)',
+                        //'rgba(153, 102, 255, 1)',
+                        //'rgba(255, 159, 64, 1)',
+                        //'rgba(255, 0, 0)',
+                        //'rgba(0, 255, 0)',
+                        //'rgba(0, 0, 255)',
+                        //'rgba(192, 192, 192)',
+                        //'rgba(255, 255, 0)',
+                        //'rgba(255, 0, 255)'
+                    ],
+                    borderWidth: 1,
+                    data: @Html.Raw(YValues)
+    }]
+            };
+
+var options = {
+                maintainAspectRatio: false,
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            min: 0,
+                            beginAtZero: true
+                        },
+                        gridLines: {
+                            display: false,
+                            color: "rgba(255,99,164,0.2)"
+                        }
+}],
+                    xAxes: [{
+                        ticks: {
+                            min: 0,
+                            beginAtZero: true
+                        },
+                        gridLines: {
+                            display: false
+                        }
+                    }]
+                }
+            };
+
+       var myChart = new  Chart(ctx, {
+                options: options,
+                data: data,
+                type:'pie'
+
+            });
+        });
+</script>  

@@ -1,0 +1,57 @@
+﻿
+@{
+    ViewData["Title"] = "SearchProject";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@model List<ProjectModel>
+
+<div class="container-fluid h1" id="addx">
+
+    <h1 class="pt-lg-2" style="font-size: 46px; font-weight: bold; ">PROJECTS</h1>
+
+
+
+    <div class="pt-3 pb-4">
+        <form class="input-group" asp-action="SearchProject" method="get">
+            <input type="text" id="Name" name="Name" class="form-control" placeholder="Search Project">
+            <div class="input-group-append">
+                <button asp-action="SearchProject" type="submit" class="btn btn-custom">Search </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<div class="container">
+    <a asp-controller="Project" asp-action="AddNewProject" class="btn btn-primary btn-sm">Add New Project</a>
+    <br />
+    <br />
+
+    <div class="row">
+        @if (Model != null)
+        {
+            @foreach (var project in Model)
+            {
+                <div class="col-md-4">
+                    <div class="card" style="width: 18rem;">
+                        <div class="card-body">
+                            <h5 class="card-title">@project.Title </h5>
+                            <p class="card-text">@project.Description</p>
+                            @*<p class="text-muted">@project.CustomerId</p>*@
+                            <a asp-controller="project" asp-action="getproject" asp-route-id="@project.ID"
+                               asp-route-nameofProject="@project.Title" class="btn btn-primary">View</a>
+                            <a asp-controller="project" asp-action="Editprojects" asp-route-id="@project.ID"
+                               asp-route-nameofProject="@project.Title" class="btn btn-secondary">Edit</a>
+                            <a class="btn btn-danger" role="button" asp-action="DeleteProject" asp-controller="Project" asp-route-id="@project.ID"
+                               onclick="return confirm('Are you sure you want to delete project @project.Title ? ')">Delete</a>
+                        </div>
+                    </div>
+                    <br />
+                </div>
+            }
+        }
+    </div>
+</div>
+
+

@@ -1,0 +1,49 @@
+﻿
+@import url('https://fonts.googleapis.com/css?family=Roboto');
+
+
+
+
+
+.d-block {
+  
+    width: 600px;
+    
+}
+
+.navbar {
+    width: 111%;
+    line-height: 25px;
+    background-color: #173A47
+}
+
+@media screen and (max-width:600px) {
+    .navbar {
+      width:100%;
+    }
+    body {
+        background-image:none;
+        background-repeat:repeat-y;
+        
+    }
+
+}
+
+.emp1 {
+    color: black;
+    font-weight: bolder;
+}
+
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    background-color: #f1f1f1;
+    position: absolute;
+    height: 50%;
+    overflow: auto;
+}
+
+
+

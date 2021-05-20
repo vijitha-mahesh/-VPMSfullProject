@@ -1,0 +1,72 @@
+﻿
+@model List<Project2>
+
+<div class="row pb-5">
+    <div class="col-12 table-responsive ">
+        <table class="table table table-hover table-striped " id="projects" width="100%" cellspacing="0">
+
+            <thead>
+                <tr style="line-height: 30px">
+
+                    <th scope="row">Id</th>
+                    <th scope="row">Name</th>
+                    <th scope="row">Type</th>
+                    <th scope="row">Project Manager</th>
+                    <th scope="row">Customer</th>
+                    <th scope="row">Contract Value</th>
+                    <th scope="row">Cost</th>
+                    <th scope="row">Budget</th>
+                    <th scope="row">Current Profit</th>
+                    <th scope="row">Target Profit</th>
+                    <th >Completion</th>
+                    <th scope="row"></th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+
+                @if (Model != null)
+                {
+                    @foreach (var proj in Model)
+                    {
+                <tr>
+                    <td scope="row">@proj.Id</td>
+                    <td scope="row">@proj.Name</td>
+                    <td scope="row">@proj.Type</td>
+                    <td scope="row">@proj.ProjectManagerName</td>
+                    <td scope="row">@proj.CustomerName</td>
+                    <td scope="row">@proj.ContractValue</td>
+                    <td scope="row">@proj.Cost</td>
+                    <td scope="row">@proj.Budget</td>
+                    <td scope="row">@proj.CurrentProfit %</td>
+                    <td scope="row">@proj.TargetProfit %</td>
+                    <td scope="row">@proj.Completion %</td>
+                    @if (proj.Status != "Closed")
+                    {
+                        <td scope="row">
+                            <a asp-controller="Home" asp-action="GetProjectById" asp-route-id="@proj.Id">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-in-down" viewBox="0 0 16 16">
+                                    <path fill-rule="evenodd" d="M3.5 6a.5.5 0 0 0-.5.5v8a.5.5 0 0 0 .5.5h9a.5.5 0 0 0 .5-.5v-8a.5.5 0 0 0-.5-.5h-2a.5.5 0 0 1 0-1h2A1.5 1.5 0 0 1 14 6.5v8a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 14.5v-8A1.5 1.5 0 0 1 3.5 5h2a.5.5 0 0 1 0 1h-2z" />
+                                    <path fill-rule="evenodd" d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z" />
+                                </svg>
+                            </a>
+                        </td>
+                    }
+                    else
+                    {
+                        <td scope="row">
+                           
+                                
+                        </td>
+                    }
+
+                </tr>
+                    }
+                }
+            </tbody>
+        </table>
+
+    </div>
+</div>
+

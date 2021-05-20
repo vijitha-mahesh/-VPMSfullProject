@@ -1,0 +1,68 @@
+﻿@model VPMS_System.Models.RegisterViewModel
+
+@{
+    Layout = "_Layout2";
+    ViewData["Title"] = "Register";
+}
+
+<h1>Set User Password</h1>
+
+<div class="row">
+    <div class="col-md-12">
+        <form method="post">
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="FirstName"></label>
+                <input asp-for="FirstName" class="form-control" />
+                <span asp-validation-for="FirstName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LastName"></label>
+                <input asp-for="LastName" class="form-control" />
+                <span asp-validation-for="LastName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Designation"></label>
+                <input asp-for="Designation" class="form-control" />
+                <span asp-validation-for="Designation" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="UserName"></label>
+                <input asp-for="UserName" class="form-control" />
+                <span asp-validation-for="UserName" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Password"></label>
+                <input asp-for="Password" class="form-control" />
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="ConfirmPassword"></label>
+                <input asp-for="ConfirmPassword" class="form-control" />
+                <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+            </div>
+
+            <div class="form-group col-sm-5">
+
+                <label asp-for="admin">Admin</label>
+                <input type="checkbox" asp-for="admin" class="form-control" />
+                <label asp-for="user">User</label>
+                <input type="checkbox" asp-for="user" class="form-control" />
+                <label asp-for="manager">Manager</label>
+                <input type="checkbox" asp-for="manager" class="form-control" />
+
+
+                <span asp-validation-for="admin" class="text-danger"></span>
+                <span asp-validation-for="user" class="text-danger"></span>
+                <span asp-validation-for="manager" class="text-danger"></span>
+            </div>
+            <div class="form-group col-3 pb-5">
+                <button type="submit" class="btn btn-primary">Register</button>
+            </div>
+            
+        </form>
+
+    </div>
+</div>

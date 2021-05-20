@@ -1,0 +1,72 @@
+﻿
+@{
+    Layout = "_LeaveLayout";
+    ViewData["Title"] = "Edit job type";
+
+}
+<link href="~/CSS/EditJob.css" rel="stylesheet" />
+
+@model JobModel
+
+<div class="content">
+    <br><br><br><br>
+
+    <form enctype="multipart/form-data" method="post" asp-action="EditJob" asp-controller="AdminLeave"  id="s2">
+        
+         <input hidden asp-for="JobId" />
+        <div class="form-group">
+            <input asp-for="JobName" class="form-control" placeholder="Enter New Position" />
+            <span asp-validation-for="JobName" class="text-danger"></span>
+        </div>
+        <font id="s3">Enter Number Of Leaves Given for one year for this position </font>
+        <div class="row">
+            <div class="col">
+                <div class="form-group">
+                    <font style="color:white">Casual leaves</font>
+                    <input asp-for="Casual" class="form-control" placeholder="Casual Leaves" />
+                    <span asp-validation-for="Casual" class="text-danger"></span>
+                </div>
+
+            </div>
+
+            <div class="col">
+                <div class="form-group">
+                    <font style="color:white">Medical leaves</font>
+                    <input asp-for="Medical" class="form-control" placeholder="Medical Leaves"  />
+                    <span asp-validation-for="Medical" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col">
+                <div class="form-group">
+                    <font style="color:white"> Annual leaves</font>
+                    <input asp-for="Annual" class="form-control" placeholder="Annual Leaves"/>
+                    <span asp-validation-for="Annual" class="text-danger"></span>
+                </div>
+
+            </div>
+
+            <div class="col">
+                <div class="form-group">
+                    <font style="color:white"> short leaves</font>
+                    <input asp-for="ShortLeaves" class="form-control" placeholder="Short Leaves"  />
+                    <span asp-validation-for="ShortLeaves" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <font style="color:white"> Half days</font>
+            <input asp-for="HalfDays" class="form-control" placeholder="Half Day Leaves" />
+            <span asp-validation-for="HalfDays" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <input type="submit" value="Save Changes" class="btn-block btn-success btn-lg" />
+            <a asp-controller="AdminLeave" asp-action="HRLeaveTableSee" class="btn btn-success btn-lg btn-block mt-3">Cancel</a>
+        </div>
+
+    </form>
+</div>
+

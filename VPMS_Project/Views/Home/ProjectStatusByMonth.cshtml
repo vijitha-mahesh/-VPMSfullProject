@@ -1,0 +1,20 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@model List<Status>
+
+
+<h1 style="text-align: left; color: #53804d; font-size: 28px;margin-bottom:40px">This Month</h1>
+
+<div class="row mb-5" style="background-color: #aba37c30;">
+
+    @foreach(var type in Model)
+    {
+    <div class="col-sm-2">
+        
+            <label class="@type.ProjectType">@type.Count</label>    
+        <div class="text-muted">@type.ProjectType</div>
+    </div>
+    }
+
+</div>

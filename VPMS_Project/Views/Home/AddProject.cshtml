@@ -1,0 +1,185 @@
+﻿
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "AddProject";
+}
+@model Project
+<div class="loader">
+
+    <div class="spinner-grow text-primary" role="status">
+        <span class="sr-only">Loading...</span>
+    </div>
+
+</div>
+<div id="addP1" class="container-fluid">
+
+
+    @if (ViewBag.isSuccess == true)
+    {
+        <div class="alert alert-success alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <strong>Congratulations!</strong> You successfully added a project, Click <a asp-action="GetProjectById" asp-route-id="@ViewBag.id">Here</a> to view project.
+        </div>
+    }
+
+    @if (ViewBag.context == true)
+    {
+        <div class="alert alert-danger alert-dismissible " role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <strong>Date and time not belong to the current context</strong>
+        </div>
+    }
+
+
+
+    @if (ViewBag.invalid == true)
+    {
+        <div class="alert alert-danger alert-dismissible " role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <strong>End date and time should be a value greater than start date and time</strong>
+        </div>
+    }
+
+
+        <div class="row pt-2">
+            <div class="col-sm-4 pt-5">
+                <h1 class="pt-3" style="font-size: 20px; font-weight: bold; ">ADD PROJECT</h1>
+                <div class=" text-center" style="padding-top: 55px; padding-bottom: 45px; font-family: serif;">
+                    <span class="text-muted ">Enter projects which dosen't exist a pre-sales stage </span>
+                </div>
+                <div class=" text-center">
+                    <span  style="background-color: #87abde; padding: 18px; border-radius: 10px;"><a asp-action="AddNewProject" asp-controller="Project" class="text-white text-decoration-none"> ADD PRE-SALE PROJECT</a></span>
+                </div>
+            </div>
+            <div class="col-sm-8 mx-auto pb-5 pt-3" style=" background-color: #ffffff6e;">
+                <div class="mt-2 mx-auto border-0">
+                    <div class="card-body border-0">
+                       
+                            <form id="contact-form" method="post" asp-action="AddProject">
+                                <div class="controls">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="form-group"> <label asp-for=Name>Name*</label> <input asp-for=Name type="text" class="form-control" placeholder="Enter Project Name"> </div>
+                                            <span asp-validation-for="Name" class="text-danger font-weight-bold" style="font-family:revert; font-size:77%"></span>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label asp-for="Type">Project Type*</label> <select asp-for="Type" class="form-control">
+                                                    <option value="" selected disabled>Select Project Type</option>
+                                                    <option>Project</option>
+                                                    <option>Maintainance</option>
+                                                    <option>R and D</option>
+                                                    <option>Internal</option>
+                                                </select>
+                                                <span asp-validation-for="Type" class="text-danger font-weight-bold" style="font-family:revert; font-size:77%"></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label asp-for="ProjectManagerId">Project Manager*</label> <select asp-for="ProjectManagerId" asp-items="ViewBag.ProjectManager" class="form-control">
+                                                    <option value="" selected disabled>Select Project Manager</option>
+                                                </select>
+                                                <span asp-validation-for="ProjectManagerId" class="text-danger font-weight-bold" style="font-family:revert; font-size:77%"></span>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label asp-for="CustomerId">Customer</label> <select asp-for="CustomerId" asp-items="ViewBag.Customer" class="form-control">
+                                                    <option value="" selected disabled>Select Customer</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group"> <label asp-for="ContractValue">Contract Value</label> <input asp-for="ContractValue" type="number" class="form-control" placeholder="Enter Contract Value"> </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group"> <label asp-for="EstimetedBudget">Budget</label> <input asp-for="EstimetedBudget" type="number" class="form-control" placeholder="Enter Budget"> </div>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="form-group"> <label asp-for="StartDate">Start Date*</label> <input asp-for="StartDate" type="date" class="form-control" placeholder="Enter Start Date"> </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group"> <label asp-for="DeliveryDate">Delivery Date*</label> <input asp-for="DeliveryDate" type="date" class="form-control"> </div>
+                                            <span asp-validation-for="DeliveryDate" class="text-danger font-weight-bold" style="font-family:revert; font-size:77%"></span>
+                                        </div>
+
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label asp-for="Status">Project Status</label> <select asp-for="Status" class="form-control">
+                                                    <option value="" selected disabled>Select Project Status</option>
+                                                    <option>Ongoing</option>
+                                                    <option>Closed</option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="row">
+
+                                        @*<div class="col-md-4">
+                                            <div class="form-group"> <label>Project Plans</label> <input type="file" class="form-control"> </div>
+                                        </div>*@
+                                        <div class="col-md-5">
+                                            <div class="form-group"> <label asp-for="Description">Project Description</label> <textarea asp-for="Description" class="form-control" placeholder="Enter Project Description" rows="3"></textarea> </div>
+                                            <span asp-validation-for="Description" class="text-danger font-weight-bold" style="font-family:revert; font-size:77%"></span>
+                                        </div>
+                                        <div class="col-md-5 mt-5 ml-3"> <input asp-action="AddProject" type="submit" class="btn pt-2 btn-block " value="Add Project"> </div>
+                                    </div>
+                                    <div class="row">
+
+                                        
+                                    </div>
+                                </div>
+                            </form>
+                       
+                    </div>
+                </div> <!-- /.8 -->
+            </div> <!-- /.row-->
+        </div>
+    
+
+
+    <partial name="AllProjects" Model="@ViewData["projects"]" />
+
+
+
+
+</div>
+
+
+
+@section scripts{
+
+
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $('#projects').DataTable();
+        });
+    </script>
+
+
+
+
+
+
+
+
+    <script>
+        $(window).on('load', function () {
+            $('.loader').css('display', 'none');
+
+        });
+
+    </script>
+
+
+}

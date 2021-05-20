@@ -1,0 +1,98 @@
+﻿
+
+
+
+@{
+    Layout = "_ReviewLayout";
+    ViewData["Title"] = "Dashboard";
+}
+@model IEnumerable<TaskModel>
+
+<link href="https://fonts.googleapis.com/css?family=Muli&display=swap" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+
+<style>
+
+    .content {
+        margin-right: auto;
+        margin-right: auto;
+    }
+
+
+    #h {
+        font-family: Cambria;
+        border-color: black;
+        text-align: center;
+        background-color: gainsboro;
+        border-radius: 25px;
+        padding: 30px;
+    }
+</style>
+
+<link rel="stylesheet" type="text/css" href="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.4/css/jquery.dataTables.css">
+<link rel="stylesheet" type="text/css" href="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.0/css/jquery.dataTables_themeroller.css">
+
+
+<div class="content text-center">
+    <div class="col-md-8 col-lg-12 col-sm-12">
+        <br>    <h4 id="h" style="font-family:Castellar;line-height:50px">
+            <b>My Efficiency</b>
+        </h4>
+    </div>
+
+
+    <div>
+        @if (Model.Count() == 0)
+        {
+            <div class="jumbotron jumbotron-fluid">
+                <div class="container">
+                    <h3 style="font-family:Castellar;">No Tasks Available</h3>
+
+                </div>
+            </div>
+        }
+        else
+        {
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col">Task Name</th>
+                        <th scope="col">Project Name</th>
+                        <th scope="col">Tech Lead</th>
+                        <th scope="col">Supervisor</th>
+                        <th scope="col">Efficiency%</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var task in Model)
+                    {
+                        <tr>
+                            <td>@task.Name</td>
+                            <td>@task.ProjectName</td>
+                            <td>Navod Lakshitha</td>
+                            <td>Imesha Dilshani</td>
+                            @{
+                                double quality = ((task.AllocatedHours - task.TakenHours) / task.AllocatedHours) * 100;
+                                Double dc = Math.Round((Double)quality, 2);
+                            }
+                            <th scope="row">@dc</th>
+
+                        </tr>
+
+                                }
+                </tbody>
+            </table>
+           }
+        </div>
+
+
+
+</div>
+
+
+</div>
+
+
+
+
+

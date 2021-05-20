@@ -1,0 +1,65 @@
+﻿
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "AddSalaryInfo";
+}
+@model Salary
+
+    <div class="container-fluid" id="addP1">
+        <h1 class="pt-3"  style="font-size: 20px; font-weight: bold; ">HOURLY RATES</h1>
+
+        @if (ViewBag.msg == true)
+        {
+            <div class="alert alert-success alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <strong>Congratulations!</strong> You successfully added a employee rate.
+            </div>
+        }
+
+        @if (ViewBag.delete == true)
+        {
+            <div class="alert alert-warning alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <strong>Congratulations!</strong> You successfully deleted the item.
+            </div>
+        }
+  
+        <div class="row p-5">
+            <div class="col-md-4 pb-3">
+                <form id="contact-form" method="post" asp-action="AddSalaryInfo">
+                    <div class="controls">
+                        <div class="row">
+                            <div class="col-md-11">
+                                <div class="form-group"> <label asp-for=Designation>Designation</label> <select asp-for="Designation" asp-items="ViewBag.titles" class="form-control">
+    <option value="" selected disabled>Select Job Title</option>
+</select> </div>
+                                <span asp-validation-for="Designation" class="text-danger font-weight-bold" style="font-family:revert; font-size:77%"></span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-11">
+                                <div class="form-group"> <label asp-for="HourlyRate">Hourlt Rate</label> <input asp-for="HourlyRate" type="number" class="form-control" placeholder="Enter salary rate for a hour"> </div>
+                                <span asp-validation-for="HourlyRate" class="text-danger font-weight-bold" style="font-family:revert; font-size:77%"></span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-11"><label></label> <input asp-action="AddSalaryInfo" asp-controller="Task" type="submit" class="btn pt-2 btn-block mt-2 " value="Add"> </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="col-md-8" style="border-left: outset 2px #c1c1c1bf;">
+
+                    <div class="mt-2 mx-auto border-0">
+
+
+                        <partial name="GetSalaryInfo" model="@ViewData["salary"]" />
+
+
+                    </div>
+            </div>
+        </div>
+
+    </div>
+
+

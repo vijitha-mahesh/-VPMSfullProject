@@ -1,0 +1,89 @@
+﻿
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Projects";
+}
+
+@model List<Project>
+<div class="container-fluid"  id="addx">
+
+    <h1 class="pt-3" style="font-size: 20px; font-weight: bold; ">PROJECTS</h1>
+
+    <div class="pt-3 pb-4">
+        <form class="input-group" asp-action="SearchProject" method="get">
+            <input type="text" id="Name" name="Name" class="form-control" placeholder="Search Project">
+            <div class="input-group-append">
+                <button asp-action="SearchProject" type="submit" class="btn btn-custom">Search </button>
+            </div>
+        </form>
+    </div>
+
+    <div class="row">
+
+        <div class="col-lg-3 col-md-4 col-sm-5 mb-3  pr-5">
+
+            <label class="text-muted" style="font-family:math">Project Categories</label>
+            <ul class="list-group mb-4">
+                <partial name="ProjectType" model="@ViewData["types"]" />
+            </ul>
+            <label class="text-muted" style="font-family:math">Project Status</label>
+            <ul class="list-group mb-4">
+                <partial name="ProjectState" model="@ViewData["states"]" />
+            </ul>
+            <label class="text-muted" style="font-family:math">Project Condition</label>
+            <ul class="list-group mb-4">
+                <partial name="ProjectStage" model="@ViewData["stages"]" />
+            </ul>
+        </div>
+
+        <div class="col-lg-9 col-md-8 col-sm-7">
+            @if (ViewBag.Success == true)
+            {
+                <div class="alert alert-warning alert-dismissible" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <strong>One project deleted successfully!</strong>
+                </div>
+            }
+
+            <label class="text-muted" style="font-family:math">@ViewBag.state</label>
+            <div class="row">
+                @if (Model != null)
+                {
+                    @foreach (var Project in Model)
+                    {
+
+                        <div class="col-sm-6 col-md-4 col-lg-4">
+                            <div class="thumbnail">
+                                <div class="caption" id="delete">
+                                    <h4 class="main3">@Project.Name</h4>
+                                    @if (@Project.Status == "Closed")
+                                    {
+                                        <p class="des2">@Project.Description</p>
+                                    }
+                                    else
+                                    {
+                                        <p class="des">@Project.Description</p>
+                                    }
+                                    <p class="button">
+                                        <a class="btn btn-primary" role="button" asp-action="GetProjectById" asp-route-id="@Project.Id">View</a>
+                                        @if (@Project.Status == "Closed")
+                                        {
+                                            <a class="btn btn-default" role="button">Edit</a>
+                                        }
+                                        else
+                                        {
+                                            <a class="btn btn-default" role="button" asp-action="EditProject" asp-route-id="@Project.Id">Edit</a>
+                                        }
+                                        <a class="btn btn-danger" role="button"  asp-action="DeleteProject" asp-route-id="@Project.Id" onclick="return confirm('Are you sure you want to delete project @Project.Name ? ')">Delete</a>
+                                    </p>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    }
+                }
+            </div>
+        </div>
+    </div>
+</div>

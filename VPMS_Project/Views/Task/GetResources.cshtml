@@ -1,0 +1,58 @@
+﻿
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "available Resources";
+}
+@model List<Employee>
+
+<div class="container-fluid" id="addP1">
+
+    <h1 class="pt-3" style="font-size: 20px; font-weight: bold; ">AVAILABLE RESOURCES</h1>
+
+    <div class="container">
+        <div class="row ">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-arrow-left-circle-fill" viewBox="0 0 16 16">
+                <path d="M8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0zm3.5 7.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5z" />
+            </svg>
+            <a class="text-decoration-none mb-1" asp-action="SelectResources" asp-controller="Task">Back to choose date and time</a>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="row p-3 text-white" style="background-color:#617477;border-radius:10px">
+                    <div class="col-1">
+                        <span>ID</span>
+                    </div>
+                    <div class="col-4">
+                        <span>NAME</span>
+                    </div>
+                    <div class="col-3">
+                        <span>DESIGNATION</span>
+                    </div>
+                    <div class="col-4">
+                        <span>PROJECT MANAGER</span>
+                    </div>
+                </div>
+
+
+
+                @if (Model != null)
+                {
+                    @foreach (var employee in Model)
+                    {
+            <div class="row pt-3 pl-3 pr-3 mb-2" style="background-color: #0000001f; border-radius: 10px; }">
+                <div class="col-1">@employee.Id</div>
+                <div class="col-4">@employee.Name</div>
+                <div class="col-3">@employee.Designation</div>
+                <div class="col-4">@employee.ProjectManager</div>
+            </div>
+                    }
+                }
+
+
+            </div>
+        </div>
+ </div>
+    </div>

@@ -1,0 +1,141 @@
+﻿
+@{
+    Layout = "_LayoutManager";
+    ViewData["Title"] = "ProjectDetails";
+}
+@model List<ProjectWithCategories>
+    <div class="container-fluid " id="addP">
+        <h1 class="pt-3" style="font-size: 20px; font-weight: bold; ">PROJECTS OVERVIEW</h1>
+
+        <div class="row pt-5 pb-5">
+            <div class=" col-sm-3" style="border-right: outset 2px;">
+                <div class="col-10 text-center" style="background-color: #355d61; padding: 25px; border-radius: 15px; margin-bottom: 30px;">
+
+                    <label class="text-white" style="font-size:108%">TOTAL</label>
+                    <label class="d-block text-white" style="font-size:108%">@ViewBag.Total</label>
+
+                </div>
+                <a class="text-decoration-none" asp-action="ProjectDetails" asp-controller="Manager" asp-route-type="status">
+                    <div class="col-10 text-center" style="background-color: #709fa4; padding: 25px; border-radius: 15px; margin-bottom: 30px;box-shadow: -2px 9px 0px 3px #e6e6e6;">
+                        <p style="font-size:108%;color:white">STATUS</p>
+                    </div>
+                </a>
+                <a class="text-decoration-none" asp-action="ProjectDetails" asp-controller="Manager" asp-route-type="project manager">
+                    <div class="col-10 text-center" style="background-color: #709fa4; padding: 25px; border-radius: 15px; margin-bottom: 30px;box-shadow: -2px 9px 0px 3px #e6e6e6;">
+                        <p style="font-size:108%;color:white">PROJECT MANAGER</p>
+
+                    </div>
+                </a>
+                <a class="text-decoration-none" asp-action="ProjectDetails" asp-controller="Manager" asp-route-type="category">
+                    <div class="col-10 text-center" style="background-color: #709fa4; padding: 25px; border-radius: 15px; margin-bottom: 30px;box-shadow: -2px 9px 0px 3px #e6e6e6;">
+                        <p style="font-size:108%;color:white">CATEGORY</p>
+
+                    </div>
+                </a>
+                <a class="text-decoration-none" asp-action="ProjectDetails" asp-controller="Manager" asp-route-type="state">
+                    <div class="col-10 text-center" style="background-color:#709fa4; padding: 25px; border-radius: 15px; margin-bottom: 30px;box-shadow: -2px 9px 0px 3px #e6e6e6;">
+                        <p style="font-size:108%;color:white">STATE</p>
+
+                    </div>
+                </a>
+            </div>
+
+            <div class="col-sm-8 pl-5"  >
+
+                @if (Model != null)
+                {
+                    @foreach (var data in Model)
+                    {
+                        <label class="text-muted mb-4" >@data.type</label>
+
+                        <div class="row mb-4" style=" background-color:#415258; padding: 5px; border-radius: 10px;margin-left:5px">
+                            <div class="col-2">
+                                <label class="text-white">ID</label>
+                            </div>
+                            <div class="col-7">
+                                <label class="text-white">PROJECT NAME</label>
+                            </div>
+
+                        </div>
+
+                        foreach (var project in data.Projects)
+                        {
+                            <div class="row mb-2" style=" background-color:#d6d6d68f; padding: 5px; border-radius: 10px;margin-left:5px">
+                                <div class="col-2">
+                                    <label>@project.Id</label>
+                                </div>
+                                <div class="col-7">
+                                    <label>@project.Name</label>
+                                </div>
+                                <div class="col-3">
+                                    <button id="show_@project.Id" onclick="showcontent('@project.Id', true);" class="btn btn-dark">show</button>
+                                </div>
+
+                                <div class="row mr-0 ml-0" style="display:none" id="content_@project.Id">
+                                    <div class="col-6"><label>Created Date: - @project.CreatedDate</label></div>
+                                    <div class="col-6"><label>Last Update: - @project.LastUpdate</label></div>
+                                    <div class="col-6"><label>Project Id: - @project.Id</label></div>
+                                    <div class="col-6"><label>Project Type: - @project.Type</label></div>
+                                    <div class="col-6"><label>Start Date: - @project.StartDate</label></div>
+                                    <div class="col-6"><label>Delivery Date: - @project.DeliveryDate</label></div>
+                                    <div class="col-6"><label>Contract Value: - @project.ContractValue</label></div>
+                                    <div class="col-6"><label>Budget: - @project.EstimetedBudget</label></div>
+                                    <div class="col-6"><label>Current Expences: - @project.Cost</label></div>
+                                    <div class="col-6"><label>Customer: - @project.CustomerName</label></div>
+                                    <div class="col-6"><label>Project Manager: - @project.ProjectManagerName</label></div>
+                                    <div class="col-6"><label>Allocated Task Count: - @project.AllocatedTasks</label></div>
+                                    <div class="col-6"><label>Finalized Task Count: - @project.FinalizedTasks</label></div>
+                                    <div class="col-6"><button id="hide_@project.Id" onclick="hidecontent('@project.Id', true);" class="btn btn-dark">Hide</button></div>
+                                </div>
+                            </div>
+                        }
+
+
+                    }
+                }
+
+            </div>
+
+        </div>
+
+
+
+
+
+    </div>
+
+@section Scripts{
+
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#Name').autocomplete({
+                source: "@Url.Action("searchTask","postapi")"
+            });
+        });
+    </script>
+    <script>
+        function showcontent(id, isclicked) {
+            var show = 'show_' + id;
+            var content = 'content_' + id;
+            var content2 = 'content2_' + id;
+            if (isclicked) {
+                $('#' + content).show();
+                $('#' + content2).show();
+                $('#' + show).hide();
+            }
+        }
+        function hidecontent(id, isclicked) {
+            var show = 'show_' + id;
+            var content = 'content_' + id;
+            var content2 = 'content2_' + id;
+            if (isclicked) {
+                $('#' + content).hide();
+                $('#' + content2).hide();
+                $('#' + show).show();
+            }
+        }
+    </script>
+}
+

@@ -1,0 +1,61 @@
+﻿@*@{
+        ViewData["Title"] = "GetAllBudgets";
+        Layout = "~/Views/Shared/_Layout1.cshtml";
+    }*@
+
+@*doesn't want*@
+@model IEnumerable<BudgetModel>
+
+    <div id="addP1">
+
+        <div class="container">
+            <h4 class="text-center">PROJECT BUDGET</h4>
+            <div class="row">
+                <div class="text-center">
+                    <a asp-controller="Budget" asp-action="AddNewBudget" class="btn btn-primary btn-sm">Add New Budget</a>
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <table class="table">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">Project ID</th>
+                            <th scope="col">Lab Hr</th>
+                            <th scope="col">Lab Rt</th>
+                            <th scope="col">Mat unit</th>
+                            <th scope="col">unit Pr</th>
+                            <th scope="col">Bidget Cost</th>
+                            <th scope="col">Actual</th>
+                            <th scope="col">under(over)</th>
+                            <th scope="col">       </th>
+                        </tr>
+                    </thead>
+
+                    @foreach (var budget in Model)
+                    {
+                        <tbody>
+                            <tr>
+                                <th scope="row">@budget.ProjectsID
+                                <td>@budget.LbHou</td>
+                                <td>@budget.LbRate</td>
+                                <td>@budget.MtUnit</td>
+                                <td>@budget.MtunitPr</td>
+                                <td>@budget.BudgetCost</td>
+                                <td>@budget.Actual</td>
+                                <td>@budget.Under</td>
+                                <td>
+                                    <div class="btn-group" role="group" aria-label="Basic example">
+                                        @*<a asp-controller="Budget" asp-action="GetAllBudgets" asp-route-id="@budget.Id" asp-route-namaofBudget="@budget.ProjectName" class="btn btn-primary">Details</a>*@
+                                        <a asp-controller="Budget" asp-action="EditBudgets" asp-route-id="@budget.Id" asp-route-namaofBudget="@budget.Id" class="btn btn-primary">Edit</a>
+                                        <a class="btn btn-danger" role="button" asp-action="DeleteBudget" asp-controller="Budget" asp-route-id="@budget.Id"
+                                           onclick="return confirm('Are you sure you want to delete budget @budget.Id ? ')">Delete</a>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    }
+                </table>
+            </div>
+        </div>
+    </div>

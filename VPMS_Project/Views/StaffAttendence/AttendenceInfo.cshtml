@@ -1,0 +1,223 @@
+﻿@{
+    Layout = "_AttendenceLayout";
+    ViewData["Title"] = "Attendence Info";
+}
+<link href="~/CSS/MenuStyleSheet.css" rel="stylesheet" />
+<link rel="stylesheet" type="text/css" href="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.4/css/jquery.dataTables.css">
+<link rel="stylesheet" type="text/css" href="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.0/css/jquery.dataTables_themeroller.css">
+<style>
+    #addQ {
+        background-image: url('../images/clean-white-polygon-backgrounds-8.jpg');
+        background-size: cover;
+        background-color: #5b8d8f;
+        background-blend-mode: hard-light;
+        min-height: 400px;
+    }
+</style>
+
+@model IEnumerable<MarkAttendenceModel>
+
+
+<div class="content">
+    <partial name="_Menu" />
+    <br>
+    <div aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a asp-controller="EmployeeHome" asp-action="Portal">Home</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Attendence</li>
+
+        </ol>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-7 col-sm-12 col-md-7" id="addQ">
+            <div id="piechart" data-aos="zoom-in" data-aos-duration="1500"></div>
+
+        </div>
+        <div class="col-lg-5 col-sm-12 col-md-7">
+            <div class="jumbotron jumbotron-fluid" style="height:320px;background-color:rgba(172, 203, 222, 0.27)">
+                <div class="container">
+                    <h1 class="display-4">Attendence Info</h1>
+                    <p class="lead" style="padding-bottom:10px">Select a month and view your attendence in that selected month.</p>
+                    <form class="form-inline" method="get" asp-action="AttendenceInfo" asp-controller="StaffAttendence">
+                        <input id="start" type="month" class="form-control" style="height:50px;width:60%" name="Month" required />
+                        <input class="btn btn-success" type="submit" value="Search" style="line-height:35px;background-color:#173A47;width:20%;margin-left:2%" />
+                    </form>
+                </div>
+            </div>
+            @if (ViewBag.a == DateTime.MinValue)
+            {
+                <div class="float-right" style="font-size:15pt;font-family:Cambria">
+
+                    <img src="~/images/download.png" style="width:30%;height:auto;" />
+                    View your attendence so far
+                </div>
+            }
+
+        </div>
+    </div>
+
+
+    <br>
+    <br>
+    
+    <input hidden id="x1" value="@ViewBag.P">
+    <input hidden id="x3" value="@ViewBag.L">
+    <input hidden id="x4" value="@ViewBag.W">
+    <input hidden id="x5" value="@ViewBag.IO">
+    <div class="table-responsive col-sm-10 col-md-12 col-xm-12">
+
+        @if (ViewBag.a != DateTime.MinValue)
+        {
+            <h3 class="text-center" style="font-family:Cambria">@ViewBag.subtitle</h3>
+            <table class="table table-hover" id="example" width="100%" cellspacing="0" style="background-color:gainsboro">
+
+                <thead>
+                    <tr style="line-height: 60px">
+
+                        <th scope="row">DATE </th>
+                        <th scope="row">IN TIME</th>
+                        <th scope="row">OUT TIME</th>
+                        <th scope="row">TOTAL HOURS </th>
+                        <th scope="row">TYPE </th>
+                        <th scope="row">STATUS </th>
+
+                    </tr>
+                </thead>
+                <tbody>
+
+                    @foreach (var time in Model)
+                    {
+
+                        <tr style="line-height: 60px">
+
+                            <td scope="row">@time.Date.Day-@time.Date.Month-@time.Date.Year </td>
+                            @if (time.Status == "Leave On Day" || time.Status == "LoggedIn" || (time.Type == "Auto" && time.Status == "Absent"))
+                            {
+                                if (time.Type == "Auto" && time.Status == "Absent")
+                                {
+                                    <td scope="row">@time.InTime.ToString("hh:mm tt")</td>
+                                    <td scope="row">-</td>
+                                    <td scope="row">-</td>
+                                    <td scope="row">@time.Type</td>
+                                }
+                                else
+                                {
+                                    <td scope="row">-</td>
+                                    <td scope="row">-</td>
+                                    <td scope="row">-</td>
+                                    <td scope="row">-</td>
+                                }
+                            }
+                            else
+                            {
+                                <td scope="row">@time.InTime.ToString("hh:mm tt")</td>
+                                <td scope="row">@time.OutTime.ToString("hh:mm tt")</td>
+
+                                var timeSpan1 = TimeSpan.FromHours(time.TotalHours);
+                                int hh1 = timeSpan1.Hours;
+                                int mm1 = timeSpan1.Minutes;
+                                String total = hh1 + " h " + mm1 + " min";
+
+
+                                <td scope="row">@total </td>
+                                <td scope="row">@time.Type </td>
+                            }
+                            @if (time.Type == "Manual" && time.Status == "Absent")
+                            {
+                                <td scope="row" class="text-danger" style="text-transform:uppercase">@time.Status </td>
+                            }
+
+
+                            @if (time.Status == "LoggedIn")
+                            {
+                                <td scope="row" class="text-danger" style="text-transform:uppercase">In/Out Not Marked </td>
+                            }
+                            @if (time.Type == "Auto" && time.Status == "Absent")
+                            {
+                                <td scope="row" class="text-danger" style="text-transform:uppercase">Out time not Marked </td>
+                            }
+                            @if (time.Status == "Not Complete")
+                            {
+                                <td scope="row" class="text-danger" style="text-transform:uppercase">Work Hours Not Complete </td>
+                            }
+                            @if (time.Status == "Present" || time.Status == "Leave On Day")
+                            {
+                                <td scope="row" class="text-dark" style="text-transform:uppercase">@time.Status </td>
+                            }
+
+
+                        </tr>
+                    }
+
+                </tbody>
+            </table>
+        }
+    </div>
+
+</div>
+
+
+@section Attendence{
+    <script type="text/javascript" charset="utf8" src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.2.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.4/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script>
+        AOS.init();
+    </script>
+    <script>
+        $(function () {
+            $("#example").dataTable({
+                'paging': false,
+                'ordering': false,
+            });
+        })
+    </script>
+    <script type="text/javascript">
+        // Load google charts
+        google.charts.load('current', { 'packages': ['corechart'] });
+        google.charts.setOnLoadCallback(drawChart);
+
+        // Draw the chart and set the chart values
+        function drawChart() {
+            var x1 = document.getElementById("x1").value;
+            var x3 = document.getElementById("x3").value;
+            var x4 = document.getElementById("x4").value;
+            var x5 = document.getElementById("x5").value;
+            var c1 = parseInt(x1);
+            var c3 = parseInt(x3);
+            var c4 = parseInt(x4);
+            var c5 = parseInt(x5);
+
+            var data = google.visualization.arrayToDataTable([
+                ['Type', 'Days'],
+                ['Present', c1],
+                ['Absent', c5],
+                ['Leave On Day', c3],
+                ['Work Hours InComplete', c4],
+                
+            ]);
+
+            // Optional; add a title and set the width and height of the chart
+            var options = {
+                title: 'ATTENDENCE CHART',
+                fontName: 'Times New Roman',
+                fontSize: 16,
+                bold: true,
+                width: 750,
+                height: 500,
+                is3D: true,
+                backgroundColor: {
+                    fill: '#171a1b',
+                    fillOpacity: 0.3
+                },
+            };
+
+            // Display the chart inside the <div> element with id="piechart"
+            var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+            chart.draw(data, options);
+        }
+    </script>
+
+
+}

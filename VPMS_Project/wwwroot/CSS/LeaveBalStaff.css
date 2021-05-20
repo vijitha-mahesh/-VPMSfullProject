@@ -1,0 +1,42 @@
+﻿.circle {
+    width: 70px;
+    height: 70px;
+    line-height: 70px;
+    border-radius: 30%;
+    font-size: 18px;
+    color: white;
+    text-align: center;
+    background: #173A47;
+}
+
+#d1 {
+    background-color: #aaa;
+    font-family: Cambria;
+    color: black;
+}
+
+.c1 {
+    border: 2px solid black;
+    height: 150px;
+    border-radius: 5%;
+    background-color: #173A47
+}
+
+#d2 {
+    font-size: 12pt;
+    color: white;
+}
+
+.c2 {
+    background-color: ThreeDHighlight
+}
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+}
+
+.b1 {
+    font-weight: normal;
+    font-size: 12pt
+}

@@ -1,0 +1,66 @@
+﻿
+
+@{
+    ViewData["Title"] = "Add New Job";
+    ViewData["Topic"] = "Add New Position";
+}
+
+<link href="~/CSS/AddJob.css" rel="stylesheet" />
+
+@model JobModel
+
+<div class="content" >
+    <br><br><br><br>
+
+    <form enctype="multipart/form-data" method="post" asp-action="AddJob" asp-controller="Emp_Manage" id="s2">
+        <div class="form-group">
+            <input asp-for="JobName" class="form-control" placeholder="Enter New Position" />
+            <span asp-validation-for="JobName" class="text-danger"></span>
+        </div>
+        <font id="s3">Enter Number Of Leaves Given for one year for this position </font>
+        <div class="row">
+            <div class="col-md-6 col-sm-3">
+                <div class="form-group">
+                    <input asp-for="Casual" class="form-control" placeholder="Casual Leaves" />
+                    <span asp-validation-for="Casual" class="text-danger"></span>
+                </div>
+
+            </div>
+
+            <div class="col-md-6 col-sm-3">
+                <div class="form-group">
+                    <input asp-for="Medical" class="form-control" placeholder="Medical Leaves"/>
+                    <span asp-validation-for="Medical" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6 col-sm-3">
+                <div class="form-group">
+                    <input asp-for="Annual" class="form-control" placeholder="Annual Leaves" />
+                    <span asp-validation-for="Annual" class="text-danger"></span>
+                </div>
+
+            </div>
+
+            <div class="col-md-6 col-sm-3">
+                <div class="form-group">
+                    <input asp-for="ShortLeaves" class="form-control" placeholder="Short Leaves"  />
+                    <span asp-validation-for="ShortLeaves" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <input asp-for="HalfDays" class="form-control" placeholder="Half Day Leaves"/>
+            <span asp-validation-for="HalfDays" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <input type="submit" value="Add New" class="btn-block" /><br><br>
+            <a asp-controller="Emp_Manage" asp-action="ModifyList" class="btn btn-success btn-lg btn-block" style="margin-top:20px">Cancel</a>
+        </div>
+
+    </form>
+</div>
+

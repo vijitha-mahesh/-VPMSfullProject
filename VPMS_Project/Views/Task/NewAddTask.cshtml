@@ -1,0 +1,39 @@
+﻿@model List<Project>
+
+
+<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
+<script language="javascript" type="text/javascript">
+    function GetTasks(_TaskId) {
+        var procemessage = "<option value='0'> Please wait...</option>";
+        $("#Name").html(procemessage).show();
+
+        $.ajax({
+            url: '@Url.Action("GetTaskByProjectIdAsync", "Task")',
+            data: {id: _TaskId },
+            cache: false,
+            type: "POST",
+            success: function (data) {
+                var markup = "<option value='0'>Select Task</option>";
+                for (var x = 0; x < data.length; x++) {
+                    markup += "<option value=" + data[x].Value + ">" + data[x].Text + "</option>";
+                }
+                $("#Name").html(markup).show();
+            },
+            error: function (reponse) {
+                alert("error : " + reponse);
+            }
+        });
+</script>
+
+
+@using (Html.BeginForm())
+{
+    @Html.DropDownListFor(m => m.Any(), new SelectList(Model, "Id", "Name"), new { @id = "proj", @style = "width:200px;", @onchange = "javascript:GetTasks(this.value);" })
+    <br />
+    <br />
+    <select id="Name" name="Name" style="width: 200px">
+    </select>
+
+    <br />
+    <br />
+}

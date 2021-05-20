@@ -1,0 +1,53 @@
+﻿
+@{
+    ViewData["Title"] = "GetAllCustomers";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@model IEnumerable<CustomerModel>
+
+<div id="addP1">
+
+    <div class="container">
+        <br />
+        <br />
+        <br />
+        <h1 class="pt-3" style="font-size: 20px; font-weight: bold; ">ALL CUSTOMERS</h1>
+        <div class="row">
+            <table class="table">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Customer Name</th>
+                        <th scope="col">Address</th>
+                        <th scope="col">Contact Number</th>
+                        <th scope="col">Email Address</th>
+                        <th scope="col">       </th>
+                    </tr>
+                </thead>
+
+                @foreach (var customer in Model)
+                {
+                    <tbody>
+                        <tr>
+                            <th scope="row">@customer.Id
+                            <td>@customer.name</td>
+                            <td>@customer.address</td>
+                            <td>@customer.contactNumber</td>
+                            <td>@customer.emailAddress</td>
+                            <td>
+                                <div class="btn-group" role="group" aria-label="Basic example">
+                                    <a asp-controller="PreCustomer" asp-action="GetCustomer" asp-route-id="@customer.Id" asp-route-namaofCustomer="@customer.name" class="btn btn-primary">Details</a>
+                                    <a asp-controller="PreCustomer" asp-action="EditCustomers" asp-route-id="@customer.Id" asp-route-namaofCustomer="@customer.name" class="btn btn-primary">Edit</a>
+                                    <a class="btn btn-danger" role="button" asp-action="DeleteCustomer" asp-controller="PreCustomer" asp-route-id="@customer.Id"
+                                       onclick="return confirm('Are you sure you want to delete customer @customer.name ? ')">Delete</a>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                }
+            </table>
+        </div>
+    </div>
+
+</div>

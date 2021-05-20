@@ -1,0 +1,121 @@
+﻿
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "TaskOverview";
+}
+@model TaskCount
+
+<div class="container-fluid" id="addQ">
+
+
+    <div class="container pt-3">
+        <div class="row ">
+            <div class="col-4 group2" style="border-right:solid white">
+                <span><a asp-action="GetTasks" asp-controller="Task" class="text-white text-decoration-none">CUMULATIVE TASK VIEW</a></span>
+            </div>
+            <div class="col-4 group2" style="border-right:solid white">
+                <span><a asp-action="SelectEmployee" asp-controller="Task" class="text-white text-decoration-none"> ADD TASK</a></span>
+            </div>
+            <div class="col-4 group2">
+                <span><a asp-action="TodayAllocatedTasks" asp-controller="Task" class="text-white text-decoration-none">TODAY ALLOCATION</a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row mt-5 ">
+            <div class="col-12 text-center">
+                <span>CUMULATIVE OVERVIEW</span>
+            </div>
+        </div>
+    </div>
+
+    <div>
+
+        <div class="row ">
+            <div class="col-12 mt-4 mb-4 text-center">
+                <span style="font-size:35px">TOTAL </span>
+                <div style="font-size:35px">@Model.Total</div>
+            </div>
+        </div>
+
+        <div class="row pb-4 text-center">
+            <div class="col-3">
+                <span>Ongoing</span>
+            </div>
+            <div class="col-3">
+                <span>Pending</span>
+            </div>
+            <div class="col-3">
+                <span>TimeOut</span>
+            </div>
+            <div class="col-3">
+                <span>Finalized</span>
+            </div>
+        </div>
+
+        <div class="row text-center pb-5 mt-4 mb-5">
+            <div class="col-3">
+                <div class="col-11" style="padding:47px">
+                    <img src="~/images/grey.png" style="height: 130px; margin-top: -80px; margin-left: -53px; position: absolute;" />
+                </div>
+                <div class="mx-auto" style="margin-top: -75px;">@Model.Ongoing</div>
+
+            </div>
+            <div class="col-3">
+                <div class="col-11" style="padding:47px">
+                    <img src="~/images/grey.png" style="height: 130px; margin-top: -80px; margin-left: -53px; position: absolute;" />
+                </div>
+                <div class="mx-auto" style="margin-top: -75px;">@Model.Pending</div>
+            </div>
+            <div class="col-3">
+                <div class="col-11" style="padding:47px">
+                    <img src="~/images/grey.png" style="height: 130px; margin-top: -80px; margin-left: -53px; position: absolute;" />
+                </div>
+                <div class="mx-auto" style="margin-top: -75px;">@Model.TimeOut</div>
+            </div>
+            <div class="col-3">
+                <div class="col-11" style="padding:47px">
+                    <img src="~/images/grey.png" style="height: 130px; margin-top: -80px; margin-left: -53px; position: absolute; " />
+                </div>
+                <div class="mx-auto" style="margin-top: -75px;">@Model.Finalized</div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="row pb-5">
+        <div class="col-4 text-white text-center" >
+            <div class="container ml-3" style=" background-color: #020202d1;height:206px">
+                <span style="font-size: 250%">TODAY</span>
+                <div style="font-size: 250%">@Model.Today</div>
+            </div>
+            
+        </div>
+        <div class="col-8">
+            <partial name="TodayTaskCount" model="@ViewData["tasks2"]" />
+        </div>
+    </div>
+
+
+    <partial name="TodayTask" model="@ViewData["tasks"]" />
+
+</div>
+
+
+
+@section Scripts{
+
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $('#tasks').DataTable();
+        });
+    </script>
+
+
+
+}

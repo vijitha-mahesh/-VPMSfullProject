@@ -1,0 +1,35 @@
+﻿@model List<Status>
+
+@foreach (var data in Model)
+{
+   
+        @if (data.ProjectType == "Good")
+        {
+    <a asp-action="GetProjectsByState" asp-route-state="@data.ProjectType">
+        <li class="list-group-item justify-content-between align-items-center">
+            <label class="text-success">@data.ProjectType</label>
+            <span class="badge badge-primary badge-info float-right ml-2">@data.Count</span>
+        </li>
+    </a>
+        }
+        else if (data.ProjectType == "Amature")
+        {
+<a asp-action="GetProjectsByState" asp-route-state="@data.ProjectType">
+    <li class="list-group-item justify-content-between align-items-center">
+        <label class="text-warning">@data.ProjectType</label>
+        <span class="badge badge-primary badge-info float-right ml-2">@data.Count</span>
+    </li>
+</a>
+        }
+        else
+        {
+<a asp-action="GetProjectsByState" asp-route-state="@data.ProjectType">
+    <li class="list-group-item justify-content-between align-items-center">
+        <label class="text-danger">@data.ProjectType</label>
+        <span class="badge badge-primary badge-info float-right ml-2">@data.Count</span>
+    </li>
+</a>
+        }
+       
+   
+}

@@ -1,0 +1,57 @@
+﻿
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "EditSalaryInfo";
+}
+@model Salary
+
+    <div class="container-fluid" id="addP1">
+        <h1 class="pt-3" style="font-size: 20px; font-weight: bold; ">HOURLY RATES</h1>
+
+        @if (ViewBag.msg == true)
+        {
+            <div class="alert alert-success alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <strong>Congratulations!</strong> You successfully updated rates.
+            </div>
+        }
+        <div class="container pl-0 ml-5">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-arrow-left-circle-fill" viewBox="0 0 16 16">
+                <path d="M8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0zm3.5 7.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5z" />
+            </svg>
+            <a class="text-decoration-none mb-1" asp-action="AddSalaryInfo" asp-controller="Task">Back to add rate</a>
+        </div>
+
+        <div class="row p-5">
+            <div class="col-md-4 pb-3">
+                <form id="contact-form" method="post" asp-action="EditSalaryInfo">
+                    <div class="controls">
+                        <div class="row">
+                            <div class="col-md-11">
+                                <div class="form-group"> <label asp-for=@Model.Designation>Designation</label> <input asp-for=@Model.Designation type="text" class="form-control" disabled> </div>
+                                <span asp-validation-for="@Model.Designation" class="text-danger font-weight-bold" style="font-family:revert; font-size:77%"></span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-11">
+                                <div class="form-group"> <label asp-for="@Model.HourlyRate">Hourly Rate</label> <input asp-for="@Model.HourlyRate" type="number" class="form-control"> </div>
+                                <span asp-validation-for="@Model.HourlyRate" class="text-danger font-weight-bold" style="font-family:revert; font-size:77%"></span>
+                            </div>
+                        </div><div class="row">
+                            <div class="col-md-11"> <label></label><input asp-action="EditSalaryInfo" asp-controller="Task" type="submit" class="btn pt-2 btn-block mt-2" style="font-size:80%" value="Update"> </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="col-md-8 " style="border-left: outset 2px #c1c1c1bf;">
+                <div class="mt-2 mx-auto border-0">
+
+
+                    <partial name="GetSalaryInfo" model="@ViewData["salary"]" />
+
+
+                </div>
+            </div>
+        </div>
+
+    </div>

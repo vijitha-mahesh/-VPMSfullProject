@@ -1,0 +1,58 @@
+﻿
+@{
+    Layout = "_LayoutManager";
+    ViewData["Title"] = "ProjectStatus";
+}
+<div class="container-fluid" id="addP1">
+
+    @*<div style="text-align:right">
+        @{Html.BeginForm("CreateDocument", "Home", FormMethod.Get);
+            {
+                <div>
+                    <input class="btn btn-secondary mt-4" style="margin-left:80%" type="submit" value="Generate Report" />
+                </div>
+            }
+            Html.EndForm();
+        }
+    </div>*@
+    <div id="download">
+        <div class="row">
+            <div class="col-sm-3">
+
+                <label class="text-muted" style="font-family:math">Project Categories</label>
+                <ul class="list-group mb-4">
+                    <partial name="ProjectStatus2" model="@ViewData["types"]" />
+                </ul>
+                <label class="text-muted" style="font-family:math">Project Status</label>
+                <ul class="list-group mb-4">
+                    <partial name="ProjectStatus2" model="@ViewData["states"]" />
+                </ul>
+                <label class="text-muted" style="font-family:math">Project Condition</label>
+                <ul class="list-group mb-4">
+                    <partial name="ProjectStatus2" model="@ViewData["stages"]" />
+                </ul>
+
+
+
+            </div>
+            <div class="col-sm-9 pt-4">
+                <partial name="ProjectStatusByMonth" model="@ViewData["month"]" />
+                <h1 data-aos="fade-right" data-aos-duration="1500" style="text-align: left; color:#0c6b79; font-size: 18px;margin-bottom:40px">Cumulative Overview</h1>
+                <label class="text-muted pb-3" style="font-size: 16px;">Cumulative project attainment during last 4 months</label>
+                <partial name="Chart4" model="@ViewData["month2"]" />
+                <label class="text-muted pb-3" style="font-size: 16px;">Project category status</label>
+                <partial name="Chart1" model="@ViewData["types"]" />
+                <div data-aos="fade-right" data-aos-duration="1500" style="text-align: left; color:#0c6b79; font-size: 18px;margin-bottom:10px;padding-top:20px">Project Status(Project budget)</div>
+                <h1 data-aos="fade-right" data-aos-duration="1500" style="text-align: left;color:#6f6f6f; font-size: 15px;margin-bottom:5px">project margin(stage1) - still gaining a profit</h1>
+                <h1 data-aos="fade-right" data-aos-duration="1500" style="text-align: left;color:#6f6f6f; font-size: 15px;margin-bottom:5px">project margin(stage2) - no profit</h1>
+                <h1 data-aos="fade-right" data-aos-duration="1500" style="text-align: left;color:#6f6f6f; font-size: 15px;margin-bottom:40px">project margin(stage2) - negative profit</h1>
+                <partial name="Chart3" model="@ViewData["states2"]" />
+                <h1 data-aos="fade-right" data-aos-duration="1500" style="text-align: left; color:#0c6b79; font-size: 18px;margin-bottom:40px;padding-top:20px">Project Status(Project Time)</h1>
+                <partial name="Chart2" model="@ViewData["states1"]" />
+
+            </div>
+        </div>
+
+    </div>
+
+</div>

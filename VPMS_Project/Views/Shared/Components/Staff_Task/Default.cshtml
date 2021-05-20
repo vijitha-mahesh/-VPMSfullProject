@@ -1,0 +1,66 @@
+﻿@using VPMS_Project.Models;
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@model IEnumerable<StaffTaskModel>
+
+
+<div class="table-responsive">
+    <br>
+    <table class="table table-hover " id="example" width="100%" cellspacing="0">
+
+        <thead>
+            <tr style="line-height: 40px">
+
+                <th scope="row">TASK & Project </th>
+                <th scope="row">DATE</th>
+                <th scope="row">BEGIN </th>
+                <th scope="row">END </th>
+                <th scope="row">TIME TAKEN </th>
+                <th scope="row">STATUS </th>
+
+
+
+            </tr>
+        </thead>
+        <tbody>
+
+            @foreach (var task in Model)
+            {
+
+            <tr style="line-height: 40px;background-color:rgba(107, 102, 102, 0.29)">
+
+                <td scope="row">@task.TaskName-<br>@task.ProjectName </td>
+                <td scope="row">@task.StartDate.Day-@task.StartDate.Month-@task.StartDate.Year </td>
+
+                @{
+                    String start = string.Format("{0:hh:mm:ss tt}", task.StartDate);
+                    String end = string.Format("{0:hh:mm:ss tt}", task.EndDate);
+                }
+                <td>@start</td>
+                <td>@end</td>
+                @{
+                    var timeSpan2 = TimeSpan.FromHours(task.TakenHours);
+                    int hh2 = timeSpan2.Hours;
+                    int mm2 = timeSpan2.Minutes;
+                    String total2 = hh2 + " h " + mm2 + " min";
+                }
+                <td scope="row">@total2 </td>
+                @if (task.Recommend == "Rejected")
+                {
+                    <td scope="row" class="text-danger">@task.Recommend </td>
+                }
+                @if (task.Recommend == "Waiting for recommend")
+                {
+                    <td scope="row">Pending </td>
+                }
+                @if (task.Recommend == "Recommended")
+                {
+                <td scope="row">@task.Recommend </td>
+                }
+
+            </tr>
+            }
+
+        </tbody>
+    </table>
+</div>

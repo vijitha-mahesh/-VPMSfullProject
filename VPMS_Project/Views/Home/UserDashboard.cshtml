@@ -1,0 +1,91 @@
+﻿
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "UserDashboard";
+}
+<div id="addP" class="container-fluid pb-5 ">
+    <h1 class="pt-3" style="font-size: 20px; font-weight: bold; ">DASHBOARD</h1>
+    <div class="row pt-3">
+
+        <div class="col-sm-3" style="background-color: #ffffff4d;">
+            <partial name="Notifications" model="@ViewData["projects1"]" />
+            <partial name="Dashboard1" model="@ViewData["projects1"]" />
+            <partial name="UserEmploees" model="@ViewData["employees"]" />
+        </div>
+
+        <div class="col-sm-8" style="border-left: outset 1px;margin-left:10px">
+            <label class="text-muted">PROJECT CATEGORIES</label>
+            <hr />
+            <div class="row pt-4" style="margin-left: -2px; ">
+                <partial name="Dashboard2" model="@ViewData["projects2"]" />
+            </div>
+
+
+            <label class="text-muted pt-3">TASK ALLOCATION (Last 6 Days)</label>
+            <hr />
+            <div class="row pt-4" style="margin-left: -2px; ">
+                <partial name="Dashboard4" model="@ViewData["Tasks2"]" />
+            </div>
+
+            <label class="text-muted pt-5">TASK CATEGORIES</label>
+            <hr />
+            <div class="row pt-4" style="margin-left: -2px; }">
+                <partial name="Dashboard3" model="@ViewData["Tasks"]" />
+            </div>
+        </div>
+
+    </div>
+
+
+</div>
+
+
+@section Scripts{
+
+    <script>
+        function showcontent(id, isclicked) {
+            var show = 'show_' + id;
+            var content = 'content_' + id;
+            var content2 = 'content2_' + id;
+            if (isclicked) {
+                $('#' + content).show();
+                $('#' + content2).show();
+                $('#' + show).hide();
+            }
+        }
+        function hidecontent(id, isclicked) {
+            var show = 'show_' + id;
+            var content = 'content_' + id;
+            var content2 = 'content2_' + id;
+            if (isclicked) {
+                $('#' + content).hide();
+                $('#' + content2).hide();
+                $('#' + show).show();
+            }
+        }
+    </script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $('#tasks_Ongoing').DataTable();
+        });
+    </script>
+    <script>
+        $(document).ready(function () {
+            $('#tasks_Pending').DataTable();
+        });
+    </script>
+    <script>
+        $(document).ready(function () {
+            $('#tasks_Finalized').DataTable();
+        });
+    </script>
+    <script>
+        $(document).ready(function () {
+            $('#tasks_Timeout').DataTable();
+        });
+    </script>
+
+}
+

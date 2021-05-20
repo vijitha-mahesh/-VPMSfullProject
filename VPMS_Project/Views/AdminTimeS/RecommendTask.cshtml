@@ -1,0 +1,105 @@
+﻿@{
+    Layout = "_TimeSLayout";
+    ViewData["Title"] = "Task Recommend";
+    ViewData["Msg1"] = "No Task recommendation";
+    ViewData["Msg2"] = "No Task recommendation requests have been received yet.";
+
+}
+<link href="~/CSS/Recomm.css" rel="stylesheet" />
+<link href="~/CSS/MenuStyleSheet.css" rel="stylesheet" />
+@model IEnumerable<TimeSheetTaskModel>
+
+<div style="height:800px">
+    <div id="s1" style="background-color: #ecdcdad1;background-image: url('../images/background.jpg');background-blend-mode: lighten; height: 100%;background-position: center;background-repeat: no-repeat;background-size: cover;">
+
+
+        <br>
+        <div id="s2">
+            @if (ViewBag.IsRecommend == true)
+            {
+                <div class="alert alert-success alert-dismissible fade show container" role="alert">
+                    Successfully Recommended.
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            }
+            @if (ViewBag.IsNotRecommend == true)
+            {
+                <div class="alert alert-success alert-dismissible fade show container" role="alert">
+                    Successfully Rejected.
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            }
+        </div>
+        <br>
+        @if (Model.Count() == 0)
+        {
+            <div id="s3">
+                <partial name="_Message" />
+            </div>
+        }
+
+        @foreach (var task in Model)
+        {
+            <div class="card bg-light ml-5" style="font-family:Cambria">
+                <div class="card-header">
+                    <font class="card-title">
+                        <b> @task.Name </b> Task - &nbsp;
+                        <span>
+                          <b> @task.ProjectName</b> Project
+                        </span>
+                    </font>
+                    <font class="card-title">
+                    </font>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <blockquote class="blockquote mb-0">
+                                Applied By  @task.EmpName
+                            </blockquote>
+                            <div style="margin-top:10px"><i class='far fa-calendar-alt'></i>  Applied Date : @task.AppliedDate.Day - @task.AppliedDate.Month - @task.AppliedDate.Year</div>
+                            <p id="s4"><i class='far fa-clipboard'></i> Description : @task.Description</p>
+                        </div>
+                        @{
+                            String start = string.Format("{0:hh:mm:ss tt}", task.ActualStartDateTime);
+                            String end = string.Format("{0:hh:mm:ss tt}", task.ActualEndDateTime);
+                        }
+                        <div class="s6 col-md-4">
+                            <div><i class='far fa-calendar-alt'></i>  Request for : @task.ActualStartDateTime.Day - @task.ActualStartDateTime.Month - @task.ActualStartDateTime.Year</div>
+                            <div><i class='far fa-calendar-alt'></i>  Begin Time: @start</div>
+                            <div><i class='far fa-calendar-alt'></i>  End Time&nbsp; : @end</div>
+
+                        </div>
+                        @{
+
+                            var timeSpan1 = TimeSpan.FromHours(task.TotalHours);
+                            int hh1 = timeSpan1.Hours;
+                            int mm1 = timeSpan1.Minutes;
+                            String total = hh1 + " h " + mm1 + " min";
+                        }
+                        <div class="col-md-4">
+                            <div style="margin-top:2px">
+                                <div id="s3"><i class='far fa-calendar-alt'></i>  Taken Hours : @total</div>
+                            </div>
+
+                            <div style="margin-top:6px">
+                                <a asp-controller="AdminTimeS" asp-action="TaskRecomend" asp-route-id="@task.Id" onclick="return confirm('Do you want to recommend this task ? ')" type="button" class="btn btn-outline-primary btn-sm btn-block">
+                                    <i class='far fa-check-square'></i> Recommended
+                                </a>
+                            </div>
+                            <div style="margin-top:6px">
+                                <a asp-controller="AdminTimeS" asp-action="TaskNotRecomend" asp-route-id="@task.Id" onclick="return confirm('Do you want to reject this task ? ')" type="button" class="btn btn-outline-danger btn-sm btn-block">
+                                    <i class='fas fa-times'></i> Not Recommended
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

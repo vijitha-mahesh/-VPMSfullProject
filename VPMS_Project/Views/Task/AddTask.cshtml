@@ -1,0 +1,201 @@
+﻿
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "AddTask";
+}
+@model Taskz
+
+
+<div class="container-fluid" id="addP1">
+
+    <h1 class="pt-3" style="font-size: 20px; font-weight: bold; ">TASK ALLOCATION</h1>
+    <div class="container ">
+        <div class="row">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-arrow-left-circle-fill" viewBox="0 0 16 16">
+                <path d="M8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0zm3.5 7.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5z" />
+            </svg>
+            <a class="text-decoration-none mb-1" asp-action="SelectEmployee" asp-controller="Task">Back to choose date and time</a>
+        </div>
+    </div>
+
+
+
+    @if (ViewBag.Success == true)
+    {
+        <div class="alert alert-success alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <strong>Congratulations!</strong> You successfully added a Task.
+        </div>
+    }
+
+    @if (ViewBag.invalid == true)
+    {
+        <div class="alert alert-danger alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <strong>Date and time choosen for next allocation is invalid</strong>
+        </div>
+    }
+
+    <form id="contact-form" method="post" asp-action="AddTask">
+        <div class="row">
+            <div class="col-sm-4" style="background-color: #0000001c;">
+
+                <div class="row mt-5">
+
+                    <div class="col-lg-12 mx-auto">
+
+                        <div class="card-body border-0">
+
+                            <div class="container">
+                                <div class="col-sm-12 mb-4 mt-1">
+                                    <label style="font-size: 16px; font-weight: bold; ">
+                                        NEXT ALLOCATION
+                                    </label>
+                                </div>
+
+
+                                <div class="col-md-12">
+                                    <div class="form-group"> <label asp-for="ChooseStartDate">Start Date&Time</label> <input asp-for="ChooseStartDate" type="datetime-local" class="form-control"> </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group"> <label asp-for="ChooseEndDate">End Date&Time</label> <input asp-for="ChooseEndDate" type="datetime-local" class="form-control"> </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-8 mb-5">
+                <div class="container pt-5 pb-5 pr-4 pl-4">
+                    <div class="row ">
+                        <div class="col-4 group2" style="border-right:solid white">
+                            <span><a asp-action="SelectResources" asp-controller="Task" class="text-white text-decoration-none">VIEW AVAILABILITY</a></span>
+                        </div>
+                        <div class="col-4 group2" style="border-right:solid white">
+                            <span><a asp-action="ResourceAllocation" asp-controller="Task" class="text-white text-decoration-none">ALLOCATE RESOURCES</a></span>
+                        </div>
+                        <div class="col-4 group2">
+                            <span><a asp-action="TodayAllocatedTasks" asp-controller="Task" class="text-white text-decoration-none">TODAY ALLOCATION</a></span>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="row">
+                    <div class="col-lg-12 mx-auto">
+
+                        <div class="card-body border-0">
+                            <div class="container">
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group"> <label>Start Date & Time</label><div class="text-success">@Model.StartDate</div></div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group"> <label>End Date & Time</label><div class="text-success">@Model.EndDate</div> </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label asp-for="projectId">Project</label>
+                                            <select asp-for="projectId" asp-items="ViewBag.Projects" class="form-control" onchange="GetTasks(this.value)">
+                                                <option value="" selected disabled>Select Project</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label asp-for="EmployeeId">Employee</label>
+                                            <select asp-for="EmployeeId" asp-items="ViewBag.Employees" class="form-control">
+                                                <option value="" selected disabled>Select Employee</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group sr-only"> <label asp-for="ProjectManager"></label> <input asp-for="ProjectManager" class="form-control" /> </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group sr-only"> <label asp-for="ProjectManagerId"></label> <input asp-for="ProjectManagerId" class="form-control" type="text" /> </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group sr-only"> <label asp-for="StartDate">Start Date & Time</label> <input asp-for="StartDate" class="form-control" type="datetime-local" /> </div>
+                                    </div>
+                                    <div class="col-md-6 sr-only">
+                                        <div class="form-group"> <label asp-for="EndDate">End Date & Time</label> <input asp-for="EndDate" class="form-control" type="datetime-local" /> </div>
+                                    </div>
+                                </div>
+
+
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label asp-for="Name">Task Name</label>
+                                            <select asp-for="Name" id="Name" class="form-control">
+                                                @*<option value="" selected disabled>Select Task</option>*@
+                                            </select>
+                                        </div>
+                                        <span asp-validation-for="Name" class="text-danger font-weight-bold" style="font-family:revert; font-size:77%"></span>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group"> <label asp-for="Description">Description</label> <textarea asp-for="Description" type="text" class="form-control" placeholder="Enter description" rows="1"></textarea> </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12"> <input asp-action="AddTask" asp-controller="Task" type="submit" class="btn pt-2 btn-block " value="Add Task"> </div>
+
+
+                            </div>
+
+                        </div> <!-- /.8 -->
+                    </div> <!-- /.row-->
+
+
+                </div>
+
+
+            </div>
+        </div>
+
+    </form>
+
+</div>
+
+
+@section Scripts{
+
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
+    <script>
+        function GetTasks(Id) {
+            var procemessage = "<option value='0'> Please wait...</option>";
+            $("#Name").html(procemessage).show();
+
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("PostTask", "Task")',
+                data: { id:Id },
+                cache: false,
+                success: function (data) {
+                    var markup = "<option value='0'>Select Task</option>";
+                    for (var x = 0; x < data.length; x++) {
+                        markup += "<option value=" + data[x].value + ">" + data[x].text + "</option>";
+                    }
+                    $("#Name").html(markup).show();
+                },
+                error: function (reponse) {
+                    alert("error : " + reponse);
+                }
+            });
+        }
+    </script>
+
+
+}

@@ -1,0 +1,68 @@
+﻿@model List<DashboardProjectList>
+
+
+@foreach (var item in Model)
+{
+    <div data-aos="zoom-in" data-aos-duration="1000" class="col-sm-6 text-center mb-3">
+
+
+        @if (item.Name.Equals("R and D"))
+        {
+            <div style="background-color: #5c6b44; border-radius: 7px; padding: 7px;">
+                <label style="color:white">@item.Name |</label> <label style="padding-right: 35px;color:white">@item.Projects.Count()</label>
+                <button class="btn btn-dark" id="show_research" onclick="showcontent('research', true);">show</button>
+            </div>
+
+
+            <div style="display:none" id="content_research">
+
+                @foreach (var project in item.Projects)
+                {
+                    <a class="text-decoration-none" asp-controller="Home" asp-action="GetProjectById" asp-route-id="@project.Id">
+                        <div class="row text-capitalize text-center mr-0 ml-0 mb-3 " style="background-color: #bbcddc; padding-bottom: 10px; padding-top: 10px; border-radius: 8px;margin-bottom:5px">
+                            <div class="col-12">
+                                @project.Name
+                            </div>
+                        </div>
+                    </a>
+                }
+                <button class="btn btn-dark" id="hide_research" onclick="hidecontent('research', true);">hide</button>
+            </div>
+
+
+
+
+        }
+        else
+        {
+            <div style="background-color: #5c6b44; border-radius: 7px; padding: 7px;">
+                <label style="color:white">@item.Name |</label> <label style="padding-right: 35px;color:white">@item.Projects.Count()</label>
+                <button class="btn btn-dark" id="show_@item.Name" onclick="showcontent('@item.Name', true);">show</button>
+            </div>
+
+            <div style="display:none" id="content_@item.Name">
+
+                @foreach (var project in item.Projects)
+                {
+                    <a class="text-decoration-none" asp-controller="Home" asp-action="GetProjectById" asp-route-id="@project.Id">
+                        <div class="row text-capitalize text-center mr-0 ml-0 mb-3 " style="background-color: aliceblue; padding-bottom: 10px; padding-top: 10px; border-radius: 8px;margin-bottom:5px">
+                            <div class="col-12">
+                                @project.Name
+                            </div>
+                        </div>
+                    </a>
+                }
+                <button class="btn btn-dark" id="hide_@item.Name" onclick="hidecontent('@item.Name', true);">hide</button>
+            </div>
+
+
+
+
+        }
+
+
+    </div>
+
+}
+
+

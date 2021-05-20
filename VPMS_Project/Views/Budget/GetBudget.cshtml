@@ -1,0 +1,82 @@
+﻿
+@{
+    ViewData["Title"] = "GetBudget";
+    Layout = "~/Views/Shared/_LayoutManager.cshtml";
+    //Layout = "~/Views/Shared/_Layout1.cshtml";
+    var projectInfo = ViewData["Project"] as ProjectModel;
+}
+
+
+@*doesn't want*@
+@model IEnumerable<BudgetLineItem>
+
+    <div id="addP1">
+        <br>
+        <div class="container">
+            <h4 class="text-center">PROJECT BUDGET - @projectInfo.ID - @projectInfo.Title </h4>
+            <div class="row">
+                <div class="text-center">
+                    <a asp-controller="PreCollection" asp-action="AddNewCollection" asp-route-projectId="@projectInfo.ID" asp-route-Title="@projectInfo.Title" class="btn btn-primary btn-sm">Add New Budget Collction</a>
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <table class="table">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">Task ID</th>
+                            <th scope="col">Task Name</th>
+                            <th scope="col">Employee</th>
+                            <th scope="col">Time</th>
+                            <th scope="col">Status</th>
+                            <th scope="col">Estimated Cost</th>
+                            <th scope="col">Actual Cost</th>
+                            <th scope="col">Other</th>
+                        </tr>
+                    </thead>
+
+                    @foreach (var budget in Model)
+                    {
+                        <tbody>
+                            <tr>
+                                <th scope="row">@budget.TaskID
+                                <td>@budget.TaskName</td>
+                                <td>@budget.Employee</td>
+                                <td>@budget.Time</td>
+                                <td>@(budget.IsCompleted ? "Completed" : "Not Completed")</td>
+                                <td>@budget.EstimatedCost</td>
+                                <td>@budget.ActualCost</td>
+                                <td>@budget.Other</td>
+
+                                <!--<td>
+                                <div class="btn-group" role="group" aria-label="Basic example">-->
+                                @*<a asp-controller="Budget" asp-action="GetAllBudgets" asp-route-id="@budget.Id" asp-route-namaofBudget="@budget.ProjectName" class="btn btn-primary">Details</a>*@
+                                <!--<a asp-controller="Budget" asp-action="EditBudgets" asp-route-id="@budget.TaskID" asp-route-namaofBudget="@budget.TaskID" class="btn btn-primary">Edit</a>
+                                        <a class="btn btn-danger" role="button" asp-action="DeleteBudget" asp-controller="Budget" asp-route-id="@budget.TaskID"
+                                           onclick="return confirm('Are you sure you want to delete budget @budget.TaskID ? ')">Delete</a>
+                                    </div>
+                                </td>-->
+                            </tr>
+                        </tbody>
+                    }
+                    <tfoot>
+                        <tr>
+                            <td colspan="5">Total</td>
+                            <td>@Model.Sum(i => i.EstimatedCost)</td>
+                            <td>@Model.Sum(i => i.ActualCost)</td>
+                            <td>@Model.Sum(i => i.Other)</td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+            <div class="col-sm-9 pt-4">
+                <partial name="Chart1" model="@ViewData["types"]" />
+            </div>
+            <div>
+                <a asp-controller="Project" asp-action="GetAllProjects" class="btn btn-link">Back to Project List</a>
+            </div>
+
+        </div>
+
+
+    </div>

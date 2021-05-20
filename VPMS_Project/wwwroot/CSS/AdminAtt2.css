@@ -1,0 +1,19 @@
+﻿#s1 {
+    line-height: 35px;
+    background-color: #173A47;
+    width: 10%;
+    margin-left: 2%
+}
+
+#s2 {
+    margin-left: 20%;
+    font-size: 15pt;
+    font-family: Cambria
+}
+#s3 {
+    margin-left: 18%;
+    height: 600px;
+}
+.jumbotron {
+    height: 300px
+}

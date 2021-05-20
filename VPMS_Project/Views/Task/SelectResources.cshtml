@@ -1,0 +1,56 @@
+﻿
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Select Resources";
+}
+@model SelectEmployees
+
+
+
+
+    <div class="container-fluid" id="addP1">
+
+
+        @if (ViewBag.context == true)
+        {
+            <div class="alert alert-danger alert-dismissible " role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <strong>Date and time not belong to the current context</strong>
+            </div>
+        }
+
+
+
+        @if (ViewBag.invalid == true)
+        {
+            <div class="alert alert-danger alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <strong>End date and time should be a value greater than start date and time</strong>
+            </div>
+        }
+
+        <h1 class="pt-3 text-muted" style="font-size: 15px;">Select date and time</h1>
+        <form method="post" asp-action="SelectResources" asp-controller="Task">
+            <div class="pt-5">
+                <div class="row">
+                    <div class="col-4 mx-auto">
+                        <div class="form-group"> <label asp-for="StartDate">Start Date & Time</label> <input asp-for="StartDate" type="datetime-local" class="form-control"> </div>
+                        <span asp-validation-for="StartDate" class="text-danger font-weight-bold" style="font-family:revert; font-size:77%"></span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-4 mx-auto">
+                        <div class="form-group"> <label asp-for="EndDate">End Date & Time</label> <input asp-for="EndDate" type="datetime-local" class="form-control"> </div>
+                        <span asp-validation-for="EndDate" class="text-danger font-weight-bold" style="font-family:revert; font-size:77%"></span>
+                    </div>
+                </div>
+            <div class="row">
+                <div class="text-center col-4 mx-auto">
+                    <input asp-action="SelectResources" asp-controller="Task" type="submit" class="btn pt-2 btn-block mt-3" value="get available resources">
+                </div>
+            </div>
+            </div>
+        </form>
+    </div>
+
+    

@@ -1,0 +1,97 @@
+﻿@using VPMS_Project.Models;
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@model IEnumerable<TaskModel>
+
+<link rel="stylesheet" type="text/css" href="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.4/css/jquery.dataTables.css">
+<link rel="stylesheet" type="text/css" href="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.0/css/jquery.dataTables_themeroller.css">
+<style>
+    #d1 {
+        background-color: #aaa;
+        font-family: Cambria;
+        color: black;
+        width:100%
+       
+    }
+
+    div.col-10.group1 {
+        background-color: #526862;
+        padding: 10px 0 10px 0;
+        text-align: center;
+        border-radius: 4px;
+    }
+    #TaskL {
+        background-image: url('../images/60ac66ae2cf6843b28687fc143861404.png');
+        background-size: cover;
+        min-height: 500px;
+    }
+</style>
+<div class="row">
+    <div class="col-lg-3 col-md-4 col-sm-12" id="TaskL">
+    </div>
+
+    <div class="col-lg-8 col-md-9 col-sm-12">
+        <div class="table-responsive col-sm-10 col-md-12 col-xm-12 mt-4" data-aos="fade-up" data-aos-duration="1500">
+
+            <table class="table table-hover" width="100%" cellspacing="0" style="background-color:rgba(45, 41, 41, 0.18)" id="example">
+
+                <thead>
+                    <tr style="line-height: 30px">
+                        <th scope="row">TASK   </th>
+                        <th scope="row">PROJECT</th>
+                        <th scope="row">STATUS </th>
+                        <th scope="row"> </th>
+                    </tr>
+
+                </thead>
+                <tbody>
+
+                    @foreach (var task in Model)
+                    {
+                        <tr style="line-height: 40px;font-family:Cambria;background-color:#" class="mb-5">
+                            <td scope="row">@task.Name </td>
+                            <td scope="row" class="text-center">@task.ProjectName</td>
+                            @if (task.TaskComplete == true)
+                            {
+                                <td scope="row" class="text-center" style="color:green">FINALIZED</td>
+                            }
+                            else
+                            {
+                                <td scope="row" class="text-center text-primary">PENDING</td>
+                            }
+
+                            <td scope="row" class="text-center">
+                                <div class="col-10 group1">
+                                    <span id="btnView"><a asp-controller="StaffHome" asp-action="TaskInfo" asp-route-id="@task.Id" class="btn text-white text-decoration-none">INFO </a></span>
+                                </div>
+                            </td>
+
+                        </tr>
+                    }
+
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+</div>
+
+
+
+
+@section Dashboard{
+    <script type="text/javascript" charset="utf8" src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.2.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.4/jquery.dataTables.min.js"></script>
+    <script>
+
+        $(function () {
+            $("#example").dataTable({
+                paging: false
+            });
+        })
+    </script>
+
+
+
+}
+

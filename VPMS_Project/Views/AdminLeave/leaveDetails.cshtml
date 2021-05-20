@@ -1,0 +1,86 @@
+﻿
+
+@{
+    Layout = "_LeaveLayout";
+    ViewData["Title"] = "Leave Details";
+}
+<link href="~/CSS/LeaveDetail.css" rel="stylesheet" />
+@model IEnumerable<EmpModel>
+
+<div id="s1" style="background-color:white">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8" >
+                <div class="jumbotron jumbotron-fluid" style="background-color: rgba(172, 203, 222, 0.27)">
+                    <div class="container">
+                        <h1 class="display-4">Leave Details</h1>
+                        <p class="lead">Search employee by name or designation to see their leave balance/Taken details and get leave reports.</p>
+                        <form class="form-inline" method="get" asp-action="LeaveDetails" asp-controller="AdminLeave">
+                            <input class="form-control-lg mr-lg-2" type="search" placeholder="Name or Designation" aria-label="Search" name="Search" required/>
+                            <input class="btn btn-success" type="submit" value="Search" id="s2" onclick="help()" />
+                            <a asp-controller="EmployeeHome" asp-action="EmpIndex" class="btn btn-success">Back</a>
+                        </form>
+                    </div>
+                </div>
+
+                <br> <br>
+                <div class="row">
+                    <div class="table-responsive col-sm-12 col-md-12">
+                        <table class="table table-hover ">
+                            <thead>
+                            </thead>
+                            <tbody>
+                                @foreach (var emp in Model)
+                                {
+                                    <tr>
+                                        <th scope="row">
+                                            <a asp-controller="AdminLeave" asp-action="SeeLeaveAllocation" asp-route-id="@emp.EmpId">
+                                                <div class="rounded-circle" >
+                                                    <img class="card-img-top rounded-circle" src="@(string.IsNullOrEmpty(emp.PhotoURL) ? "~/images/defa.png" : emp.PhotoURL)" height="55" width="20" asp-append-version="true">
+                                                </div>
+                                            </a>
+                                        </th>
+                                        <td> @emp.EmpFName @emp.EmpLName<br><font id="s5"> EmpId : @emp.EmpId</font></td>
+                                        <td>
+                                            @emp.JobType
+
+                                        </td>
+                                        <td><a asp-controller="AdminLeave" asp-action="SeeLeaveDetails" asp-route-id=" @emp.EmpId" class="text-success">See leave Details</a></td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                        <br>
+                        @if (Model.Count() == 0)
+                        {
+                            <div class="find" id="img" style="font-family:Cambria">
+                                Search Employees to see their leave balance details
+                                <img src="~/images/sea.jpg"  />
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <br>
+                @await Component.InvokeAsync("TodayLeave")
+                <br>
+                @await Component.InvokeAsync("UpcomingLeave")
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section leave
+{
+
+    <script>
+        $(document).ready(function () {
+            $("input").click(function () {
+                $(".find").hide(2000);
+            });
+        });
+
+    </script>
+}

@@ -1,0 +1,179 @@
+﻿
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "SearchTask";
+}
+@model List<Taskz>
+    <div class="container-fluid" id="addP1">
+
+        <h1>Task Allocations</h1>
+
+
+        <div id="edit">
+            <a class="btn btn-primary" role="button" asp-action="GetTasks" asp-controller="Task">Back to task</a>
+        </div>
+
+
+        <div class="row pt-4">
+            <div class="col-12">
+                <div class="row p-3 text-white" style="background-color:#617477;border-radius:10px">
+                    <div class="col-3">
+                        <span>Id & Name</span>
+                    </div>
+                    <div class="col-3">
+                        <span>Start Date & Time</span>
+                    </div>
+                    <div class="col-3">
+                        <span>End Date & Time</span>
+                    </div>
+
+                </div>
+
+
+                @if (Model != null)
+                {
+                    @foreach (var Task in Model)
+                    {
+
+                        <div class="row pt-1 pl-3 pr-3 mb-2" style="background-color: #0000001f; border-radius: 10px; }">
+                            <div class="col-3">@Task.Id. @Task.Name</div>
+                            <div class="col-3">@Task.StartDate</div>
+                            <div class="col-3">@Task.EndDate</div>
+                            <div class="col-sm-1 col-2">
+                                <p style="cursor:pointer" id="show_@Task.Id" onclick="showcontent('@Task.Id', true);">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-in-down" viewBox="0 0 16 16">
+                                        <path fill-rule="evenodd" d="M3.5 6a.5.5 0 0 0-.5.5v8a.5.5 0 0 0 .5.5h9a.5.5 0 0 0 .5-.5v-8a.5.5 0 0 0-.5-.5h-2a.5.5 0 0 1 0-1h2A1.5 1.5 0 0 1 14 6.5v8a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 14.5v-8A1.5 1.5 0 0 1 3.5 5h2a.5.5 0 0 1 0 1h-2z" />
+                                        <path fill-rule="evenodd" d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z" />
+                                    </svg>
+                                </p>
+                            </div>
+                            <div class="col-sm-1 col-2">
+                                @if (Task.EndDate >= DateTime.Now && Task.StartDate <= DateTime.Now)
+                                {
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                                        <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+                                        <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
+                                    </svg>
+                                }
+                                else
+                                {
+
+                                    <a style="cursor:pointer" role="button" asp-controller="Task" asp-action="EditTask" asp-route-id="@Task.Id">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                                            <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+                                            <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
+                                        </svg>
+                                    </a>
+
+                                }
+
+                            </div>
+                            <div class="col-sm-1 col-2">
+                                @if (Task.EndDate >= DateTime.Now && Task.StartDate <= DateTime.Now)
+                                {
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#792323" class="bi bi-x-square-fill" viewBox="0 0 16 16">
+                                        <path d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm3.354 4.646L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 1 1 .708-.708z" />
+                                    </svg>
+                                }
+                                else
+                                {
+
+                                    <a role="button" asp-action="DeleteTask" asp-controller="Task" asp-route-id="@Task.Id" onclick="return confirm('Are you sure you want to delete task @Task.Name?')">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#792323" class="bi bi-x-square-fill" viewBox="0 0 16 16">
+                                            <path d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm3.354 4.646L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 1 1 .708-.708z" />
+                                        </svg>
+                                    </a>
+
+                                }
+                            </div>
+                            <div class="row" style="display:none" id="content_@Task.Id">
+                                <div class="col-sm-6">Created Date & Time = @Task.CreatedDate</div>
+                                <div class="col-sm-6">Last Update = @Task.LastUpdate</div>
+                                <div class="col-sm-6">Emloyee Name = @Task.Employee</div>
+                                <div class="col-sm-6">Project Name = @Task.project</div>
+                                <div class="col-sm-6">Task Description = @Task.Description</div>
+                                <div class="col-sm-6">Project Manager = @Task.ProjectManager</div>
+                                <div class="col-sm-4">
+                                    <span>
+                                        Task Status :-  @if (@Task.EndDate >= DateTime.UtcNow && @Task.StartDate <= DateTime.UtcNow)
+                                        {
+                                            <span style="color:#760000">In Progress</span>
+                                            <span style="background-color:#760000">&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                                        }
+                                        @if (@Task.TimeSheet == true)
+                                        {
+                                            <span style="color:#18672a">Done</span>
+                                            <span style="background-color:#18672a">&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                                        }
+                                        @if (@Task.EndDate < DateTime.UtcNow)
+                                        {
+                                            <span style="color:#969323">Timeout</span>
+                                            <span style="background-color:#969323">&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                                        }
+                                        @if (@Task.StartDate > DateTime.UtcNow)
+                                        {
+                                            <span style="color:#a98109">Pending</span>
+                                            <span style="background-color:#a98109">&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                                        }
+                                    </span>
+                                </div>
+                                @if (Task.TimeSheet == true)
+                                {
+                                    <div class="col-sm-4" style="color:darkblue">Finalized</div>
+                                }
+                                else
+                                {
+                                    <div class="col-sm-4" style="color:darkred">Not-Finalized</div>
+                                }
+                                <div class="col-2">
+                                    <p style="cursor:pointer" id="hide_@Task.Id" onclick="hidecontent('@Task.Id', true);">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-in-up" viewBox="0 0 16 16">
+                                            <path fill-rule="evenodd" d="M3.5 10a.5.5 0 0 1-.5-.5v-8a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 .5.5v8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 0 0 1h2A1.5 1.5 0 0 0 14 9.5v-8A1.5 1.5 0 0 0 12.5 0h-9A1.5 1.5 0 0 0 2 1.5v8A1.5 1.5 0 0 0 3.5 11h2a.5.5 0 0 0 0-1h-2z" />
+                                            <path fill-rule="evenodd" d="M7.646 4.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 5.707V14.5a.5.5 0 0 1-1 0V5.707L5.354 7.854a.5.5 0 1 1-.708-.708l3-3z" />
+                                        </svg>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    }
+
+                }
+            </div>
+        </div>
+
+    </div>
+
+@section Scripts{
+
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#Name').autocomplete({
+                source: "@Url.Action("searchTask","postapi")"
+            });
+        });
+    </script>
+    <script>
+        function showcontent(id, isclicked) {
+            var show = 'show_' + id;
+            var content = 'content_' + id;
+            var content2 = 'content2_' + id;
+            if (isclicked) {
+                $('#' + content).show();
+                $('#' + content2).show();
+                $('#' + show).hide();
+            }
+        }
+        function hidecontent(id, isclicked) {
+            var show = 'show_' + id;
+            var content = 'content_' + id;
+            var content2 = 'content2_' + id;
+            if (isclicked) {
+                $('#' + content).hide();
+                $('#' + content2).hide();
+                $('#' + show).show();
+            }
+        }
+    </script>
+}       

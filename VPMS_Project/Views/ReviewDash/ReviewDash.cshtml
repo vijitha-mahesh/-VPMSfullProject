@@ -1,0 +1,183 @@
+﻿@{
+        Layout = "_ReviewLayout";
+        ViewData["Title"] = "Dashboard";
+    }
+
+<link href="https://fonts.googleapis.com/css?family=Muli&display=swap" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+
+<style>
+
+    .content{
+        margin-right:auto;
+        margin-right:auto;
+    }
+
+
+    #h {
+        font-family: Cambria;
+        border-color: black;
+        text-align: center;
+        background-color: gainsboro;
+        border-radius: 25px;
+        padding: 30px;
+        
+    }
+
+    .chart-container {
+        position: relative;
+        width: 100%;
+        height: 0;
+        padding-top: 100%;
+        margin-bottom: 27px;
+    }
+
+    .skill-item .chart,
+    .skill-item .chart canvas {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100% !important;
+        height: 100% !important;
+    }
+
+        .skill-item .chart:before {
+            content: "";
+            width: 0;
+            height: 100%;
+        }
+
+        .skill-item .chart:before,
+        .skill-item .percent {
+            display: inline-block;
+            vertical-align: middle;
+        }
+
+    .skill-item .percent {
+        position: relative;
+        line-height: 1;
+        font-size: 40px;
+        font-weight: 900;
+        z-index: 2;
+    }
+
+        .skill-item .percent:after {
+            content: attr(data-after);
+            font-size: 20px;
+        }
+
+   
+
+    #d1 {
+        background-color: #aaa;
+        font-family: Cambria;
+        color: black;
+        width: 100%
+    }
+
+    #review-point {
+        background-image: url('../images/reviewdash.jpg');
+        background-size: cover;
+        background-color: #5b8d8f;
+        background-blend-mode: hard-light;
+        min-height: 300px;
+        background-color: rgba(45, 41, 41, 0.18);
+        border-radius: 25px;
+    }
+</style>
+
+<link rel="stylesheet" type="text/css" href="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.4/css/jquery.dataTables.css">
+<link rel="stylesheet" type="text/css" href="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.0/css/jquery.dataTables_themeroller.css">
+
+
+<div class="content text-center">
+        <div class="col-md-8 col-lg-12 col-sm-12">
+            <br>    <h4 id="h" style="font-family:Castellar;line-height:50px">
+                <b>MY SKILLS</b>
+            </h4>
+
+            <section id="review-point" class="section mt-4">
+                <div class="b-skills">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-xs-12 col-lg-4 col-md-3" data-aos="zoom-in" data-aos-duration="1500">
+                                <div class="skill-item center-block">
+                                    <div class="chart-container">
+                                        <div class="chart " data-percent="@ViewBag.Workqulity" data-bar-color="#10A70A">
+                                            <span class="percent" data-after="%">@ViewBag.Workqulity</span>
+                                        </div>
+                                    </div>
+                                    <p><b>Work Quality</b></p>
+                                </div>
+                            </div>
+
+                            <div class="col-xs-12 col-lg-4 col-md-3" data-aos="zoom-in" data-aos-duration="1500">
+                                <div class="skill-item center-block">
+                                    <div class="chart-container">
+                                        <div class="chart " data-percent="@ViewBag.qulity" data-bar-color="#FFC300">
+                                            <span class="percent" data-after="%">@ViewBag.qulity</span>
+                                        </div>
+                                    </div>
+                                    <p><b>Efficiency</b></p>
+                                </div>
+                            </div>
+
+                            <div class="col-xs-12 col-lg-4 col-md-3" data-aos="zoom-in" data-aos-duration="1500">
+                                <div class="skill-item center-block">
+                                    <div class="chart-container">
+                                        <div class="chart " data-percent="@ViewBag.Communication" data-bar-color="#FF5733">
+                                            <span class="percent" data-after="%">@ViewBag.Communication</span>
+                                        </div>
+                                    </div>
+                                    <p><b>Communication</b></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            </div>
+      
+
+
+   
+</div>
+
+@section Dashboard
+{
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script type="text/javascript" charset="utf8" src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.2.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.4/jquery.dataTables.min.js"></script>
+
+    <script src="~/js/jquery.easypiechart.js"></script>
+    <script>
+        $(function () {
+            $(".chart").easyPieChart({
+
+            });
+        })
+    </script>
+    <script>
+        AOS.init();
+
+        $(function () {
+            $("#example").dataTable({
+                'paging': false,
+                'ordering': false,
+            });
+        })
+
+        function myFunction() {
+            var x = document.getElementById("myDIV");
+            if (x.style.display === "none") {
+                x.style.display = "block";
+            } else {
+                x.style.display = "none";
+            }
+        }
+    </script>
+
+
+
+
+}

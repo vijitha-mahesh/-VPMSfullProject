@@ -1,0 +1,246 @@
+﻿@{
+    Layout = "_StaffHomeLayout";
+    ViewData["Title"] = "Task Info";
+}
+@model TaskModel2
+    <link href="https://fonts.googleapis.com/css?family=Muli&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <style>
+        .content {
+            height: 700px
+        }
+        .b-skills {
+            border-top: 1px solid #f9f9f9;
+            padding-top: 46px;
+            text-align: center;
+        }
+
+            .b-skills:last-child {
+                margin-bottom: -30px;
+            }
+
+            .b-skills h2 {
+                margin-bottom: 50px;
+                font-weight: 900;
+                text-transform: uppercase;
+
+            }
+
+        .skill-item {
+            position: relative;
+            max-width: 250px;
+            width: 100%;
+            margin-bottom: 30px;
+            color: #555;
+        }
+
+        .chart-container {
+            position: relative;
+            width: 100%;
+            height: 0;
+            padding-top: 100%;
+            margin-bottom: 27px;
+        }
+
+        .skill-item .chart,
+        .skill-item .chart canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100% !important;
+            height: 100% !important;
+        }
+
+            .skill-item .chart:before {
+                content: "";
+                width: 0;
+                height: 100%;
+            }
+
+            .skill-item .chart:before,
+            .skill-item .percent {
+                display: inline-block;
+                vertical-align: middle;
+            }
+
+        .skill-item .percent {
+            position: relative;
+            line-height: 1;
+            font-size: 40px;
+            font-weight: 900;
+            z-index: 2;
+        }
+
+            .skill-item .percent:after {
+                content: attr(data-after);
+                font-size: 20px;
+            }
+
+        p {
+            font-weight: 900;
+            font-family: 'Lucida Console';
+            font-size: 13pt
+        }
+
+        
+    </style>
+    <div class="content" style="background: linear-gradient(45deg, #173A47,rgba(102, 107, 103, 0.52));">
+        <br>
+        <div aria-label="breadcrumb" class="container">
+            <ol class="breadcrumb" style="background-color:rgba(214, 219, 220, 0.19)">
+                <li class="breadcrumb-item"><a asp-controller="EmployeeHome" asp-action="Portal" style="color:midnightblue">Home</a></li>
+                <li class="breadcrumb-item" ><a asp-controller="StaffHome" asp-action="StaffDash" style="color:midnightblue">Dashboard</a></li>
+                <li class="breadcrumb-item active text-white-50" aria-current="page">Task Info</li>
+            </ol>
+        </div>
+     
+        <div>
+            <section class="jumbotron text-center" style="background-color:rgba(42, 44, 47, 0.35);">
+                <div class="row">
+                    <div class="col-lg-4 col-md-4 col-sm-12">
+                        <h2 style="text-transform:uppercase;font-family:Castellar;color:white">@Model.ProjectName</h2>
+                        <section id="s-team" class="section mt-4 ml-4">
+                            <div class="b-skills">
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col-xs-12 col-lg-10 col-md-3" data-aos="zoom-in" data-aos-duration="1500">
+                                            <div class="skill-item center-block">
+                                                <div class="chart-container">
+                                                    <div class="chart " data-percent="92" data-bar-color="#a7d212">
+                                                        <span class="percent text-white-50">92%</span>
+                                                    </div>
+                                                </div>
+                                                <p class="text-white-50">Current Completion</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                        </div>
+                        <div class="col-lg-8 col-md-8 col-sm-12">
+                            <div class="card" style="background-color:rgba(214, 219, 220, 0.19);font-family:Cambria"  >
+                                <div class="card-body text-left" style="font-size:12.5pt;color:black">
+                                    <h4 class="card-title" style="color:black">
+                                        Description :  @Model.ProjectDes
+                                        <span class="badge badge-dark float-right">@Model.Status</span>
+                                    </h4>
+                                    <div class="card-title text-left" style="font-size:15pt;">
+                                        Project Type : @Model.Type
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-1">
+                                            <div>
+                                                <img src="@(string.IsNullOrEmpty(Model.PMPhotoURL) ? "~/images/defa.png" : Model.PMPhotoURL)" class="card-img-top rounded-circle" style="width:50px;height:45px;" asp-append-version="true" />
+                                            </div>
+                                        </div>
+                                        <div class="col-9" style="color: midnightblue">@Model.ProjectManager - Project Manager</div>
+                                    </div><hr>
+                                    
+                                    <table class="table table-hover">
+                                        <tbody>
+                                            <tr>
+                                                <td scope="row" style="width:30%">Project Start Date :</td>
+                                                <td> @Model.ProjectStartDate.Day/@Model.ProjectStartDate.Month/@Model.ProjectStartDate.Year</td>
+                                            </tr>
+                                            <tr>
+                                                <td scope="row" style="width:30%">Project Closed Date :</td>
+                                                <td> @Model.ClosedDate.Day/@Model.ClosedDate.Month/@Model.ClosedDate.Year</td>
+                                            </tr>
+                                            <tr>
+                                                <td scope="row" style="width:30%">Project Delivery Date :</td>
+                                                <td> @Model.ProjectDeliveryDate.Day/@Model.ProjectDeliveryDate.Month/@Model.ProjectDeliveryDate.Year</td>
+                                            </tr>
+                                            <tr>
+                                                <td scope="row" style="width:30%">Project Created Date :</td>
+                                                <td> @Model.CreatedDate.Day/@Model.CreatedDate.Month/@Model.CreatedDate.Year</td>
+                                            </tr>
+                                  </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+</section>
+            <section class="jumbotron text-center" style="background-color:rgba(42, 44, 47, 0.35);height:320px">             
+                <div class="card" style="background-color:rgba(214, 219, 220, 0.19);font-family:Cambria" data-aos="fade-up" data-aos-duration="1500">
+                    <div class="card-body">
+                        @{
+                            String status;
+                            if (Model.TaskComplete == false)
+                            {
+                                status = "Not Finalized";
+                            }
+                            else
+                            {
+                                status = "Finalized";
+                            }
+
+                        }
+                        <h4 class="card-title" style="color:black">
+                           <span style="text-transform:uppercase;font-family:Castellar;color:white"> Task - @Model.Name</span>
+                            <span class="badge badge-dark float-right"> @status</span>
+                        </h4>
+                        <h5 class="card-title text-left" style="color:midnightblue">
+                            Task Description :  @Model.Description
+                        </h5>
+
+
+                        <table class="table table-bordered" style="font-weight:bold">
+                            <tbody>
+                                <tr>
+                                    @{
+                                        var timeSpan2 = TimeSpan.FromHours(Model.AllocatedHours);
+                                        int hh2 = timeSpan2.Hours;
+                                        int mm2 = timeSpan2.Minutes;
+                                        String total2 = hh2 + " h " + mm2 + " min";
+                                    }
+                                    <td>Planing</td>
+                                    <td>Start Date & Time : @Model.StartDate</td>
+                                    <td>End Date & Time : @Model.EndDate</td>
+                                    <td>Allocated : @total2 </td>
+                                </tr>
+                                
+                                @if (Model.TakenHours != 0)
+                                {
+                                    var timeSpan1 = TimeSpan.FromHours(Model.TakenHours);
+                                    int hh1 = timeSpan1.Hours;
+                                    int mm1 = timeSpan1.Minutes;
+                                    String total1 = hh1 + " h " + mm1 + " min";
+                                    <tr>
+                                        <td>Actual</td>
+                                        <td>Start Date & Time : @Model.ActualStartDateTime</td>
+                                        <td>End Date & Time : @Model.ActualEndDateTime</td>
+                                        <td>Time Taken : @total1</td>
+                                    </tr>
+                                }
+                        </table>
+                    </div>
+                </div>
+            </section>
+                </div>
+    </div>
+
+    @section Dashboard
+{
+        <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+        <script type="text/javascript" charset="utf8" src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.2.min.js"></script>
+        <script type="text/javascript" charset="utf8" src="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.4/jquery.dataTables.min.js"></script>
+
+        <script src="~/js/jquery.easypiechart.js"></script>
+        <script>
+            $(function () {
+                $(".chart").easyPieChart({
+
+                });
+            })
+        </script>
+        <script>
+            AOS.init();
+
+        </script>
+
+
+
+
+    }

@@ -1,0 +1,141 @@
+﻿@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Time Sheet";
+}
+
+@model IEnumerable<TimeSheetTaskModel>
+    <style>
+        div.col-6.group1 {
+            background-color: #526862;
+            padding: 10px 0 10px 0;
+            text-align: center;
+            border-right: solid white;
+            border-radius: 18px;
+        }
+    </style>
+
+
+<link href="~/CSS/TimeSheet.css" rel="stylesheet" />
+
+
+<div class="content" >
+    <br>
+    <div aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a asp-controller="EmployeeHome" asp-action="Portal">Home</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Time Sheet</li>
+
+        </ol>
+    </div>
+
+    <div style="display: flex; justify-content: space-between;">
+        <div class="float-left">
+            <h1 class="display-4">Daily Time Sheet</h1>
+        </div>
+        <div class="float-right mr-5">
+            <div class="row" style="font-family:Cambria">
+                <div class="col-6 group1" >
+                    <span><a asp-controller="StaffTimeSheet" asp-action="AddTask" class="text-white text-decoration-none">Generate New Task </a></span>
+                </div>
+                <div class="col-6 group1">
+                    <span><a asp-controller="StaffTimeSheet" asp-action="ViewTimeS" class="text-white text-decoration-none">View Time Sheets </a></span>
+                </div>
+                      </div>
+            
+            
+
+        </div>
+
+    </div>
+    <br>
+    <br>
+
+    <div class="row">
+        <div class="column left">
+            @if (ViewBag.TaskId != 0)
+            {
+                @await Component.InvokeAsync("TimeSheetForm", new { id = ViewBag.TaskId })
+                <br>
+            }
+            <div class="card text-center text-white" style="font-family:Cambria;border-bottom-width:10px;background:linear-gradient(to left,#607d8b, #173A47);">
+                <br>
+                <h4 class="container" style="text-align:center;border-color:black;">
+                    Daily Time Sheet<br>
+                    <span style="font-size:13pt"> @DateTime.Now.Day-@DateTime.Now.Month-@DateTime.Now.Year</span>
+
+                </h4>
+                <div class="card-body">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr class="text-center text-white">
+                                <th scope="col">Task</th>
+                                <th scope="col">Allocated Hours</th>
+                                <th scope="col">Start Time</th>
+                                <th scope="col">End Time</th>
+                                <th scope="col">Break Hours</th>
+                                <th scope="col">Total Hours</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            @if (Model.Count() == 0)
+                            {
+                                <tr>
+                                    <td colspan="6">
+                                        <div class="jumbotron jumbotron-fluid">
+                                            <div class="container">
+                                                <img src="~/images/task.png" />
+                                                <h3><b>Add Tasks</b></h3>
+                                                <p class="lead">You can add tasks from task list and submit your daily time sheet.</p>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+
+                            @foreach (var task in Model)
+                            {
+
+                                <tr class="text-white">
+
+                                    <td scope="row">@task.Name</td>
+                                    <td>@task.AllocatedHours</td>
+                                    @{
+                                        String start = string.Format("{0:hh:mm:ss tt}", task.ActualStartDateTime);
+                                        String end = string.Format("{0:hh:mm:ss tt}", task.ActualEndDateTime);
+                                    }
+                                    <td>@start</td>
+                                    <td>@end</td>
+                                    @{
+                                        var timeSpan2 = TimeSpan.FromHours(task.BreakHours);
+                                        int hh2 = timeSpan2.Hours;
+                                        int mm2 = timeSpan2.Minutes;
+                                        String total2 = hh2 + " h " + mm2 + " min";
+                                    }
+                                    <td>@total2</td>
+
+                                    @{
+                                        var timeSpan1 = TimeSpan.FromHours(task.TotalHours);
+                                        int hh1 = timeSpan1.Hours;
+                                        int mm1 = timeSpan1.Minutes;
+                                        String total = hh1 + " h " + mm1 + " min";
+                                    }
+                                    <td>@total</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="column right" style="background-color:ThreeDHighlight;font-family:Cambria">
+            @await Component.InvokeAsync("TaskList", new { id = ViewBag.EmpId })
+        </div>
+    </div>
+</div>
+
+@section TimeSheet{
+    <script type="text/javascript">
+
+    </script>
+}}

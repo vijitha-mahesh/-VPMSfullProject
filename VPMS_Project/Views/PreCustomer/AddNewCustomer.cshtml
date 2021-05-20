@@ -1,0 +1,56 @@
+﻿@model CustomerModel
+@{
+    ViewData["Title"] = "AddNewCustomer";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div id="addP1">
+    <div class="container">
+        <h3 class="display-4 text-center">Add New Customer</h3>
+        <hr />
+
+        @if (ViewBag.IsSuccess == true)
+        {
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <strong>Congratulations</strong> You have added new project successfulliy.<br />
+                Click <a asp-controller="PreCustomer" asp-action="GetCustomer" asp-route-id="@ViewBag.CustomerId">here</a> to view the details
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        }
+
+        <form method="post" asp-action="AddNewCustomer" asp-controller="PreCustomer">
+            <div class="form-group">
+                <label asp-for="name"></label>
+                <input asp-for="name" class="form-control" />
+                <span asp-validation-for="name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="address"></label>
+                <input asp-for="address" class="form-control" />
+                <span asp-validation-for="address" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="contactNumber"></label>
+                <input asp-for="contactNumber" class="form-control" />
+                <span asp-validation-for="contactNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="emailAddress"></label>
+                <input asp-for="emailAddress" class="form-control" />
+                <span asp-validation-for="emailAddress" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Add A Customer" class="btn btn-primary" />
+            </div>
+        </form>
+        <div>
+            <a asp-action="GetAllCustomers">Back to List</a>
+        </div>
+        <br />
+    </div>
+</div>
+
+
+
+
