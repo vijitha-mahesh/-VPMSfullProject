@@ -7,119 +7,119 @@
 
 @model DocumentModel
 
-    <div id="addP1">
+<div id="addP1">
 
-        <div class="container">
-            <h3 class="display-4 text-center">Add Project Document</h3>
-            <hr />
-            @if (ViewBag.IsSuccess == true)
-            {
-                <div class="alert alert-success alert-dismissible fade show" role="alert">
-                    <strong>Congratulations</strong> You have added new document successfulliy.<br />
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-            }
+    <div class="container">
+        <h3 class="display-4 text-center">Add Project Document</h3>
+        <hr />
+        @if (ViewBag.IsSuccess == true)
+        {
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <strong>Congratulations</strong> You have added new document successfulliy.<br />
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        }
 
 
-            <form method="post" enctype="multipart/form-data" asp-action="AddNewDocument" asp-controller="Document">
-                <div class="row">
+        <form method="post" enctype="multipart/form-data" asp-action="AddNewDocument" asp-controller="Document">
+            <div class="row">
+                <div class="col">
+                    @*<div class="form-group">
+                            <label asp-for="ProjectsID"></label>
+                            <select asp-for="ProjectsID" class="form-control" asp-items="ViewBag.projects">
+                                <option vlaue="">Please choose the project </option>
+                            </select>
+                            <span asp-validation-for="ProjectsID" class="text-danger"></span>
+                        </div>*@
+
                     <div class="col">
-                        @*<div class="form-group">
-                                <label asp-for="ProjectsID"></label>
-                                <select asp-for="ProjectsID" class="form-control" asp-items="ViewBag.projects">
-                                    <option vlaue="">Please choose the project </option>
-                                </select>
-                                <span asp-validation-for="ProjectsID" class="text-danger"></span>
-                            </div>*@
-
-                        <div class="col">
-                            <div class="form-group">
-                                <input text=@ViewBag.project.ID asp-for="ProjectsID" class="form-control" hidden />
-                                <label asp-for="ProjectsID"> @ViewBag.project.Title </label>
-                                <input text=@ViewBag.project.Title class="form-control" disabled />
-                                <span asp-validation-for="ProjectsID" class="text-danger"></span>
-                            </div>
-                        </div>
-
-
-                        <div class="form-row">
-                            <div class="col-4">
-                                <div class="form-group">
-                                    <label asp-for="ScopeDocument" class="control-lable"></label>
-                                    <div class="custom-file">
-                                        <input asp-for="ScopeDocument" class="custom-file-input" id="customeFile">
-                                        <label class="custom-file-label" for="customerFile">Choose file</label>
-                                    </div>
-                                    <span asp-validation-for="ScopeDocument" class="text-danger"></span>
-                                </div>
-                            </div>
-                            <div class="col-4">
-                                <div class="form-group">
-                                    <label asp-for="ActionPlan" class="control-lable"></label>
-                                    <div class="custom-file">
-                                        <input asp-for="ActionPlan" class="custom-file-input" id="customeFile">
-                                        <label class="custom-file-label" for="customerFile">Choose file</label>
-                                    </div>
-                                    <span asp-validation-for="ActionPlan" class="text-danger"></span>
-                                </div>
-                            </div>
-                            <div class="col-4">
-                                <div class="form-group">
-                                    <label asp-for="TimePlan" class="control-lable"></label>
-                                    <div class="custom-file">
-                                        <input asp-for="TimePlan" class="custom-file-input" id="customeFile">
-                                        <label class="custom-file-label" for="customerFile">Choose file</label>
-                                    </div>
-                                    <span asp-validation-for="TimePlan" class="text-danger"></span>
-                                </div>
-                            </div>
-                        </div>
                         <div class="form-group">
-                            <input type="submit" value="Add Document" class="btn btn-primary" />
+                            <input text=@ViewBag.project.ID asp-for="ProjectsID" class="form-control" hidden />
+                            <label> @ViewBag.project.Title </label>
+                            <input text=@ViewBag.project.Title class="form-control" disabled />
+                            <span asp-validation-for="ProjectsID" class="text-danger"></span>
                         </div>
+                    </div>
+
+
+                    <div class="form-row">
+                        <div class="col-4">
+                            <div class="form-group">
+                                <label asp-for="ScopeDocument" class="control-lable"></label>
+                                <div class="custom-file">
+                                    <input asp-for="ScopeDocument" class="custom-file-input" id="customeFile">
+                                    <label class="custom-file-label" for="customerFile">Choose file</label>
+                                </div>
+                                <span asp-validation-for="ScopeDocument" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="form-group">
+                                <label asp-for="ActionPlan" class="control-lable"></label>
+                                <div class="custom-file">
+                                    <input asp-for="ActionPlan" class="custom-file-input" id="customeFile">
+                                    <label class="custom-file-label" for="customerFile">Choose file</label>
+                                </div>
+                                <span asp-validation-for="ActionPlan" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="form-group">
+                                <label asp-for="TimePlan" class="control-lable"></label>
+                                <div class="custom-file">
+                                    <input asp-for="TimePlan" class="custom-file-input" id="customeFile">
+                                    <label class="custom-file-label" for="customerFile">Choose file</label>
+                                </div>
+                                <span asp-validation-for="TimePlan" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Add Document" class="btn btn-primary" />
                     </div>
                 </div>
-            </form>
-            <div>
-                <partial name="GetDocument" model="@ViewData["Document"]" />
             </div>
-
-            @*<div class="row">
-                    <div class="col">
-                        <div class="card" style="width: 14rem;">
-                            <div class="card-body">
-                                <h5 class="card-title">Scope Document</h5>
-                                <p class="card-text">Scope Document</p>
-                                <a href="#" class="btn btn-primary">Go somewhere</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="card" style="width: 14rem;">
-                            <div class="card-body">
-                                <h5 class="card-title">Action Plan</h5>
-                                <p class="card-text">Action Plan</p>
-                                <a href="#" class="btn btn-primary">Go somewhere</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="card" style="width: 14rem;">
-                            <div class="card-body">
-                                <h5 class="card-title">Time Plan</h5>
-                                <p class="card-text">TimePlanUrl</p>
-                                <a href="#" class="btn btn-primary">Go somewhere</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>*@
-            <div>
-                <a asp-controller="Project" asp-action="GetAllProjects" class="btn btn-link">Back to Project List</a>
-            </div>
+        </form>
+        <div>
+            <partial name="GetDocument" model="@ViewData["Document"]" />
         </div>
 
+        @*<div class="row">
+                <div class="col">
+                    <div class="card" style="width: 14rem;">
+                        <div class="card-body">
+                            <h5 class="card-title">Scope Document</h5>
+                            <p class="card-text">Scope Document</p>
+                            <a href="#" class="btn btn-primary">Go somewhere</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card" style="width: 14rem;">
+                        <div class="card-body">
+                            <h5 class="card-title">Action Plan</h5>
+                            <p class="card-text">Action Plan</p>
+                            <a href="#" class="btn btn-primary">Go somewhere</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card" style="width: 14rem;">
+                        <div class="card-body">
+                            <h5 class="card-title">Time Plan</h5>
+                            <p class="card-text">TimePlanUrl</p>
+                            <a href="#" class="btn btn-primary">Go somewhere</a>
+                        </div>
+                    </div>
+                </div>
+            </div>*@
+        <div>
+            <a asp-controller="Project" asp-action="GetAllProjects" class="btn btn-link">Back to Project List</a>
+        </div>
     </div>
+
+</div>
 
 

@@ -14,23 +14,23 @@ namespace VPMS_Project.Models
 
         public Repo(EmpStoreContext context)
         {
-             _context =context;
+            _context = context;
         }
 
         public async Task<List<Project>> GetProjects()
         {
             var projects = new List<Project>();
             var AllProjects = await _context.Projects.OrderByDescending(x => x.Id).ToListAsync();
-            if(AllProjects?.Any() == true)
+            if (AllProjects?.Any() == true)
             {
-                foreach(var project in AllProjects)
+                foreach (var project in AllProjects)
                 {
                     projects.Add(new Project()
                     {
                         Id = project.Id,
                         Description = project.Description,
                         Name = project.Name,
-                        Status= project.Status
+                        Status = project.Status
                     });
                 }
             }
@@ -45,15 +45,15 @@ namespace VPMS_Project.Models
             {
                 foreach (var project in AllProjects)
                 {
-                    var pm =await _context.Employees.FindAsync(project.EmployeesId);
+                    var pm = await _context.Employees.FindAsync(project.EmployeesId);
 
                     var cus = "none";
-                    if(project.CustomersId != null)
+                    if (project.CustomersId != null)
                     {
                         var customer = await _context.Customers.FindAsync(project.CustomersId);
                         cus = customer.Name;
                     }
-                    
+
 
 
                     projects.Add(new Project2()
@@ -65,13 +65,13 @@ namespace VPMS_Project.Models
                         ProjectManagerName = pm.EmpFName,
                         Cost = project.Cost,
                         Budget = project.EstimetedBudget,
-                        ContractValue = (project.ContractValue == null)?0:project.ContractValue,
+                        ContractValue = (project.ContractValue == null) ? 0 : project.ContractValue,
                         CustomerName = cus,
                         Completion = 0,
-                        CurrentProfit = (project.ContractValue == null) ?0 :(Math.Round((double)((project.ContractValue - project.Cost) / project.ContractValue * 100))) ,
-                        TargetProfit = (project.ContractValue == null || project.EstimetedBudget==0)?0:(Math.Round((double)((project.ContractValue - project.EstimetedBudget) / project.ContractValue * 100)))
+                        CurrentProfit = (project.ContractValue == null) ? 0 : (Math.Round((double)((project.ContractValue - project.Cost) / project.ContractValue * 100))),
+                        TargetProfit = (project.ContractValue == null || project.EstimetedBudget == 0) ? 0 : (Math.Round((double)((project.ContractValue - project.EstimetedBudget) / project.ContractValue * 100)))
 
-                }) ;
+                    });
                 }
             }
             return projects;
@@ -81,7 +81,7 @@ namespace VPMS_Project.Models
         public async Task<List<Project>> GetProjectsByManager(int id)
         {
             var projects = new List<Project>();
-            var AllProjects = await _context.Projects.Where(x =>x.EmployeesId==id && x.DeliveryDate > DateTime.Now).OrderByDescending(x => x.Id).ToListAsync();
+            var AllProjects = await _context.Projects.Where(x => x.EmployeesId == id && x.DeliveryDate > DateTime.Now).OrderByDescending(x => x.Id).ToListAsync();
             if (AllProjects?.Any() == true)
             {
                 foreach (var project in AllProjects)
@@ -99,7 +99,7 @@ namespace VPMS_Project.Models
         public async Task<List<Project>> GetProjectsByType(String type)
         {
             var projects = new List<Project>();
-            var AllProjects = await _context.Projects.Where(x => x.Type == type ).OrderByDescending(x => x.Id).ToListAsync();
+            var AllProjects = await _context.Projects.Where(x => x.Type == type).OrderByDescending(x => x.Id).ToListAsync();
             if (AllProjects?.Any() == true)
             {
                 foreach (var project in AllProjects)
@@ -119,26 +119,26 @@ namespace VPMS_Project.Models
         public async Task<List<Project>> GetProjectsByState(String state)
         {
             var projects = new List<Project>();
-            if(state == "Good")
-            
+            if (state == "Good")
+
             {
-         var AllProjects = await _context.Projects.Where(x => (x.DeliveryDate > x.ClosedDate) && (x.EstimetedBudget > x.Cost)).OrderByDescending(x => x.Id).ToListAsync();
-            if (AllProjects?.Any() == true)
-            {
-                foreach (var project in AllProjects)
+                var AllProjects = await _context.Projects.Where(x => (x.DeliveryDate > x.ClosedDate) && (x.EstimetedBudget > x.Cost)).OrderByDescending(x => x.Id).ToListAsync();
+                if (AllProjects?.Any() == true)
                 {
-                    projects.Add(new Project()
+                    foreach (var project in AllProjects)
                     {
-                        Id = project.Id,
-                        Description = project.Description,
-                        Name = project.Name,
-                        Status = project.Status
-                    });
+                        projects.Add(new Project()
+                        {
+                            Id = project.Id,
+                            Description = project.Description,
+                            Name = project.Name,
+                            Status = project.Status
+                        });
+                    }
                 }
-            }
 
             }
-            else if(state == "Amature")
+            else if (state == "Amature")
             {
 
                 var AllProjects = await _context.Projects.Where(x => (x.DeliveryDate == x.ClosedDate) || (x.EstimetedBudget == x.Cost)).OrderByDescending(x => x.Id).ToListAsync();
@@ -176,7 +176,7 @@ namespace VPMS_Project.Models
                 }
 
             }
-           
+
             return projects;
         }
 
@@ -248,6 +248,7 @@ namespace VPMS_Project.Models
                     Cost = project.Cost,
                     AllocatedTasks = project.AllocatedTasks,
                     FinalizedTasks = project.FinalizedTasks,
+                    PreProjectId = project.PreProjectId,
                 };
                 return details;
             }
@@ -259,7 +260,7 @@ namespace VPMS_Project.Models
         {
             var proj = await _context.Projects.FindAsync(project.Id);
 
-        
+
             proj.Description = project.Description;
             proj.Name = project.Name;
             proj.Type = project.Type;
@@ -272,7 +273,7 @@ namespace VPMS_Project.Models
             proj.CustomersId = project.CustomerId;
             proj.Status = project.Status;
             proj.Cost = project.Cost + project.ExtraCost;
-            if(project.Status == "Closed")
+            if (project.Status == "Closed")
             {
                 proj.ClosedDate = DateTime.Now;
             }
@@ -284,7 +285,7 @@ namespace VPMS_Project.Models
 
         }
 
-        public async Task<int>  AddProject(Project project)
+        public async Task<int> AddProject(Project project)
         {
 
             var NewProject = new Projects
@@ -315,7 +316,7 @@ namespace VPMS_Project.Models
         {
             var project = await _context.Projects.FindAsync(id);
 
-             _context.Projects.Remove(project);
+            _context.Projects.Remove(project);
             await _context.SaveChangesAsync();
             return true;
 
@@ -325,18 +326,18 @@ namespace VPMS_Project.Models
         {
             var project = await _context.Projects.FindAsync(id);
             var Emp = await _context.Employees.FindAsync(project.EmployeesId);
-            String CustomerName ;
+            String CustomerName;
             if (project.CustomersId != null)
             {
-             var Cus = await _context.Customers.FindAsync(project.CustomersId);
+                var Cus = await _context.Customers.FindAsync(project.CustomersId);
                 CustomerName = Cus.Name;
             }
             else
             {
-              CustomerName = "none";
+                CustomerName = "none";
             }
- 
-            
+
+
             var NewProject = new DeletedProjects
             {
                 Description = project.Description,
@@ -348,7 +349,7 @@ namespace VPMS_Project.Models
                 LastUpdate = project.LastUpdate,
                 ContractValue = project.ContractValue,
                 EstimetedBudget = project.EstimetedBudget,
-                ProjectManager = Emp.EmpFName+" "+Emp.EmpLName,
+                ProjectManager = Emp.EmpFName + " " + Emp.EmpLName,
                 Status = project.Status,
                 Cost = project.Cost,
                 CustomerName = CustomerName
@@ -371,15 +372,15 @@ namespace VPMS_Project.Models
                 {
                     if (project.Name.Contains(Name))
                     {
-                    projects.Add(new Project()
-                    {
-                        Id = project.Id,
-                        Description = project.Description,
-                        Name = project.Name,
-                        Status = project.Status
-                    });
+                        projects.Add(new Project()
+                        {
+                            Id = project.Id,
+                            Description = project.Description,
+                            Name = project.Name,
+                            Status = project.Status
+                        });
                     }
-                    
+
                 }
             }
             return projects;
@@ -400,11 +401,11 @@ namespace VPMS_Project.Models
                     {
                         arr[j]++;
                     }
-                }  
+                }
             }
-            for(int i=0; i<4; i++)
+            for (int i = 0; i < 4; i++)
             {
-                projects.Add (new Status()
+                projects.Add(new Status()
                 {
                     ProjectType = arr2[i],
                     Count = arr[i]
@@ -418,7 +419,7 @@ namespace VPMS_Project.Models
         {
             int month = DateTime.Now.Month;
             int year = DateTime.Now.Year;
-            var data = await _context.Projects.Where(x=> (x.StartDate.Month == month) && (x.StartDate.Year ==year)).ToListAsync();
+            var data = await _context.Projects.Where(x => (x.StartDate.Month == month) && (x.StartDate.Year == year)).ToListAsync();
             int[] arr = new int[4] { 0, 0, 0, 0 };
             string[] arr2 = new string[4] { "Project", "Maintainance", "R and D", "Internal" };
             var projects = new List<Status>();
@@ -591,7 +592,7 @@ namespace VPMS_Project.Models
         public async Task<List<Status>> ProjectStatus5()
         {
             var data = await _context.Projects.ToListAsync();
-            int[] arr = new int[5] { 0, 0, 0,0,0 };
+            int[] arr = new int[5] { 0, 0, 0, 0, 0 };
             string[] arr2 = new string[5] { "Good", "Amature", "Over Margin-Stage1", "Over Margin-Stage2", "Over Margin-Stage3" };
             var projects = new List<Status>();
             foreach (var dat in data)

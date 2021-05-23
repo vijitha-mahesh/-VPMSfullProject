@@ -33,6 +33,7 @@ namespace VPMS_Project.Models
         public int FinalizedTasks { get; set; }
         public int? CustomerId { get; set; }
         public string CustomerName { get; set; }
+        public int PreProjectId { get; set; }
 
     }
 }

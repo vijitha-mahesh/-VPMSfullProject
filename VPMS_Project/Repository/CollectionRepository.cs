@@ -21,6 +21,8 @@ namespace VPMS_Project.Repository
 
         public async Task<int> AddNewCollection(CollectionModel model)
         {
+
+
             var newCollection = new PreSalescollection()
             {
                 Description = model.Description,

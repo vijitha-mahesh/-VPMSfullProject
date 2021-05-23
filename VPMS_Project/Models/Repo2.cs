@@ -17,14 +17,14 @@ namespace VPMS_Project.Models
         private readonly EmpStoreContext _context = null;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
-        
 
-        public Repo2(EmpStoreContext context, UserManager<ApplicationUser> userManager,SignInManager<ApplicationUser> signInManager)
+
+        public Repo2(EmpStoreContext context, UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager)
         {
             _context = context;
             _userManager = userManager;
             _signInManager = signInManager;
-            
+
         }
 
         public async Task<List<Employee>> GetEmployeeByTitle(String title)
@@ -34,7 +34,7 @@ namespace VPMS_Project.Models
             {
 
                 Id = x.EmpId,
-                Name = x.EmpFName+" "+x.EmpLName,
+                Name = x.EmpFName + " " + x.EmpLName,
                 Designation = x.Designation
             }).ToListAsync();
 
@@ -69,11 +69,11 @@ namespace VPMS_Project.Models
 
             }).ToListAsync();
 
-            for(int i=0; i<data1.Count(); i++)
+            for (int i = 0; i < data1.Count(); i++)
             {
-                foreach(var emp in data2)
+                foreach (var emp in data2)
                 {
-                    if(emp.projectManagerId == data1[i].Id)
+                    if (emp.projectManagerId == data1[i].Id)
                     {
                         list1.Add(emp.Name);
                         list2.Add(emp.Id);
@@ -86,12 +86,12 @@ namespace VPMS_Project.Models
                     Ids = new List<int>(list2),
                     Count = list1.Count()
 
-                }) ;
+                });
                 list1.Clear();
                 list2.Clear();
             }
 
-           
+
             return data;
         }
 
@@ -99,7 +99,7 @@ namespace VPMS_Project.Models
         {
             var data = await _context.Employees.FindAsync(Id);
 
-            return data.EmpFName+" "+data.EmpLName;
+            return data.EmpFName + " " + data.EmpLName;
         }
 
         public async Task<List<String>> GetEmpoyeesTitles()
@@ -153,9 +153,33 @@ namespace VPMS_Project.Models
             proj.Cost = proj.Cost + (rate * hours);
             proj.FinalizedTasks = proj.FinalizedTasks + 1;
 
+            var collections = _context.PreSalescollection.Where(x => x.ProjecstID == projectId).ToList();
+            double cumilativeCollectionValue = collections[0].value;
+
+            try
+            {
+                for (int i = 0; i < collections.Count; i++)
+                {
+                    if (cumilativeCollectionValue < proj.Cost && cumilativeCollectionValue + collections[i + 1].value < proj.Cost)
+                    {
+                        Utility.EmailSender.BudgetRemainder();
+                        break;
+                    }
+                    if (i != 0)
+                    {
+                        cumilativeCollectionValue = cumilativeCollectionValue + collections[i].value;
+                    }
+
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
             _context.Entry(proj).State = EntityState.Modified;
             await _context.SaveChangesAsync();
-
             return true;
         }
         public async Task<bool> DeductCost(int id)
@@ -203,28 +227,28 @@ namespace VPMS_Project.Models
         {
             var data = new List<JobModel>();
 
-            var list =await _context.Job.ToListAsync();
+            var list = await _context.Job.ToListAsync();
             var list2 = await _context.Salarys.ToListAsync();
-            
-            foreach(var dat in list)
+
+            foreach (var dat in list)
             {
-              int count=0;
-                foreach(var dat2 in list2)
+                int count = 0;
+                foreach (var dat2 in list2)
                 {
-                    if(dat2.Designation != dat.JobName)
+                    if (dat2.Designation != dat.JobName)
                     {
-                       count++;
+                        count++;
                     }
                     if (count == list2.Count())
                     {
                         data.Add(new JobModel()
-                      {
-                        JobName = dat.JobName,
-                        JobId = dat.JobId
-                      });
+                        {
+                            JobName = dat.JobName,
+                            JobId = dat.JobId
+                        });
                     }
                 }
-                
+
             }
             return data;
         }
@@ -279,7 +303,7 @@ namespace VPMS_Project.Models
             return true;
 
         }
-        [ResponseCache(Duration =0, NoStore = true)]
+        [ResponseCache(Duration = 0, NoStore = true)]
         public async Task<int> AddTask(Taskz Task)
         {
             var employee = await _context.Employees.FindAsync(Task.EmployeeId);
@@ -296,7 +320,7 @@ namespace VPMS_Project.Models
                 CreatedDate = DateTime.UtcNow,
                 LastUpdate = DateTime.UtcNow,
                 EmployeesId = Task.EmployeeId,
-                EmployeeName = employee.EmpFName+" "+employee.EmpLName,
+                EmployeeName = employee.EmpFName + " " + employee.EmpLName,
                 ProjectName = project.Name,
                 ProjectManager = Task.ProjectManager,
                 ProjectManagerId = Task.ProjectManagerId,
@@ -346,7 +370,7 @@ namespace VPMS_Project.Models
                 {
                     tasks.Add(new Taskz()
                     {
-                        TimeSheet =task.TimeSheet,
+                        TimeSheet = task.TimeSheet,
                         StartDate = task.StartDate,
                         EndDate = task.EndDate
                     });
@@ -359,25 +383,25 @@ namespace VPMS_Project.Models
             int today = 0;
             int pending = 0;
 
-           foreach(var task in tasks)
+            foreach (var task in tasks)
             {
                 if (task.TimeSheet == true)
                 {
                     finalized++;
                 }
-                if(task.EndDate < DateTime.Now)
+                if (task.EndDate < DateTime.Now)
                 {
                     timeout++;
                 }
-                if(task.StartDate.Date == DateTime.Today || task.EndDate.Date == DateTime.Today)
+                if (task.StartDate.Date == DateTime.Today || task.EndDate.Date == DateTime.Today)
                 {
                     today++;
                 }
-                if(task.StartDate > DateTime.Now)
+                if (task.StartDate > DateTime.Now)
                 {
                     pending++;
                 }
-                if(task.EndDate >= DateTime.Now && task.StartDate <= DateTime.Now)
+                if (task.EndDate >= DateTime.Now && task.StartDate <= DateTime.Now)
                 {
                     ongoing++;
                 }
@@ -397,17 +421,17 @@ namespace VPMS_Project.Models
 
         public async Task<TaskCount> TaskOverview2()
         {
-           
-            var AllTasks = await _context.Tasks.Where(task=> task.StartDate.Date == DateTime.Today || task.EndDate.Date == DateTime.Today).ToListAsync();
+
+            var AllTasks = await _context.Tasks.Where(task => task.StartDate.Date == DateTime.Today || task.EndDate.Date == DateTime.Today).ToListAsync();
             var count = new TaskCount();
             if (AllTasks?.Any() == true)
             {
-                      
-            int total = AllTasks.Count();
-            int ongoing = 0;
-            int timeout = 0;
-            int finalized = 0;
-            int pending = 0;
+
+                int total = AllTasks.Count();
+                int ongoing = 0;
+                int timeout = 0;
+                int finalized = 0;
+                int pending = 0;
 
                 foreach (var task in AllTasks)
                 {
@@ -428,14 +452,14 @@ namespace VPMS_Project.Models
                         ongoing++;
                     }
                 }
-            
 
-            count.Total = total;
-            count.Ongoing = ongoing;
-            count.Pending = pending;
-            count.Finalized = finalized;
-            count.TimeOut = timeout;
-         }
+
+                count.Total = total;
+                count.Ongoing = ongoing;
+                count.Pending = pending;
+                count.Finalized = finalized;
+                count.TimeOut = timeout;
+            }
             return count;
 
         }
@@ -444,7 +468,7 @@ namespace VPMS_Project.Models
         {
             var list = new List<PreTaskModel>();
             var data = _context.PreSalesTasks.Where(task => task.ProjectsID == id && task.IsAssigned == false).ToList();
-            foreach(var task  in data)
+            foreach (var task in data)
             {
                 list.Add(new PreTaskModel
                 {
@@ -457,459 +481,459 @@ namespace VPMS_Project.Models
 
         public IQueryable<Tasks> GetTasks2Async(int id)
         {
-            
+
             if (id == 0)
             {
-              var  data1 = _context.Tasks.AsQueryable();
+                var data1 = _context.Tasks.AsQueryable();
                 return data1;
             }
             else
             {
-               var data2 = _context.Tasks.Where(task => task.ProjectsId == id);
-               return data2;
+                var data2 = _context.Tasks.Where(task => task.ProjectsId == id);
+                return data2;
             }
-             
-            
+
+
 
         }
 
         public async Task<List<Taskz>> GetTasks(int count, int emp, int proj, String state)
         {
             var tasks = new List<Taskz>();
-            var AllTasks = await _context.Tasks.OrderByDescending(x=> x.Id).ToListAsync() ;
-            
-           
-                if (AllTasks?.Any() == true)
+            var AllTasks = await _context.Tasks.OrderByDescending(x => x.Id).ToListAsync();
+
+
+            if (AllTasks?.Any() == true)
+            {
+
+                if ((emp == 0) && (proj == 0) && (state == null))
                 {
 
-                    if ((emp == 0) && (proj == 0) && (state == null))
+                    foreach (var task in AllTasks)
                     {
-
+                        tasks.Add(new Taskz()
+                        {
+                            Id = task.Id,
+                            Description = task.Description,
+                            Name = task.Name,
+                            StartDate = task.StartDate,
+                            EndDate = task.EndDate,
+                            project = task.ProjectName,
+                            Employee = task.EmployeeName,
+                            CreatedDate = task.CreatedDate,
+                            TimeSheet = task.TimeSheet,
+                            LastUpdate = task.LastUpdate,
+                            ProjectManager = task.ProjectManager
+                        });
+                    }
+                }
+                else if ((emp == 0) && (proj == 0))
+                {
+                    if (state.Equals("finalized"))
+                    {
                         foreach (var task in AllTasks)
                         {
-                            tasks.Add(new Taskz()
+                            if (task.TimeSheet == true)
                             {
-                                Id = task.Id,
-                                Description = task.Description,
-                                Name = task.Name,
-                                StartDate = task.StartDate,
-                                EndDate = task.EndDate,
-                                project = task.ProjectName,
-                                Employee = task.EmployeeName,
-                                CreatedDate = task.CreatedDate,
-                                TimeSheet = task.TimeSheet,
-                                LastUpdate =task.LastUpdate,
-                                ProjectManager =task.ProjectManager
-                            });
+                                tasks.Add(new Taskz()
+                                {
+                                    Id = task.Id,
+                                    Description = task.Description,
+                                    Name = task.Name,
+                                    StartDate = task.StartDate,
+                                    EndDate = task.EndDate,
+                                    project = task.ProjectName,
+                                    Employee = task.EmployeeName,
+                                    CreatedDate = task.CreatedDate,
+                                    TimeSheet = task.TimeSheet,
+                                    LastUpdate = task.LastUpdate,
+                                    ProjectManager = task.ProjectManager
+                                });
+                            }
                         }
                     }
-                    else if ((emp == 0) && (proj == 0))
+                    if (state.Equals("timeout"))
                     {
-                        if (state.Equals("finalized"))
+                        foreach (var task in AllTasks)
                         {
-                            foreach (var task in AllTasks)
+                            if (task.EndDate < DateTime.Now)
                             {
-                                if (task.TimeSheet == true)
+                                tasks.Add(new Taskz()
                                 {
-                                    tasks.Add(new Taskz()
-                                    {
-                                        Id = task.Id,
-                                        Description = task.Description,
-                                        Name = task.Name,
-                                        StartDate = task.StartDate,
-                                        EndDate = task.EndDate,
-                                        project = task.ProjectName,
-                                        Employee = task.EmployeeName,
-                                        CreatedDate = task.CreatedDate,
-                                        TimeSheet = task.TimeSheet,
-                                        LastUpdate = task.LastUpdate,
-                                        ProjectManager = task.ProjectManager
-                                    });
-                                }
+                                    Id = task.Id,
+                                    Description = task.Description,
+                                    Name = task.Name,
+                                    StartDate = task.StartDate,
+                                    EndDate = task.EndDate,
+                                    project = task.ProjectName,
+                                    Employee = task.EmployeeName,
+                                    CreatedDate = task.CreatedDate,
+                                    TimeSheet = task.TimeSheet,
+                                    LastUpdate = task.LastUpdate,
+                                    ProjectManager = task.ProjectManager
+                                });
                             }
                         }
-                        if (state.Equals("timeout"))
-                        {
-                            foreach (var task in AllTasks)
-                            {
-                                if (task.EndDate < DateTime.Now)
-                                {
-                                    tasks.Add(new Taskz()
-                                    {
-                                        Id = task.Id,
-                                        Description = task.Description,
-                                        Name = task.Name,
-                                        StartDate = task.StartDate,
-                                        EndDate = task.EndDate,
-                                         project = task.ProjectName,
-                                         Employee = task.EmployeeName,
-                                          CreatedDate = task.CreatedDate,
-                                        TimeSheet = task.TimeSheet,
-                                        LastUpdate = task.LastUpdate,
-                                        ProjectManager = task.ProjectManager
-                                    });
-                                }
-                            }
-                        }
-                        if (state.Equals("today"))
-                        {
-                            foreach (var task in AllTasks)
-                            {
-                                if (task.StartDate.Date == DateTime.Today || task.EndDate.Date == DateTime.Today)
-                                {
-                                    tasks.Add(new Taskz()
-                                    {
-                                        Id = task.Id,
-                                        Description = task.Description,
-                                        Name = task.Name,
-                                        StartDate = task.StartDate,
-                                        EndDate = task.EndDate,
-                                        project = task.ProjectName,
-                                        Employee = task.EmployeeName,
-                                        CreatedDate = task.CreatedDate,
-                                        TimeSheet = task.TimeSheet,
-                                        LastUpdate = task.LastUpdate,
-                                        ProjectManager = task.ProjectManager
-                                    });
-                                }
-                            }
-                        }
-                        if (state.Equals("pending"))
-                        {
-                            foreach (var task in AllTasks)
-                            {
-                                if (task.StartDate > DateTime.Now )
-                                {
-                                    tasks.Add(new Taskz()
-                                    {
-                                        Id = task.Id,
-                                        Description = task.Description,
-                                        Name = task.Name,
-                                        StartDate = task.StartDate,
-                                        EndDate = task.EndDate,
-                                        project = task.ProjectName,
-                                        Employee = task.EmployeeName,
-                                        CreatedDate = task.CreatedDate,
-                                        TimeSheet = task.TimeSheet,
-                                        LastUpdate = task.LastUpdate,
-                                        ProjectManager = task.ProjectManager
-                                    });
-                                }
-                            }
-                        }
-                        if (state.Equals("ongoing"))
-                        {
-                            foreach (var task in AllTasks)
-                            {
-                                if (task.EndDate >= DateTime.Now && task.StartDate <= DateTime.Now)
-                                {
-                                    tasks.Add(new Taskz()
-                                    {
-                                        Id = task.Id,
-                                        Description = task.Description,
-                                        Name = task.Name,
-                                        StartDate = task.StartDate,
-                                        EndDate = task.EndDate,
-                                        project = task.ProjectName,
-                                        Employee = task.EmployeeName,
-                                        CreatedDate = task.CreatedDate,
-                                        TimeSheet = task.TimeSheet,
-                                        LastUpdate = task.LastUpdate,
-                                        ProjectManager = task.ProjectManager
-                                    });
-                                }
-                            }
-                        }
-
-
                     }
-                    else if (state == null)
+                    if (state.Equals("today"))
                     {
-                        if (proj == 0)
+                        foreach (var task in AllTasks)
                         {
-                            foreach (var task in AllTasks)
+                            if (task.StartDate.Date == DateTime.Today || task.EndDate.Date == DateTime.Today)
                             {
-                                if (task.EmployeesId == emp)
+                                tasks.Add(new Taskz()
                                 {
-                                    tasks.Add(new Taskz()
-                                    {
-                                        Id = task.Id,
-                                        Description = task.Description,
-                                        Name = task.Name,
-                                        StartDate = task.StartDate,
-                                        EndDate = task.EndDate,
-                                        project = task.ProjectName,
-                                        Employee = task.EmployeeName,
-                                        CreatedDate = task.CreatedDate,
-                                        TimeSheet = task.TimeSheet,
-                                        LastUpdate = task.LastUpdate,
-                                        ProjectManager = task.ProjectManager
-                                    });
-                                }
+                                    Id = task.Id,
+                                    Description = task.Description,
+                                    Name = task.Name,
+                                    StartDate = task.StartDate,
+                                    EndDate = task.EndDate,
+                                    project = task.ProjectName,
+                                    Employee = task.EmployeeName,
+                                    CreatedDate = task.CreatedDate,
+                                    TimeSheet = task.TimeSheet,
+                                    LastUpdate = task.LastUpdate,
+                                    ProjectManager = task.ProjectManager
+                                });
                             }
                         }
-                        else
-                        {
-                            foreach (var task in AllTasks)
-                            {
-                                if (task.ProjectsId == proj)
-                                {
-                                    tasks.Add(new Taskz()
-                                    {
-                                        Id = task.Id,
-                                        Description = task.Description,
-                                        Name = task.Name,
-                                        StartDate = task.StartDate,
-                                        EndDate = task.EndDate,
-                                        project = task.ProjectName,
-                                        Employee = task.EmployeeName,
-                                        CreatedDate = task.CreatedDate,
-                                        TimeSheet = task.TimeSheet,
-                                        LastUpdate = task.LastUpdate,
-                                        ProjectManager = task.ProjectManager
-                                    });
-                                }
-                            }
-                        }
-
                     }
-                    else if (emp == 0)
+                    if (state.Equals("pending"))
                     {
-                        if (state.Equals("finalized"))
+                        foreach (var task in AllTasks)
                         {
-                            foreach (var task in AllTasks)
+                            if (task.StartDate > DateTime.Now)
                             {
-                                if (task.TimeSheet == true && task.ProjectsId == proj)
+                                tasks.Add(new Taskz()
                                 {
-                                    tasks.Add(new Taskz()
-                                    {
-                                        Id = task.Id,
-                                        Description = task.Description,
-                                        Name = task.Name,
-                                        StartDate = task.StartDate,
-                                        EndDate = task.EndDate,
-                                        project = task.ProjectName,
-                                        Employee = task.EmployeeName,
-                                        CreatedDate = task.CreatedDate,
-                                        TimeSheet = task.TimeSheet,
-                                        LastUpdate = task.LastUpdate,
-                                        ProjectManager = task.ProjectManager
-                                    });
-                                }
+                                    Id = task.Id,
+                                    Description = task.Description,
+                                    Name = task.Name,
+                                    StartDate = task.StartDate,
+                                    EndDate = task.EndDate,
+                                    project = task.ProjectName,
+                                    Employee = task.EmployeeName,
+                                    CreatedDate = task.CreatedDate,
+                                    TimeSheet = task.TimeSheet,
+                                    LastUpdate = task.LastUpdate,
+                                    ProjectManager = task.ProjectManager
+                                });
                             }
                         }
-                        if (state.Equals("timeout"))
+                    }
+                    if (state.Equals("ongoing"))
+                    {
+                        foreach (var task in AllTasks)
                         {
-                            foreach (var task in AllTasks)
+                            if (task.EndDate >= DateTime.Now && task.StartDate <= DateTime.Now)
                             {
-                                if (task.EndDate < DateTime.Now && task.ProjectsId == proj)
+                                tasks.Add(new Taskz()
                                 {
-                                    tasks.Add(new Taskz()
-                                    {
-                                        Id = task.Id,
-                                        Description = task.Description,
-                                        Name = task.Name,
-                                        StartDate = task.StartDate,
-                                        EndDate = task.EndDate,
-                                        project = task.ProjectName,
-                                        Employee = task.EmployeeName,
-                                        CreatedDate = task.CreatedDate,
-                                        TimeSheet = task.TimeSheet,
-                                        LastUpdate = task.LastUpdate,
-                                        ProjectManager = task.ProjectManager
-                                    });
-                                }
-                            }
-                        }
-                        if (state.Equals("today"))
-                        {
-                            foreach (var task in AllTasks)
-                            {
-                                if ((task.StartDate.Date == DateTime.Today || task.EndDate.Date == DateTime.Today)&& task.ProjectsId == proj)
-                                {
-                                    tasks.Add(new Taskz()
-                                    {
-                                        Id = task.Id,
-                                        Description = task.Description,
-                                        Name = task.Name,
-                                        StartDate = task.StartDate,
-                                        EndDate = task.EndDate,
-                                        project = task.ProjectName,
-                                        Employee = task.EmployeeName,
-                                        CreatedDate = task.CreatedDate,
-                                        TimeSheet = task.TimeSheet,
-                                        LastUpdate = task.LastUpdate,
-                                        ProjectManager = task.ProjectManager
-                                    });
-                                }
-                            }
-                        }
-                        if (state.Equals("pending"))
-                        {
-                            foreach (var task in AllTasks)
-                            {
-                                if (task.StartDate > DateTime.Now && task.ProjectsId == proj)
-                                {
-                                    tasks.Add(new Taskz()
-                                    {
-                                        Id = task.Id,
-                                        Description = task.Description,
-                                        Name = task.Name,
-                                        StartDate = task.StartDate,
-                                        EndDate = task.EndDate,
-                                        project = task.ProjectName,
-                                        Employee = task.EmployeeName,
-                                        CreatedDate = task.CreatedDate,
-                                        TimeSheet = task.TimeSheet,
-                                        LastUpdate = task.LastUpdate,
-                                        ProjectManager = task.ProjectManager
-                                    });
-                                }
-                            }
-                        }
-                        if (state.Equals("ongoing"))
-                        {
-                            foreach (var task in AllTasks)
-                            {
-                                if (task.EndDate >= DateTime.Now && task.StartDate <= DateTime.Now && task.ProjectsId == proj)
-                                {
-                                    tasks.Add(new Taskz()
-                                    {
-                                        Id = task.Id,
-                                        Description = task.Description,
-                                        Name = task.Name,
-                                        StartDate = task.StartDate,
-                                        EndDate = task.EndDate,
-                                        project = task.ProjectName,
-                                        Employee = task.EmployeeName,
-                                        CreatedDate = task.CreatedDate,
-                                        TimeSheet = task.TimeSheet,
-                                        LastUpdate = task.LastUpdate,
-                                        ProjectManager = task.ProjectManager
-                                    });
-                                }
+                                    Id = task.Id,
+                                    Description = task.Description,
+                                    Name = task.Name,
+                                    StartDate = task.StartDate,
+                                    EndDate = task.EndDate,
+                                    project = task.ProjectName,
+                                    Employee = task.EmployeeName,
+                                    CreatedDate = task.CreatedDate,
+                                    TimeSheet = task.TimeSheet,
+                                    LastUpdate = task.LastUpdate,
+                                    ProjectManager = task.ProjectManager
+                                });
                             }
                         }
                     }
 
+
+                }
+                else if (state == null)
+                {
+                    if (proj == 0)
+                    {
+                        foreach (var task in AllTasks)
+                        {
+                            if (task.EmployeesId == emp)
+                            {
+                                tasks.Add(new Taskz()
+                                {
+                                    Id = task.Id,
+                                    Description = task.Description,
+                                    Name = task.Name,
+                                    StartDate = task.StartDate,
+                                    EndDate = task.EndDate,
+                                    project = task.ProjectName,
+                                    Employee = task.EmployeeName,
+                                    CreatedDate = task.CreatedDate,
+                                    TimeSheet = task.TimeSheet,
+                                    LastUpdate = task.LastUpdate,
+                                    ProjectManager = task.ProjectManager
+                                });
+                            }
+                        }
+                    }
                     else
                     {
-                        if (state.Equals("finalized"))
+                        foreach (var task in AllTasks)
                         {
-                            foreach (var task in AllTasks)
+                            if (task.ProjectsId == proj)
                             {
-                                if (task.TimeSheet == true && task.EmployeesId == emp)
+                                tasks.Add(new Taskz()
                                 {
-                                    tasks.Add(new Taskz()
-                                    {
-                                        Id = task.Id,
-                                        Description = task.Description,
-                                        Name = task.Name,
-                                        StartDate = task.StartDate,
-                                        EndDate = task.EndDate,
-                                        project = task.ProjectName,
-                                        Employee = task.EmployeeName,
-                                        CreatedDate = task.CreatedDate,
-                                        TimeSheet = task.TimeSheet,
-                                        LastUpdate = task.LastUpdate,
-                                        ProjectManager = task.ProjectManager
-                                    });
-                                }
-                            }
-                        }
-                        if (state.Equals("timeout"))
-                        {
-                            foreach (var task in AllTasks)
-                            {
-                                if (task.EndDate < DateTime.Now && task.EmployeesId == emp)
-                                {
-                                    tasks.Add(new Taskz()
-                                    {
-                                        Id = task.Id,
-                                        Description = task.Description,
-                                        Name = task.Name,
-                                        StartDate = task.StartDate,
-                                        EndDate = task.EndDate,
-                                        project = task.ProjectName,
-                                        Employee = task.EmployeeName,
-                                        CreatedDate = task.CreatedDate,
-                                        TimeSheet = task.TimeSheet,
-                                        LastUpdate = task.LastUpdate,
-                                        ProjectManager = task.ProjectManager
-                                    });
-                                }
-                            }
-                        }
-                        if (state.Equals("today"))
-                        {
-                            foreach (var task in AllTasks)
-                            {
-                                if ((task.StartDate.Date == DateTime.Today || task.EndDate.Date == DateTime.Today) && task.EmployeesId == emp)
-                                {
-                                    tasks.Add(new Taskz()
-                                    {
-                                        Id = task.Id,
-                                        Description = task.Description,
-                                        Name = task.Name,
-                                        StartDate = task.StartDate,
-                                        EndDate = task.EndDate,
-                                        project = task.ProjectName,
-                                        Employee = task.EmployeeName,
-                                        CreatedDate = task.CreatedDate,
-                                        TimeSheet = task.TimeSheet,
-                                        LastUpdate = task.LastUpdate,
-                                        ProjectManager = task.ProjectManager
-                                    });
-                                }
-                            }
-                        }
-                        if (state.Equals("pending"))
-                        {
-                            foreach (var task in AllTasks)
-                            {
-                                if (task.StartDate > DateTime.Now && task.EmployeesId == emp)
-                                {
-                                    tasks.Add(new Taskz()
-                                    {
-                                        Id = task.Id,
-                                        Description = task.Description,
-                                        Name = task.Name,
-                                        StartDate = task.StartDate,
-                                        EndDate = task.EndDate,
-                                        project = task.ProjectName,
-                                        Employee = task.EmployeeName,
-                                        CreatedDate = task.CreatedDate,
-                                        TimeSheet = task.TimeSheet,
-                                        LastUpdate = task.LastUpdate,
-                                        ProjectManager = task.ProjectManager
-                                    });
-                                }
-                            }
-                        }
-                        if (state.Equals("ongoing"))
-                        {
-                            foreach (var task in AllTasks)
-                            {
-                                if (task.EndDate >= DateTime.Now && task.StartDate <= DateTime.Now && task.EmployeesId == emp)
-                                {
-                                    tasks.Add(new Taskz()
-                                    {
-                                        Id = task.Id,
-                                        Description = task.Description,
-                                        Name = task.Name,
-                                        StartDate = task.StartDate,
-                                        EndDate = task.EndDate,
-                                        project = task.ProjectName,
-                                        Employee = task.EmployeeName,
-                                        CreatedDate = task.CreatedDate,
-                                        TimeSheet = task.TimeSheet,
-                                        LastUpdate = task.LastUpdate,
-                                        ProjectManager = task.ProjectManager
-                                    });
-                                }
+                                    Id = task.Id,
+                                    Description = task.Description,
+                                    Name = task.Name,
+                                    StartDate = task.StartDate,
+                                    EndDate = task.EndDate,
+                                    project = task.ProjectName,
+                                    Employee = task.EmployeeName,
+                                    CreatedDate = task.CreatedDate,
+                                    TimeSheet = task.TimeSheet,
+                                    LastUpdate = task.LastUpdate,
+                                    ProjectManager = task.ProjectManager
+                                });
                             }
                         }
                     }
+
+                }
+                else if (emp == 0)
+                {
+                    if (state.Equals("finalized"))
+                    {
+                        foreach (var task in AllTasks)
+                        {
+                            if (task.TimeSheet == true && task.ProjectsId == proj)
+                            {
+                                tasks.Add(new Taskz()
+                                {
+                                    Id = task.Id,
+                                    Description = task.Description,
+                                    Name = task.Name,
+                                    StartDate = task.StartDate,
+                                    EndDate = task.EndDate,
+                                    project = task.ProjectName,
+                                    Employee = task.EmployeeName,
+                                    CreatedDate = task.CreatedDate,
+                                    TimeSheet = task.TimeSheet,
+                                    LastUpdate = task.LastUpdate,
+                                    ProjectManager = task.ProjectManager
+                                });
+                            }
+                        }
+                    }
+                    if (state.Equals("timeout"))
+                    {
+                        foreach (var task in AllTasks)
+                        {
+                            if (task.EndDate < DateTime.Now && task.ProjectsId == proj)
+                            {
+                                tasks.Add(new Taskz()
+                                {
+                                    Id = task.Id,
+                                    Description = task.Description,
+                                    Name = task.Name,
+                                    StartDate = task.StartDate,
+                                    EndDate = task.EndDate,
+                                    project = task.ProjectName,
+                                    Employee = task.EmployeeName,
+                                    CreatedDate = task.CreatedDate,
+                                    TimeSheet = task.TimeSheet,
+                                    LastUpdate = task.LastUpdate,
+                                    ProjectManager = task.ProjectManager
+                                });
+                            }
+                        }
+                    }
+                    if (state.Equals("today"))
+                    {
+                        foreach (var task in AllTasks)
+                        {
+                            if ((task.StartDate.Date == DateTime.Today || task.EndDate.Date == DateTime.Today) && task.ProjectsId == proj)
+                            {
+                                tasks.Add(new Taskz()
+                                {
+                                    Id = task.Id,
+                                    Description = task.Description,
+                                    Name = task.Name,
+                                    StartDate = task.StartDate,
+                                    EndDate = task.EndDate,
+                                    project = task.ProjectName,
+                                    Employee = task.EmployeeName,
+                                    CreatedDate = task.CreatedDate,
+                                    TimeSheet = task.TimeSheet,
+                                    LastUpdate = task.LastUpdate,
+                                    ProjectManager = task.ProjectManager
+                                });
+                            }
+                        }
+                    }
+                    if (state.Equals("pending"))
+                    {
+                        foreach (var task in AllTasks)
+                        {
+                            if (task.StartDate > DateTime.Now && task.ProjectsId == proj)
+                            {
+                                tasks.Add(new Taskz()
+                                {
+                                    Id = task.Id,
+                                    Description = task.Description,
+                                    Name = task.Name,
+                                    StartDate = task.StartDate,
+                                    EndDate = task.EndDate,
+                                    project = task.ProjectName,
+                                    Employee = task.EmployeeName,
+                                    CreatedDate = task.CreatedDate,
+                                    TimeSheet = task.TimeSheet,
+                                    LastUpdate = task.LastUpdate,
+                                    ProjectManager = task.ProjectManager
+                                });
+                            }
+                        }
+                    }
+                    if (state.Equals("ongoing"))
+                    {
+                        foreach (var task in AllTasks)
+                        {
+                            if (task.EndDate >= DateTime.Now && task.StartDate <= DateTime.Now && task.ProjectsId == proj)
+                            {
+                                tasks.Add(new Taskz()
+                                {
+                                    Id = task.Id,
+                                    Description = task.Description,
+                                    Name = task.Name,
+                                    StartDate = task.StartDate,
+                                    EndDate = task.EndDate,
+                                    project = task.ProjectName,
+                                    Employee = task.EmployeeName,
+                                    CreatedDate = task.CreatedDate,
+                                    TimeSheet = task.TimeSheet,
+                                    LastUpdate = task.LastUpdate,
+                                    ProjectManager = task.ProjectManager
+                                });
+                            }
+                        }
+                    }
+                }
+
+                else
+                {
+                    if (state.Equals("finalized"))
+                    {
+                        foreach (var task in AllTasks)
+                        {
+                            if (task.TimeSheet == true && task.EmployeesId == emp)
+                            {
+                                tasks.Add(new Taskz()
+                                {
+                                    Id = task.Id,
+                                    Description = task.Description,
+                                    Name = task.Name,
+                                    StartDate = task.StartDate,
+                                    EndDate = task.EndDate,
+                                    project = task.ProjectName,
+                                    Employee = task.EmployeeName,
+                                    CreatedDate = task.CreatedDate,
+                                    TimeSheet = task.TimeSheet,
+                                    LastUpdate = task.LastUpdate,
+                                    ProjectManager = task.ProjectManager
+                                });
+                            }
+                        }
+                    }
+                    if (state.Equals("timeout"))
+                    {
+                        foreach (var task in AllTasks)
+                        {
+                            if (task.EndDate < DateTime.Now && task.EmployeesId == emp)
+                            {
+                                tasks.Add(new Taskz()
+                                {
+                                    Id = task.Id,
+                                    Description = task.Description,
+                                    Name = task.Name,
+                                    StartDate = task.StartDate,
+                                    EndDate = task.EndDate,
+                                    project = task.ProjectName,
+                                    Employee = task.EmployeeName,
+                                    CreatedDate = task.CreatedDate,
+                                    TimeSheet = task.TimeSheet,
+                                    LastUpdate = task.LastUpdate,
+                                    ProjectManager = task.ProjectManager
+                                });
+                            }
+                        }
+                    }
+                    if (state.Equals("today"))
+                    {
+                        foreach (var task in AllTasks)
+                        {
+                            if ((task.StartDate.Date == DateTime.Today || task.EndDate.Date == DateTime.Today) && task.EmployeesId == emp)
+                            {
+                                tasks.Add(new Taskz()
+                                {
+                                    Id = task.Id,
+                                    Description = task.Description,
+                                    Name = task.Name,
+                                    StartDate = task.StartDate,
+                                    EndDate = task.EndDate,
+                                    project = task.ProjectName,
+                                    Employee = task.EmployeeName,
+                                    CreatedDate = task.CreatedDate,
+                                    TimeSheet = task.TimeSheet,
+                                    LastUpdate = task.LastUpdate,
+                                    ProjectManager = task.ProjectManager
+                                });
+                            }
+                        }
+                    }
+                    if (state.Equals("pending"))
+                    {
+                        foreach (var task in AllTasks)
+                        {
+                            if (task.StartDate > DateTime.Now && task.EmployeesId == emp)
+                            {
+                                tasks.Add(new Taskz()
+                                {
+                                    Id = task.Id,
+                                    Description = task.Description,
+                                    Name = task.Name,
+                                    StartDate = task.StartDate,
+                                    EndDate = task.EndDate,
+                                    project = task.ProjectName,
+                                    Employee = task.EmployeeName,
+                                    CreatedDate = task.CreatedDate,
+                                    TimeSheet = task.TimeSheet,
+                                    LastUpdate = task.LastUpdate,
+                                    ProjectManager = task.ProjectManager
+                                });
+                            }
+                        }
+                    }
+                    if (state.Equals("ongoing"))
+                    {
+                        foreach (var task in AllTasks)
+                        {
+                            if (task.EndDate >= DateTime.Now && task.StartDate <= DateTime.Now && task.EmployeesId == emp)
+                            {
+                                tasks.Add(new Taskz()
+                                {
+                                    Id = task.Id,
+                                    Description = task.Description,
+                                    Name = task.Name,
+                                    StartDate = task.StartDate,
+                                    EndDate = task.EndDate,
+                                    project = task.ProjectName,
+                                    Employee = task.EmployeeName,
+                                    CreatedDate = task.CreatedDate,
+                                    TimeSheet = task.TimeSheet,
+                                    LastUpdate = task.LastUpdate,
+                                    ProjectManager = task.ProjectManager
+                                });
+                            }
+                        }
+                    }
+                }
 
             }
             if (count != 0)
@@ -921,10 +945,10 @@ namespace VPMS_Project.Models
                 return tasks;
             }
 
-            
+
         }
 
-     
+
         public async Task<Taskz> GetTasksById(int id)
         {
             var data = await _context.Tasks.FindAsync(id);
@@ -950,45 +974,45 @@ namespace VPMS_Project.Models
         public async Task<List<PmTask>> TodayAllocatedTasks()
         {
             var pmtasks = new List<PmTask>();
-            var data =await _context.Tasks.Where(x => x.CreatedDate.Date == DateTime.Today).ToListAsync();
+            var data = await _context.Tasks.Where(x => x.CreatedDate.Date == DateTime.Today).ToListAsync();
             var managers = await _context.Employees.Where(x => x.Designation == "project manager").OrderBy(x => x.EmpFName).ToListAsync();
 
-            if ( (managers?.Any() == true))
+            if ((managers?.Any() == true))
             {
 
-                foreach(var manager in managers)
+                foreach (var manager in managers)
                 {
                     var tasks = new List<Taskz>();
 
-                 if  (data?.Any() == true)
+                    if (data?.Any() == true)
                     {
-                  foreach (var task in data)
-                  {
-                        if (task.ProjectManagerId == manager.EmpId)
+                        foreach (var task in data)
                         {
-                           tasks.Add(new Taskz()
-                           {
-                              Id = task.Id,
-                              Description = task.Description,
-                              Name = task.Name,
-                              StartDate = task.StartDate,
-                              EndDate = task.EndDate,
-                              project = task.ProjectName,
-                              Employee = task.EmployeeName,
-                              CreatedDate = task.CreatedDate,
-                              TimeSheet = task.TimeSheet,
-                              LastUpdate = task.LastUpdate,
-                          });
-                        }  
-            
-                      }
+                            if (task.ProjectManagerId == manager.EmpId)
+                            {
+                                tasks.Add(new Taskz()
+                                {
+                                    Id = task.Id,
+                                    Description = task.Description,
+                                    Name = task.Name,
+                                    StartDate = task.StartDate,
+                                    EndDate = task.EndDate,
+                                    project = task.ProjectName,
+                                    Employee = task.EmployeeName,
+                                    CreatedDate = task.CreatedDate,
+                                    TimeSheet = task.TimeSheet,
+                                    LastUpdate = task.LastUpdate,
+                                });
+                            }
+
+                        }
                     }
-                  
-                     pmtasks.Add(new PmTask()
-                        {
-                            Name = manager.EmpFName+" "+manager.EmpLName,
-                            Tasks = tasks
-                        });
+
+                    pmtasks.Add(new PmTask()
+                    {
+                        Name = manager.EmpFName + " " + manager.EmpLName,
+                        Tasks = tasks
+                    });
 
                 }
             }
@@ -1040,7 +1064,7 @@ namespace VPMS_Project.Models
                 ProjectsName = proj.Name,
                 CreatedDate = task.CreatedDate,
                 LastUpdate = task.LastUpdate,
-                EmployeesName = Emp.EmpFName+" "+Emp.EmpLName
+                EmployeesName = Emp.EmpFName + " " + Emp.EmpLName
             };
 
             await _context.DeletedTasks.AddAsync(NewTask);
@@ -1105,7 +1129,7 @@ namespace VPMS_Project.Models
             var users = await _userManager.GetUsersInRoleAsync("manager");
 
             var AllEmployees = _context.Employees.ToList();
-           
+
 
             for (int i = 0; i < AllEmployees.Count(); i++)
             {
@@ -1122,7 +1146,7 @@ namespace VPMS_Project.Models
 
             }
             string manager;
-           var selected = AllEmployees.Where(x => !ids.Contains(x.EmpId)).OrderBy(x => x.Designation);
+            var selected = AllEmployees.Where(x => !ids.Contains(x.EmpId)).OrderBy(x => x.Designation);
 
             if (selected?.Any() == true)
             {
@@ -1130,7 +1154,7 @@ namespace VPMS_Project.Models
                 {
                     if (emp.PMId != 0)
                     {
-                     var managerData =await _context.Employees.FindAsync(emp.PMId);
+                        var managerData = await _context.Employees.FindAsync(emp.PMId);
                         manager = managerData.EmpFName + " " + managerData.EmpLName;
                     }
                     else
@@ -1153,33 +1177,34 @@ namespace VPMS_Project.Models
 
         public async Task<Resources> AllocateResources1()
         {
-            var users =await _userManager.GetUsersInRoleAsync("manager");
+            var users = await _userManager.GetUsersInRoleAsync("manager");
 
             var list = new List<SelectListItem>();
-           
+
 
             var data = await _context.Employees.Where(y => (y.PMId == 0)).OrderBy(x => x.Designation).ToListAsync();
 
             if (data?.Any() == true)
             {
 
-              for (int i=0; i<data.Count(); i++) {
-
-                for (int j=0; j < users.Count();  j++)
+                for (int i = 0; i < data.Count(); i++)
                 {
-                    if(users[j].UserName == data[i].Index)
+
+                    for (int j = 0; j < users.Count(); j++)
                     {
-                        data.RemoveAt(i);
-                        i--;
-                        break;
+                        if (users[j].UserName == data[i].Index)
+                        {
+                            data.RemoveAt(i);
+                            i--;
+                            break;
+                        }
                     }
+
                 }
-
-              }
             }
-                
 
-            foreach(var emp in data)
+
+            foreach (var emp in data)
             {
                 list.Add(new SelectListItem()
                 {
@@ -1191,8 +1216,8 @@ namespace VPMS_Project.Models
 
             var resources = new Resources()
             {
-                employee =list,
-                Id=0
+                employee = list,
+                Id = 0
             };
             return resources;
 
@@ -1201,12 +1226,12 @@ namespace VPMS_Project.Models
         public async Task<List<DesignationCount>> DesignationCount()
         {
             var list = new List<DesignationCount>();
-           
+
             var users = await _userManager.GetUsersInRoleAsync("manager");
             var jobs = await _context.Job.ToListAsync();
             var data = await _context.Employees.Where(y => (y.PMId == 0) && (y.Designation != "project manager")).ToListAsync();
-            
-            if(jobs?.Any() == true)
+
+            if (jobs?.Any() == true)
             {
 
 
@@ -1252,9 +1277,9 @@ namespace VPMS_Project.Models
                 foreach (var job in jobs)
                 {
                     int count = 0;
-                    foreach(var emp in data)
+                    foreach (var emp in data)
                     {
-                        
+
                         if (job.JobName == emp.Designation)
                         {
                             count++;
@@ -1269,7 +1294,7 @@ namespace VPMS_Project.Models
             }
 
 
-            
+
 
 
             return list;
@@ -1277,9 +1302,9 @@ namespace VPMS_Project.Models
 
         public async Task<bool> AllocateResources2(Resources resources)
         {
-            var ids =resources.employee.Where(x => x.Selected == true).Select(y => int.Parse(y.Value)).ToList();
+            var ids = resources.employee.Where(x => x.Selected == true).Select(y => int.Parse(y.Value)).ToList();
 
-            foreach(int id in ids)
+            foreach (int id in ids)
             {
                 var data = await _context.Employees.FindAsync(id);
                 data.PMId = resources.Id;
@@ -1294,11 +1319,11 @@ namespace VPMS_Project.Models
         {
             var data = await _context.Tasks.Where(x => x.EmployeesId == id).ToListAsync();
             var emp = await _context.Employees.FindAsync(id);
-            if(data?.Any() == true)
+            if (data?.Any() == true)
             {
-                foreach(var task in data)
+                foreach (var task in data)
                 {
-                    if(task.EndDate >= DateTime.Now)
+                    if (task.EndDate >= DateTime.Now)
                     {
                         return false;
                     }

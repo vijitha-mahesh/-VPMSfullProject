@@ -27,6 +27,7 @@ namespace VPMS_Project.Data
         public int EmployeesId { get; set; }
         public int AllocatedTasks { get; set; }
         public int FinalizedTasks { get; set; }
+        public int PreProjectId { get; set; }
         public Employees Employees { get; set; }
         public Customers Customers { get; set; }
         public ICollection<Tasks> Tasks { get; set; }

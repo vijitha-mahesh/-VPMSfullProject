@@ -118,9 +118,9 @@ namespace VPMS_Project.Controllers
         [Authorize(Roles = "admin")]
         public async Task<IActionResult> GetProjectById(int id)
         {
-          var data = await _repo.GetProjectById(id);
+            var data = await _repo.GetProjectById(id);
 
-           
+
             if (data.DeliveryDate.Date.Subtract(DateTime.Now.Date).TotalDays <= 0)
             {
                 ViewBag.TimePresentage = 0;
@@ -148,10 +148,10 @@ namespace VPMS_Project.Controllers
                 ViewBag.BudgetPresentage = Math.Round(((data.EstimetedBudget - data.Cost) / data.EstimetedBudget) * 100);
             }
 
-            if (data.ContractValue == null || data.ContractValue==0)
+            if (data.ContractValue == null || data.ContractValue == 0)
             {
-                ViewBag.ProfitMargin =0;
-                ViewBag.Profit =0;
+                ViewBag.ProfitMargin = 0;
+                ViewBag.Profit = 0;
                 ViewBag.ProfitMarginTarget = 0;
             }
             else
@@ -162,15 +162,15 @@ namespace VPMS_Project.Controllers
             }
             var totalTasks = await _repo2.TaskCount(data.Id);
             ViewBag.TotalTasks = totalTasks;
-            if(totalTasks != 0)
+            if (totalTasks != 0)
             {
-               ViewBag.Completion = Math.Round((double)((data.FinalizedTasks / totalTasks) * 100));
+                ViewBag.Completion = Math.Round((double)((data.FinalizedTasks / totalTasks) * 100));
             }
             else
             {
                 ViewBag.Completion = 0;
             }
-            
+
 
             ViewBag.pm = await _repo2.GetEmployeeNameById(data.ProjectManagerId);
             if (data.CustomerId != null)

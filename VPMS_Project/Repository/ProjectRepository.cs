@@ -65,13 +65,32 @@ namespace VPMS_Project.Repository
         //new part
         public async Task<List<ProjectModel>> SearchProject(string title)
         {
+            var titleL = title.ToLower();
+            var titleU = title.ToUpper();
+
             var projects = new List<ProjectModel>();
             var allprojects = await _context.PreSalesProjects.ToListAsync();
             if (allprojects?.Any() == true)
             {
                 foreach (var project in allprojects)
                 {
-                    if (project.Title.Contains(title))
+                    if (project.Title.Contains(titleU))
+                    {
+                        projects.Add(new ProjectModel()
+                        {
+                            ID = project.ID,
+                            Title = project.Title,
+                            Description = project.Description,
+                            ProjectType = project.ProjectType,
+                        });
+                    }
+                }
+            }
+            if (allprojects?.Any() == true)
+            {
+                foreach (var project in allprojects)
+                {
+                    if (project.Title.Contains(titleL))
                     {
                         projects.Add(new ProjectModel()
                         {
@@ -133,7 +152,10 @@ namespace VPMS_Project.Repository
                     CustomersId = project.CustomersId,
                     Customers = project.Customers.Name,
 
+
                 }).FirstOrDefaultAsync();
+
+
 
             //return await (from p in _context.PreSalesProjects.Where(x => (x.ID == id))
             //              join c in _context.PreSalesCustomers on p.CustomersId equals c.Id
@@ -253,6 +275,7 @@ namespace VPMS_Project.Repository
                 DeliveryDate = projects.endDate,
                 CreatedDate = projects.startDate,
                 LastUpdate = projects.startDate,
+                PreProjectId = projects.ID,
                 AllocatedTasks = 0,
                 FinalizedTasks = 0
             };

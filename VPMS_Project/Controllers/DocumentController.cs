@@ -47,14 +47,14 @@ namespace VPMS_Project.Controllers
 
             ViewBag.project = await _projectRepository.GetProjectByID(projectId);
 
-            var model = new PreTaskModel()
+            var model = new DocumentModel()
             {
                 ProjectsID = projectId
             };
 
             ViewBag.IsSuccess = isSuccess;
             ViewData["Document"] = await _documentRepository.GetDocument(projectId);
-            return View();
+            return View(model);
         }
 
 

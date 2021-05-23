@@ -8,71 +8,80 @@
 
 @model CollectionModel
 
-    <div id="addP1">
+<div id="addP1">
 
-        <div class="container">
-            <h3 class="display-4 text-center">Add New Collection</h3>
-            <hr />
+    <div class="container">
+        <h3 class="display-4 text-center">Add New Collection</h3>
+        <hr />
 
-            @*@if (ViewBag.IsSuccess == true)
-                {
-                    <div class="alert alert-success alert-dismissible fade show" role="alert">
-                        <strong>Congratulations</strong> You have added new collection successfulliy.<br />
-                        Click <a asp-controller="Collection" asp-action="GetAllCollection">here</a> to view the details
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                }*@
+        @*@if (ViewBag.IsSuccess == true)
+            {
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <strong>Congratulations</strong> You have added new collection successfulliy.<br />
+                    Click <a asp-controller="Collection" asp-action="GetAllCollection">here</a> to view the details
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            }*@
 
-            <form method="post" asp-action="AddNewCollection" asp-controller="PreCollection">
-                <div class="row">
-                    @*<div class="col">
-                            <div class="form-group">
-                                <label asp-for="ProjectsID"></label>
-                                <select asp-for="ProjectsID" class="form-control" asp-items="ViewBag.projects">
-                                    <option vlaue="  " >Please choose the project  </option>
-                                </select>
-                                <span asp-validation-for="ProjectsID" class="text-danger"></span>
-                            </div>
-                        </div>*@
-                    <div class="col">
+        @if (ViewBag.isExeed == true)
+        {
+            <div class="alert alert-danger" role="alert">
+                @ViewBag.remainedBudget is the maximum budget collection value you can add
+            </div>
+        }
+
+
+
+        <form method="post" asp-action="AddNewCollection" asp-controller="PreCollection">
+            <div class="row">
+                @*<div class="col">
                         <div class="form-group">
-                            <input text=@ViewBag.project.ID asp-for="ProjectsID" class="form-control" hidden />
-                            <label asp-for="ProjectsID"> @ViewBag.project.Title </label>
-                            @*<input text=@ViewBag.project.Title class="form-control" disabled />*@
+                            <label asp-for="ProjectsID"></label>
+                            <select asp-for="ProjectsID" class="form-control" asp-items="ViewBag.projects">
+                                <option vlaue="  " >Please choose the project  </option>
+                            </select>
                             <span asp-validation-for="ProjectsID" class="text-danger"></span>
                         </div>
-                    </div>
-                    <div class="col">
-                        <div class="form-group">
-                            <label asp-for="Description"></label>
-                            <input asp-for="Description" class="form-control" />
-                            <span asp-validation-for="Description" class="text-danger"></span>
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="form-group">
-                            <label asp-for="value"></label>
-                            <input asp-for="value" class="form-control" />
-                            <span asp-validation-for="value" class="text-danger"></span>
-                        </div>
+                    </div>*@
+                <div class="col">
+                    <div class="form-group">
+                        <input text=@ViewBag.project.ID asp-for="ProjectsID" class="form-control" hidden />
+                        <label asp-for="ProjectsID"> @ViewBag.project.Title </label>
+                        @*<input text=@ViewBag.project.Title class="form-control" disabled />*@
+                        <span asp-validation-for="ProjectsID" class="text-danger"></span>
                     </div>
                 </div>
+                <div class="col">
+                    <div class="form-group">
+                        <label asp-for="Description"></label>
+                        <input asp-for="Description" class="form-control" />
+                        <span asp-validation-for="Description" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-group">
+                        <label asp-for="value"></label>
+                        <input asp-for="value" class="form-control" />
+                        <span asp-validation-for="value" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
 
-                <div class="form-group">
-                    <input type="submit" value="Add A Collection" class="btn btn-primary" />
-                </div>
-            </form>
-            <br />
-            <div>
-                <partial name="GetAllCollection" model="@ViewData["collection"]" />
+            <div class="form-group">
+                <input type="submit" value="Add A Collection" class="btn btn-primary" />
             </div>
-            <div>
-                <a asp-controller="Project" asp-action="GetAllProjects" class="btn btn-link">Back to Project List</a>
-            </div>
+        </form>
+        <br />
+        <div>
+            <partial name="GetAllCollection" model="@ViewData["collection"]" />
         </div>
-
+        <div>
+            <a asp-controller="Project" asp-action="GetAllProjects" class="btn btn-link">Back to Project List</a>
+        </div>
     </div>
+
+</div>
 
 
