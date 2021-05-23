@@ -52,8 +52,7 @@ namespace VPMS_Project.Repository
                 ProjectBudget = model.ProjectBudget,
                 CustomersId = model.CustomersId,
                 projectManagerId = model.projectManagerId,
-                preProjectState = true
-
+                preProjectState = true,
             };
 
             await _context.PreSalesProjects.AddAsync(newProject);
@@ -136,7 +135,7 @@ namespace VPMS_Project.Repository
 
         public async Task<ProjectModel> GetProjectByID(int id)
         {
-            return await _context.PreSalesProjects.Where(x => x.ID == id)
+            var project = await _context.PreSalesProjects.Where(x => x.ID == id)
                 .Select(project => new ProjectModel()
                 {
                     Description = project.Description,
@@ -144,18 +143,20 @@ namespace VPMS_Project.Repository
                     Title = project.Title,
                     ProjectType = project.ProjectType,
                     projectManagerId = project.projectManagerId,
-                    projectManager = project.PreSalesprojectManager.Name,
+                    //projectManager = project.PreSalesprojectManager.Name,
                     startDate = project.startDate,
                     EndDate = project.endDate,
                     value = project.value,
                     ProjectBudget = project.ProjectBudget,
                     CustomersId = project.CustomersId,
-                    Customers = project.Customers.Name,
-
-
+                    Customers = project.Customers.Name
                 }).FirstOrDefaultAsync();
 
 
+            var Fname = _context.Employees.FirstOrDefault(x => x.EmpId == project.projectManagerId).EmpFName.ToString();
+            var Lname = _context.Employees.FirstOrDefault(x => x.EmpId == project.projectManagerId).EmpFName.ToString();
+            project.projectManager = Fname + "" + Lname;
+            return project;
 
             //return await (from p in _context.PreSalesProjects.Where(x => (x.ID == id))
             //              join c in _context.PreSalesCustomers on p.CustomersId equals c.Id

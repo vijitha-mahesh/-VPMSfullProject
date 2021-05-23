@@ -169,15 +169,12 @@ namespace VPMS_Project.Models
                     {
                         cumilativeCollectionValue = cumilativeCollectionValue + collections[i].value;
                     }
-
                 }
             }
             catch (Exception)
             {
-
                 throw;
             }
-
             _context.Entry(proj).State = EntityState.Modified;
             await _context.SaveChangesAsync();
             return true;
